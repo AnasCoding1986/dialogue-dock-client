@@ -1,15 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 
 const Navbar = () => {
 
     const navOptions = <>
 
-        <li className="md:mr-5"><NavLink to="/">Home</NavLink></li>
-        <li className="md:mr-5"><NavLink to="/">Membership</NavLink></li>
-        <li className="md:mr-5"><NavLink to="/"><button className="btn btn-sm">
+        <li className="md:mr-5"><Link to='/'>Home</Link></li>
+        <li className="md:mr-5"><Link to='/membership'>Membership</Link></li>
+        <li className="md:mr-5"><NavLink to="/"><button className="btn bg-[#A7E6FF] btn-sm">
             Notification
-            <div className="badge badge-secondary">+99</div>
+            <div className="badge bg-[#050C9C] badge-secondary">+99</div>
         </button></NavLink></li>
     </>
 
@@ -25,7 +25,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="avatar">
-                    <div className="w-10 rounded-full ring ring-black ring-offset-base-100 ring-offset-2">
+                    <div className="w-10 rounded-full ring ring-[#050C9C] ring-offset-base-100 ring-offset-2">
                         <img src="/logo.png.jpg" alt="" />
                     </div>
                 </div>
@@ -37,7 +37,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Join US</a>
+                <a className="btn bg-[#A7E6FF] border-none">Join US</a>
             </div>
         </div>
     );
