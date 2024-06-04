@@ -4,7 +4,7 @@ const useAllMsg = () => {
     const [allMsg,setAllMsg] = useState();
     const [loading,setLoading] = useState(true);
     useEffect(()=>{
-        fetch()
+        fetch('http://localhost:5000/allMsg')
         .then(res => res.json())
         .then(data=>{
             setAllMsg(data);
