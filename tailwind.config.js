@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      roboto: ["Roboto", "sans-serif"],
+      PermanentMarker: ["Permanent Marker", "cursive"],
+      Pacifico: ["Pacifico", "cursive"],
+      LuckiestGuy: ["Luckiest Guy", "cursive"],
+    }
   },
   plugins: [
     require('daisyui'),

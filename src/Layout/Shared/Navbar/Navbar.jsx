@@ -29,7 +29,7 @@ const Navbar = () => {
                         <img src="/logo.png.jpg" alt="" />
                     </div>
                 </div>
-                <a className="btn btn-ghost text-xl">DialogueDock</a>
+                <a className="btn btn-ghost text-xl font-LuckiestGuy">DialogueDock</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
