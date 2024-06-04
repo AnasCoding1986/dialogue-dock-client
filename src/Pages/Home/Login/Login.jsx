@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import login from '../../../../public/login/login.jpg';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../../../Provider/AuthProvider';
+import { Link } from 'react-router-dom';
 
 
 const Login = () => {
@@ -8,8 +10,10 @@ const Login = () => {
     const captchaRef = useRef(null);
     const [disabled,setDisabled] = useState(true);
 
+    const {signIn} = useContext(AuthContext);
+
     useEffect(() => {
-        loadCaptchaEnginge(6); 
+        loadCaptchaEnginge(2); 
     },[])
 
     const handleLogin = e => {
@@ -18,6 +22,11 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+        signIn(email,password)
+        .then(res => {
+            const user = res.user;
+            console.log(user);
+        })
     }
 
     const handleValidateCaptcha = () => {
@@ -64,6 +73,7 @@ const Login = () => {
                             <input disabled={disabled} className="btn bg-[#A7E6FF] text-black border-none font-bold btn-primary" type="submit" value="login" />
                         </div>
                     </form>
+                    <p className='text-center pb-3'><small>New Here? <Link className='text-[#3572EF] font-bold ml-1' to="/signup">Create an account</Link></small></p>
                 </div>
             </div>
         </div>
