@@ -5,7 +5,13 @@ import { AuthContext } from "../../../Provider/AuthProvider";
 
 const Navbar = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user,logOut } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logOut()
+        .then(() => {})
+        .catch(err => console.log(err))
+    }
 
     const navOptions = <>
 
@@ -43,6 +49,9 @@ const Navbar = () => {
             {
                 user ?
                     <>
+                    <div className="navbar-end">
+                    <button onClick={handleLogout} className="btn text-black btn-ghost bg-[#A7E6FF] border-none">Log Out</button>
+                    </div>
                     </> :
                     <>
                         <div className="navbar-end">

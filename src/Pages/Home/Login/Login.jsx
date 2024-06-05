@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import login from '../../../assets/images/login/login.jpg';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../../Provider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
 
@@ -12,9 +12,13 @@ const Login = () => {
     const [disabled, setDisabled] = useState(true);
 
     const { signIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || "/";
 
     useEffect(() => {
-        loadCaptchaEnginge(2);
+        loadCaptchaEnginge(6);
     }, [])
 
     const handleLogin = e => {
@@ -34,6 +38,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1500
                   });
+                  navigate(from, {replace: true})
             })
     }
 
@@ -70,9 +75,6 @@ const Login = () => {
                                     <span className="label-text">Password</span>
                                 </label>
                                 <input type="password" name='password' placeholder="password" className="input input-bordered" required />
-                                <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                                </label>
                             </div>
                             <div className="form-control">
                                 <label className="label">
