@@ -1,0 +1,13 @@
+/* Styles for the active navigation link */
+.active-nav-link {
+    color: #A7E6FF;
+    font-weight: bold;
+}
+
+/* Ensure normal link styling */
+.navbar a {
+    color: white;
+}
+
+/* Add any additional styles as needed */
+

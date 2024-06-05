@@ -34,6 +34,17 @@ const Tag = () => {
                     clickable: true,
                 }}
                 modules={[Pagination]}
+                breakpoints={{
+                    320: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                }}
                 className="mySwiper"
             >
                 {[
@@ -63,4 +74,3 @@ const Tag = () => {
 };
 
 export default Tag;
-
