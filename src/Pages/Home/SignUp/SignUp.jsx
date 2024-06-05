@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import signup from "../../../../public/register/register.jpg"
+import signup from "../../../../src/assets/images/register/register.jpg"
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import { useContext } from "react";

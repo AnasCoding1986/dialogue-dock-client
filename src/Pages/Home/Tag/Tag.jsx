@@ -8,15 +8,15 @@ import { Pagination } from 'swiper/modules';
 import './tag.css';
 
 // Photos
-import coding from '../../../../public/TagImage/coding.jpg';
-import education from '../../../../public/TagImage/education.jpg';
-import entertainment from '../../../../public/TagImage/entertainment.jpg';
-import environment from '../../../../public/TagImage/environment.jpg';
-import fashion from '../../../../public/TagImage/fashion.jpg';
-import food from '../../../../public/TagImage/food.jpg';
-import health from '../../../../public/TagImage/health.jpg';
-import politics from '../../../../public/TagImage/politics.jpg';
-import travel from '../../../../public/TagImage/travel.jpg';
+import coding from '../../../../src/assets/images/TagImage/coding.jpg';
+import education from '../../../../src/assets/images/TagImage/education.jpg';
+import entertainment from '../../../../src/assets/images/TagImage/entertainment.jpg';
+import environment from '../../../../src/assets/images/TagImage/environment.jpg';
+import fashion from '../../../../src/assets/images/TagImage/fashion.jpg';
+import food from '../../../../src/assets/images/TagImage/food.jpg';
+import health from '../../../../src/assets/images/TagImage/health.jpg';
+import politics from '../../../../src/assets/images/TagImage/politics.jpg';
+import travel from '../../../../src/assets/images/TagImage/travel.jpg';
 import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 
 const Tag = () => {

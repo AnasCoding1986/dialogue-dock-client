@@ -6,7 +6,7 @@ const Footer = () => {
             <aside className="items-center grid-flow-col">
                 <div className="avatar">
                     <div className="w-10 rounded-full ring ring-[#050C9C] ring-offset-base-100 ring-offset-2">
-                    <img src="/logo.png.jpg" alt="" />
+                    <img src="/src/assets/images/logo.png.jpg" alt="" />
                     </div>
                 </div>
                 

@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../../Provider/AuthProvider";
 
 
 const Navbar = () => {
+
+    const { user } = useContext(AuthContext);
 
     const navOptions = <>
 
@@ -26,7 +30,7 @@ const Navbar = () => {
                 </div>
                 <div className="avatar">
                     <div className="w-10 rounded-full ring ring-[#050C9C] ring-offset-base-100 ring-offset-2">
-                        <img src="/logo.png.jpg" alt="" />
+                        <img src="../../../assets/images/logo.png.jpg" alt="" />
                     </div>
                 </div>
                 <a className="btn btn-ghost text-xl font-LuckiestGuy">DialogueDock</a>
@@ -36,9 +40,16 @@ const Navbar = () => {
                     {navOptions}
                 </ul>
             </div>
-            <div className="navbar-end">
-                <Link className="btn bg-[#A7E6FF] border-none" to="/login">Join US</Link>
-            </div>
+            {
+                user ?
+                    <>
+                    </> :
+                    <>
+                        <div className="navbar-end">
+                            <Link className="btn bg-[#A7E6FF] border-none" to="/login">Join US</Link>
+                        </div>
+                    </>
+            }
         </div>
     );
 };
