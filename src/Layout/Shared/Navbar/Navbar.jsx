@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { IoNotificationsSharp } from "react-icons/io5";
 import useAuth from "../../../Hooks/useAuth";
+import useAnnoucement from "../../../Hooks/useAnnoucement";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [notification] = useAnnoucement();
 
     const handleLogout = () => {
         logOut()
@@ -30,11 +32,11 @@ const Navbar = () => {
         </li>
         <li className="md:mr-5">
             <NavLink to="/" activeClassName="active-nav-link">
-                <button className="btn bg-[#A7E6FF] btn-sm">
+                <button className="btn border-[#050C9C] bg-[#A7E6FF] btn-sm">
                     <span className="font-bold text-xl text-[#050C9C]">
                         <IoNotificationsSharp />
                     </span>
-                    <div className="badge bg-[#050C9C] badge-secondary">+99</div>
+                    <div className="badge bg-[#050C9C] border-[#050C9C] badge-secondary">{notification.length}</div>
                 </button>
             </NavLink>
         </li>
