@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../../../Provider/AuthProvider";
 import { IoNotificationsSharp } from "react-icons/io5";
+import useAuth from "../../../Hooks/useAuth";
 
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleLogout = () => {
@@ -44,10 +44,10 @@ const Navbar = () => {
         <div className="navbar fixed z-10 bg-opacity-30 max-w-screen-xl mx-auto bg-black text-white px-5">
             <div className="navbar-start">
                 <div className="dropdown">
-                    <div 
-                        tabIndex={0} 
-                        role="button" 
-                        className="btn btn-ghost lg:hidden" 
+                    <div
+                        tabIndex={0}
+                        role="button"
+                        className="btn btn-ghost lg:hidden"
                         onClick={toggleDropdown}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +74,20 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
                 {user ?
-                    <button onClick={handleLogout} className="btn text-black btn-ghost bg-[#A7E6FF] border-none">Log Out</button>
+                    <div className="relative">
+                        <div className="avatar" onClick={toggleDropdown}>
+                            <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 cursor-pointer">
+                                <img src={user?.photoURL} alt="User Profile" />
+                            </div>
+                        </div>
+                        {isDropdownOpen && (
+                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
+                                <div className="px-4 py-2 text-black">{user?.displayName}</div>
+                                <Link to="/dashboard" className="block px-4 py-2 text-black hover:bg-gray-200">Dashboard</Link>
+                                <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200">Log Out</button>
+                            </div>
+                        )}
+                    </div>
                     :
                     <Link className="btn bg-[#A7E6FF] border-none" to="/login">Join US</Link>
                 }

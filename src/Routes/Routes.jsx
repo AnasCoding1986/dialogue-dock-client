@@ -7,6 +7,7 @@ import Membership from "../Pages/Home/Membership/Membership";
 import Login from "../Pages/Home/Login/Login";
 import SignUp from "../Pages/Home/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
+import AddNotification from "../Pages/AdminDashBoard/AddNotification/AddNotification";
 
 export const router = createBrowserRouter([
     {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <SignUp></SignUp>
+            },
+            {
+                path: '/notification',
+                element: <AddNotification></AddNotification>
             },
         ]
     },

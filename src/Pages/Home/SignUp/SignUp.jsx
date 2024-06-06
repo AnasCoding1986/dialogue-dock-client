@@ -2,9 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import signup from "../../../../src/assets/images/register/register.jpg"
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
-import { useContext } from "react";
-import { AuthContext } from "../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
 
 const SignUp = () => {
 
@@ -15,7 +14,7 @@ const SignUp = () => {
         reset
     } = useForm();
 
-    const {createUser,updateUserProfile} = useContext(AuthContext);
+    const {createUser,updateUserProfile} = useAuth();
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
