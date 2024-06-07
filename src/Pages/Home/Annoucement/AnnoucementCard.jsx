@@ -5,7 +5,7 @@ const AnnoucementCard = (singleNotification) => {
     const title = singleNotification.singleNotification.title;
     const description = singleNotification.singleNotification.description;
     const name = singleNotification.singleNotification.name;
-    const photo = singleNotification.singleNotification.photo;
+    const photo = singleNotification?.singleNotification?.photo;
     console.log(photo);
     return (
         <div className="">

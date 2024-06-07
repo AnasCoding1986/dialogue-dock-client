@@ -6,7 +6,7 @@ const useAnnoucement = () => {
 
     const axiosSecure = useAxiosSecure();
 
-    const {data: notification=[]} = useQuery({
+    const {refetch, data: notification=[]} = useQuery({
         queryKey: ['notification'],
         queryFn: async () => {
             const res = await axiosSecure.get('/notification');
@@ -14,7 +14,7 @@ const useAnnoucement = () => {
         }
     })
 
-    return [notification]
+    return [notification, refetch]
 };
 
 export default useAnnoucement;

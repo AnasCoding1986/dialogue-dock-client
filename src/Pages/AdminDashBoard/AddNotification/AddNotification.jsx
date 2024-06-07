@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAnnoucement from "../../../Hooks/useAnnoucement";
 
 
 
@@ -10,6 +11,7 @@ const AddNotification = () => {
     const name = user?.displayName;
     const photo = user?.photoURL;
     const axiosSecure = useAxiosSecure();
+    const [ , refetch] = useAnnoucement();
 
     const handleNotificattion = (e) => {
         e.preventDefault();
@@ -31,6 +33,9 @@ const AddNotification = () => {
                     showConfirmButton: false,
                     timer: 1500
                   });
+
+                //   refetch cart to update the annoucement
+                refetch();
             }
         })
     }
