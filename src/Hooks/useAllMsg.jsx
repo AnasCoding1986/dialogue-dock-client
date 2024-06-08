@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "./useAxiosSecure";
+
 
 const useAllMsg = () => {
-    const [allMsg,setAllMsg] = useState();
-    const [loading,setLoading] = useState(true);
-    useEffect(()=>{
-        fetch('http://localhost:5000/allMsg')
-        .then(res => res.json())
-        .then(data=>{
-            setAllMsg(data);
-            setLoading(false);
-        });
-    },[])
-    return [allMsg,loading]
-}
+
+    const axiosSecure = useAxiosSecure();
+    const { data: allMsg = [] } =useQuery({
+        queryKey: ['allMsg'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/allMsg')
+            return res.data
+        }
+    })
+
+    return [allMsg];
+};
 
 export default useAllMsg;

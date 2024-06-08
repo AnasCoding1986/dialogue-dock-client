@@ -2,6 +2,7 @@ import Banner from "../Banner/Banner";
 import { Helmet } from 'react-helmet-async';
 import Tag from "../Tag/Tag";
 import Annoucement from "../Annoucement/Annoucement";
+import AllMsg from "../AllMsg/AllMsg";
 
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
             <Banner></Banner>
             <Tag></Tag>
             <Annoucement></Annoucement>
+            <AllMsg></AllMsg>
         </div>
     );
 };
