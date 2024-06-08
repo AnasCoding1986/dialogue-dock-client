@@ -9,6 +9,7 @@ import SignUp from "../Pages/Home/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import AddNotification from "../Pages/AdminDashBoard/AddNotification/AddNotification";
 import AddPost from "../Pages/UserDashBoard/AddPost/AddPost";
+import DashBoard from "../Layout/DashBoard";
 
 export const router = createBrowserRouter([
     {
@@ -41,4 +42,11 @@ export const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path: "dashboard",
+        element: <DashBoard></DashBoard>,
+        children: [
+
+        ]
+    }
 ]);
