@@ -8,8 +8,13 @@ import Login from "../Pages/Home/Login/Login";
 import SignUp from "../Pages/Home/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
 import AddNotification from "../Pages/AdminDashBoard/AddNotification/AddNotification";
-import AddPost from "../Pages/UserDashBoard/AddPost/AddPost";
 import DashBoard from "../Layout/DashBoard";
+import AddPost from "../Pages/DashBoard/AddPost/AddPost";
+import MyProfile from "../Pages/DashBoard/MyProfile/MyProfile";
+import MyPost from "../Pages/DashBoard/MyPost/MyPost";
+import AdminProfile from "../Pages/DashBoard/AdminProfile/AdminProfile";
+import ManageUsers from "../Pages/DashBoard/ManageUsers/ManageUsers";
+import ReportedActivities from "../Pages/DashBoard/ReportedActivities/ReportedActivities";
 
 export const router = createBrowserRouter([
     {
@@ -36,17 +41,36 @@ export const router = createBrowserRouter([
                 path: '/notification',
                 element: <AddNotification></AddNotification>
             },
-            {
-                path: '/allMsg',
-                element: <AddPost></AddPost>
-            },
         ]
     },
     {
         path: "dashboard",
         element: <DashBoard></DashBoard>,
         children: [
-
+            {
+                path: '/dashboard/myprofile',
+                element: <MyProfile></MyProfile>
+            },
+            {
+                path: '/dashboard/addpost',
+                element: <AddPost></AddPost>
+            },
+            {
+                path: '/dashboard/mypost',
+                element: <MyPost></MyPost>
+            },
+            {
+                path: '/dashboard/adminprofile',
+                element: <AdminProfile></AdminProfile>
+            },
+            {
+                path: '/dashboard/manageusers',
+                element: <ManageUsers></ManageUsers>
+            },
+            {
+                path: '/dashboard/reportedactivities',
+                element: <ReportedActivities></ReportedActivities>
+            },
         ]
     }
 ]);
