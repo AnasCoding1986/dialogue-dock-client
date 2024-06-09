@@ -9,6 +9,8 @@ const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [notification] = useAnnoucement();
 
+    console.log(user?.photoURL);
+
     const handleLogout = () => {
         logOut()
             .then(() => { })
