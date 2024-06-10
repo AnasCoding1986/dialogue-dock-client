@@ -5,14 +5,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
 import useAuth from '../../../Hooks/useAuth';
-import { FcGoogle } from 'react-icons/fc';
+import SocialLogin from '../../../Components/SectionTitle/SocialLogin/SocialLogin';
 
 
 const Login = () => {
 
     const [disabled, setDisabled] = useState(true);
 
-    const { signIn, signInWithGoogle } = useAuth();
+    const { signIn } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -43,15 +43,15 @@ const Login = () => {
             })
     }
 
-    const handleGoogleSignIn = () => {
-        signInWithGoogle()
-        .then(res => {
-            console.log(res.data);
-        })
-        .catch(err => {
-            console.error(err);
-        })
-    }
+    // const handleGoogleSignIn = () => {
+    //     signInWithGoogle()
+    //     .then(res => {
+    //         console.log(res.data);
+    //     })
+    //     .catch(err => {
+    //         console.error(err);
+    //     })
+    // }
 
     const handleValidateCaptcha = (e) => {
         const user_captcha_value = e.target.value;
@@ -97,9 +97,10 @@ const Login = () => {
                                 <input disabled={disabled} className="btn bg-[#A7E6FF] text-black border-none font-bold btn-primary" type="submit" value="login" />
                             </div>
                         </form>
-                        <div className='mb-5 mx-auto w-10/12'>
+                        {/* <div className='mb-5 mx-auto w-10/12'>
                         <button onClick={handleGoogleSignIn} className="btn btn-outline border-[#3572EF] w-full"><span className='text-xl mr-2'><FcGoogle /></span><span className='text-[#3572EF] font-bold ml-2'>Google</span></button>
-                        </div>
+                        </div> */}
+                        <SocialLogin></SocialLogin>
                         <p className='text-center pb-3'><small>New Here? <Link className='text-[#3572EF] font-bold ml-1' to="/signup">Create an account</Link></small></p>
                     </div>
                 </div>
