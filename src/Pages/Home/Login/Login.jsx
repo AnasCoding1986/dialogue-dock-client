@@ -6,11 +6,13 @@ import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
 import useAuth from '../../../Hooks/useAuth';
 import SocialLogin from '../../../Components/SectionTitle/SocialLogin/SocialLogin';
+import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 
 
 const Login = () => {
 
     const [disabled, setDisabled] = useState(true);
+    const axiosPublic = useAxiosPublic();
 
     const { signIn } = useAuth();
     const navigate = useNavigate();
@@ -31,15 +33,26 @@ const Login = () => {
         signIn(email, password)
             .then(res => {
                 const user = res.user;
+                const userInfo = {
+                    name: user.name,
+                    email: user.email,
+                    photo: user.photoUrl
+                }
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Account created and updated successfully",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate('/');
+                        }
+                    })
                 console.log(user);
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Login successfull",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-                  navigate(from, {replace: true})
+                navigate(from, { replace: true })
             })
     }
 
