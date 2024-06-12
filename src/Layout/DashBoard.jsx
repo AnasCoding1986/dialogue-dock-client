@@ -6,10 +6,11 @@ import { PiMemberOfBold } from "react-icons/pi";
 import { RiProfileFill } from "react-icons/ri";
 import { SiDeutschepost } from "react-icons/si";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
 
 
 const DashBoard = () => {
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
     return (
         <div className="flex">
             <div className="w-64 pl-10 pt-10 min-h-screen bg-[#3572EF]">

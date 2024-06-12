@@ -16,7 +16,7 @@ const SingleMsg = ({ singleMsg }) => {
     return (
         <div>
             <Link to={`/${_id}`}>
-                <div className="p-5 shadow-2xl border-dotted rounded-2xl bg-[#f9fcfc]">
+                <div className="p-5 shadow-2xl border-dotted rounded-3xl bg-[#f9fcfc]">
                     <div className="grid grid-cols-4 p-5">
                         <div className="col-span-2">
                             <div className="avatar">

@@ -66,7 +66,7 @@ const Navbar = () => {
                 </div>
                 <div className="avatar">
                     <div className="w-10 rounded-full ring ring-[#050C9C] ring-offset-base-100 ring-offset-2">
-                        <img src="../../../assets/images/logo.png.jpg" alt="Logo" />
+                        <img src="/src/assets/images/logo.png.jpg" alt="Logo" />
                     </div>
                 </div>
                 <a className="btn btn-ghost text-xl font-Pacifico font-black">DialogueDock</a>
