@@ -15,6 +15,8 @@ import MyPost from "../Pages/DashBoard/MyPost/MyPost";
 import AdminProfile from "../Pages/DashBoard/AdminProfile/AdminProfile";
 import ManageUsers from "../Pages/DashBoard/ManageUsers/ManageUsers";
 import ReportedActivities from "../Pages/DashBoard/ReportedActivities/ReportedActivities";
+import AdminRoute from "./AdminRoute";
+import Payment from "../Pages/DashBoard/Payment/Payment";
 
 export const router = createBrowserRouter([
     {
@@ -60,16 +62,22 @@ export const router = createBrowserRouter([
                 element: <MyPost></MyPost>
             },
             {
+                path: '/dashboard/payment',
+                element: <Payment></Payment>
+            },
+
+            // admin dashboard
+            {
                 path: '/dashboard/adminprofile',
-                element: <AdminProfile></AdminProfile>
+                element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>
             },
             {
                 path: '/dashboard/manageusers',
-                element: <ManageUsers></ManageUsers>
+                element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
             },
             {
                 path: '/dashboard/reportedactivities',
-                element: <ReportedActivities></ReportedActivities>
+                element: <AdminRoute><ReportedActivities></ReportedActivities></AdminRoute>
             },
         ]
     }
