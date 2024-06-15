@@ -11,7 +11,7 @@ const SingleMsg = ({ singleMsg }) => {
     // Destructure the singleMsg object safely
     if (!singleMsg || singleMsg.length === 0) return null;
 
-    const { _id, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg[0];
+    const { _id,photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg[0];
 
     return (
         <div>
@@ -21,7 +21,7 @@ const SingleMsg = ({ singleMsg }) => {
                         <div className="col-span-2">
                             <div className="avatar">
                                 <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                    <img src={user?.photoURL} alt={`${user?.displayName || 'User'}'s avatar`} />
+                                    <img src={photo} alt={`${name || 'User'}'s avatar`} />
                                 </div>
                             </div>
                         </div>
