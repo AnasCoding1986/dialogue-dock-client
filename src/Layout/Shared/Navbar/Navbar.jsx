@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { IoNotificationsSharp } from "react-icons/io5";
 import useAuth from "../../../Hooks/useAuth";
 import useAnnoucement from "../../../Hooks/useAnnoucement";
@@ -8,12 +8,15 @@ const Navbar = () => {
     const { user, logOut } = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [notification] = useAnnoucement();
+    const navigate = useNavigate();
 
     console.log(user?.photoURL);
 
     const handleLogout = () => {
         logOut()
-            .then(() => { })
+            .then(() => {
+                navigate("/");
+             })
             .catch(err => console.log(err))
     }
 

@@ -2,13 +2,14 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
-
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = () => {
-
     const [pErr, setPErr] = useState('');
     const [clientSecret, setClientSecret] = useState('');
-    const [transactionId,setTransactionId] = useState('');
+    const [transactionId, setTransactionId] = useState('');
+    const navigate = useNavigate();
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
@@ -21,28 +22,20 @@ const CheckoutForm = () => {
                 console.log(res.data.clientSecret);
                 setClientSecret(res.data.clientSecret);
             })
-    }, [axiosSecure])
+    }, [axiosSecure]);
 
     const handleSubmit = async (event) => {
-        // Block native form submission.
         event.preventDefault();
 
         if (!stripe || !elements) {
-            // Stripe.js has not loaded yet. Make sure to disable
-            // form submission until Stripe.js has loaded.
             return;
         }
 
-        // Get a reference to a mounted CardElement. Elements knows how
-        // to find your CardElement because there can only ever be one of
-        // each type of element.
         const card = elements.getElement(CardElement);
-
         if (card === null) {
             return;
         }
 
-        // Use your card Element with other Stripe.js APIs
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card,
@@ -56,28 +49,46 @@ const CheckoutForm = () => {
             setPErr('');
         }
 
-
         const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: card,
-                    billing_details: {
-                        email: user?.email || 'anonymous',
-                        name: user?.displayName || 'anonymous',
-                    },
+            payment_method: {
+                card: card,
+                billing_details: {
+                    email: user?.email || 'anonymous',
+                    name: user?.displayName || 'anonymous',
                 },
-            })
+            },
+        });
 
-            if (confirmError) {
-                console.log('confirmError');
-            } else {
-                console.log('Payment intent', paymentIntent);
-                if (paymentIntent.status === 'succeeded') {
-                    console.log('transaction id', paymentIntent.id);
-                    setTransactionId(paymentIntent.id)
-                }
+        if (confirmError) {
+            console.log('confirmError', confirmError);
+            setPErr(confirmError.message);
+        } else {
+            console.log('Payment intent', paymentIntent);
+            if (paymentIntent.status === 'succeeded') {
+                console.log('transaction id', paymentIntent.id);
+                console.log("Now need to change member status");
+
+                axiosSecure.patch(`/users/${user.email}`)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.modifiedCount > 0) {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: `${user.displayName} is member now`,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log('Error in patch request:', err);
+                    });
+
+                setTransactionId(paymentIntent.id);
+                navigate('/');
             }
-
-
+        }
     };
 
     return (
@@ -102,9 +113,7 @@ const CheckoutForm = () => {
                 Pay
             </button>
             <p className="text-red-600">{pErr}</p>
-            {
-                transactionId && <p className="text-green-600">Your transaction id : {transactionId}</p>
-            }
+            {transactionId && <p className="text-green-600">Your transaction id : {transactionId}</p>}
         </form>
     );
 };
