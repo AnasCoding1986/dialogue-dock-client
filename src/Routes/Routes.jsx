@@ -3,7 +3,7 @@ import {
 } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../Pages/Home/Home/Home";
-import Membership from "../Pages/Home/Membership/Membership";
+import Membership from "../Pages/Membership/Membership";
 import Login from "../Pages/Home/Login/Login";
 import SignUp from "../Pages/Home/SignUp/SignUp";
 import PrivateRoute from "./PrivateRoute";
@@ -16,12 +16,14 @@ import AdminProfile from "../Pages/DashBoard/AdminProfile/AdminProfile";
 import ManageUsers from "../Pages/DashBoard/ManageUsers/ManageUsers";
 import ReportedActivities from "../Pages/DashBoard/ReportedActivities/ReportedActivities";
 import AdminRoute from "./AdminRoute";
-import Payment from "../Pages/DashBoard/Payment/Payment";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import Payment from "../Pages/Membership/Payment";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Main></Main>,
+        errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -29,7 +31,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/membership',
-                element: <PrivateRoute><Membership></Membership></PrivateRoute>
+                element: <Membership></Membership>
+            },
+            {
+                path: '/payment',
+                element: <Payment></Payment>
             },
             {
                 path: '/login',
@@ -60,10 +66,6 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/mypost',
                 element: <MyPost></MyPost>
-            },
-            {
-                path: '/dashboard/payment',
-                element: <Payment></Payment>
             },
 
             // admin dashboard
