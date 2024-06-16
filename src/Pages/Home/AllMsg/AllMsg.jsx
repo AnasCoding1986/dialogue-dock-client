@@ -1,12 +1,12 @@
 import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 import useAllMsg from '../../../Hooks/useAllMsg';
-import SingleMsg from '../SingleMsg/SingleMsg';
+import SingleMsg from '../AllMsg/SingleMsg';
 
 const AllMsg = () => {
 
     const allMsgs = useAllMsg();
     console.log(allMsgs[0]);
-
+  
     return (
         <div className='bg-[#e5f4fa] p-20'>
             <SectionTitle

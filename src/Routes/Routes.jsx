@@ -18,6 +18,7 @@ import ReportedActivities from "../Pages/DashBoard/ReportedActivities/ReportedAc
 import AdminRoute from "./AdminRoute";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Payment from "../Pages/Membership/Payment";
+import SingleMsgDetails from "../Pages/Home/AllMsg/SingleMsgDetails";
 
 export const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
             {
                 path: '/notification',
                 element: <AddNotification></AddNotification>
+            },
+            {
+                path: '/allMsg/:id',
+                element: <SingleMsgDetails></SingleMsgDetails>
             },
         ]
     },
