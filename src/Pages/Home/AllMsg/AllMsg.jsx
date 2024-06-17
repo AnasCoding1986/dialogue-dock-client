@@ -4,18 +4,18 @@ import SingleMsg from '../AllMsg/SingleMsg';
 
 const AllMsg = () => {
 
-    const allMsgs = useAllMsg();
-    console.log(allMsgs[0]);
+    const [allMsg, refetch] = useAllMsg();
+    console.log(allMsg[0]);
   
     return (
-        <div className='bg-[#e5f4fa] p-20'>
+        <div className='p-20'>
             <SectionTitle
                 heading="Beautiful Thoughts"
-                subHeading="Explore beautiful thoughts of the people around you"
+                subHeading="Explore beautiful thoughts"
             ></SectionTitle>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                 {
-                    allMsgs.map(singleMsg => <SingleMsg key={singleMsg._id} singleMsg={singleMsg}></SingleMsg>)
+                    allMsg.map(singleMsg => <SingleMsg key={singleMsg._id} singleMsg={singleMsg}></SingleMsg>)
                 }
             </div>
         </div>

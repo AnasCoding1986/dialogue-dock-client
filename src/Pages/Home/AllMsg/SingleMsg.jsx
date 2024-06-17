@@ -8,10 +8,12 @@ import { Link } from "react-router-dom";
 const SingleMsg = ({ singleMsg }) => {
     const { user } = useAuth();
 
-    // Destructure the singleMsg object safely
-    if (!singleMsg || singleMsg.length === 0) return null;
 
-    const { _id,photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg[0];
+
+    const { _id,photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
+
+    const count = parseInt(upvote)- parseInt(downvote);
+
 
     return (
         <div>
@@ -54,7 +56,7 @@ const SingleMsg = ({ singleMsg }) => {
                             <span className="font-bold text-[#3572EF]">
                                 <MdHowToVote />
                             </span>
-                            : <span className="font-light ml-2 text-sm">{votesCount}</span>
+                            : <span className="font-light ml-2 text-sm">{count}</span>
                         </div>
                     </div>
                 </div>

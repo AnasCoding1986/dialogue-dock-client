@@ -47,10 +47,6 @@ export const router = createBrowserRouter([
                 element: <SignUp></SignUp>
             },
             {
-                path: '/notification',
-                element: <AddNotification></AddNotification>
-            },
-            {
                 path: '/allMsg/:id',
                 element: <SingleMsgDetails></SingleMsgDetails>,
                 loader: ({params}) => fetch(`http://localhost:5000/allMsg/${params.id}`)
@@ -78,6 +74,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/adminprofile',
                 element: <AdminRoute><AdminProfile></AdminProfile></AdminRoute>
+            },
+            {
+                path: '/dashboard/notification',
+                element: <AdminRoute><AddNotification></AddNotification></AdminRoute>
             },
             {
                 path: '/dashboard/manageusers',

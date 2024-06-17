@@ -2,14 +2,55 @@ import { BiDownvote, BiUpvote } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
 import { useLoaderData } from "react-router-dom";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 
 
 const SingleMsgDetails = () => {
 
     const singleMsg = useLoaderData();
+    const axiosSecure = useAxiosSecure();
 
-    const { photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
+    const { _id, photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
+
+    const handleComment = () => {
+        
+    }
+
+    const handleUpVote = () => {
+        axiosSecure.patch(`/allMsg/upvote/${_id}`)
+        .then(res => {
+            if (res.data.modifiedCount > 0) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `UpVote increase by one`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        })
+    }
+    const handleDownVote = () => {
+        axiosSecure.patch(`/allMsg/downvote/${_id}`)
+        .then(res => {
+            if (res.data.modifiedCount > 0) {
+                console.log('downvote clicked');
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `DownVote increase by one`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        })
+    }
+
+    const handleShare = () => {
+
+    }
 
     return (
         <div className="flex items-center justify-center h-screen w-full">
@@ -35,10 +76,10 @@ const SingleMsgDetails = () => {
                 </div>
                 <div className="p-2 text-lg">{text}</div>
                 <div className="grid grid-cols-4 p-2 border-y-2 pb-2">
-                    <div className=" flex items-center justify-center"><FaRegComment /><span className="ml-2">Comment</span></div>
-                    <div className=" flex items-center justify-center"><BiUpvote /><span className="ml-2">UpVote</span></div>
-                    <div className=" flex items-center justify-center"><BiDownvote /><span className="ml-2">DownVote</span></div>
-                    <div className=" flex items-center justify-center"><RiShareForwardLine /><span className="ml-2">Share</span></div>
+                    <button onClick={handleComment} className=" flex items-center justify-center"><FaRegComment /><span className="ml-2">Comment</span></button>
+                    <button onClick={handleUpVote} className=" flex items-center justify-center"><BiUpvote /><span className="ml-2">UpVote</span></button>
+                    <button onClick={handleDownVote} className=" flex items-center justify-center"><BiDownvote /><span className="ml-2">DownVote</span></button>
+                    <button onClick={handleShare} className=" flex items-center justify-center"><RiShareForwardLine /><span className="ml-2">Share</span></button>
                 </div>
 
             </div>

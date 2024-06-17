@@ -7,6 +7,7 @@ import { RiProfileFill } from "react-icons/ri";
 import { SiDeutschepost } from "react-icons/si";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../Hooks/useAdmin";
+import { GrAnnounce } from "react-icons/gr";
 
 
 const DashBoard = () => {
@@ -22,6 +23,7 @@ const DashBoard = () => {
                                 <li><NavLink className='text-white p-2 rounded-xl flex items-center' to='/dashboard/adminprofile'><span className="mr-5"><CgProfile /></span>Admin Profile</NavLink></li>
                                 <li><NavLink className='text-white p-2 rounded-xl flex items-center' to='/dashboard/manageusers'><span className="mr-5"><MdManageAccounts /></span>Manage Users</NavLink></li>
                                 <li><NavLink className='text-white p-2 rounded-xl flex items-center' to='/dashboard/reportedactivities'><span className="mr-5"><MdBugReport /></span>Reported Activities</NavLink></li>
+                                <li><NavLink className='text-white p-2 rounded-xl flex items-center' to='/dashboard/notification'><span className="mr-5"><GrAnnounce /></span>Make Announcement</NavLink></li>
                             </>
                             :
                             <>
