@@ -52,7 +52,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/allMsg/:id',
-                element: <SingleMsgDetails></SingleMsgDetails>
+                element: <SingleMsgDetails></SingleMsgDetails>,
+                loader: ({params}) => fetch(`http://localhost:5000/allMsg/${params.id}`)
             },
         ]
     },
