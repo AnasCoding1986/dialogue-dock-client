@@ -3,7 +3,6 @@ import useAllMsg from '../../../Hooks/useAllMsg';
 import SingleMsg from '../AllMsg/SingleMsg';
 
 const AllMsg = () => {
-
     const [allMsg, refetch] = useAllMsg();
     console.log(allMsg[0]);
   

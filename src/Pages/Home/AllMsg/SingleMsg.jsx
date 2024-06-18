@@ -7,13 +7,8 @@ import { Link } from "react-router-dom";
 
 const SingleMsg = ({ singleMsg }) => {
     const { user } = useAuth();
-
-
-
-    const { _id,photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
-
-    const count = parseInt(upvote)- parseInt(downvote);
-
+    const { _id, photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
+    const count = parseInt(upvote) - parseInt(downvote);
 
     return (
         <div>
