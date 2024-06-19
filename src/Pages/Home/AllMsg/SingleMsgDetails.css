@@ -1,0 +1,9 @@
+.share-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .share-button {
+    cursor: pointer;
+  }
+  

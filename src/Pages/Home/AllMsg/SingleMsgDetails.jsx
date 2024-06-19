@@ -6,6 +6,15 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
 import { useState, useRef, useEffect } from "react";
+import {
+    FacebookShareButton,
+    TwitterShareButton,
+    LinkedinShareButton,
+    FacebookIcon,
+    TwitterIcon,
+    LinkedinIcon
+} from "react-share";
+
 
 const SingleMsgDetails = () => {
     const singleMsg = useLoaderData();
@@ -17,6 +26,7 @@ const SingleMsgDetails = () => {
     const [commentText, setCommentText] = useState("Comment here");
     const textareaRef = useRef(null);
     const modalRef = useRef(null);
+    const shareModalRef = useRef(null);
 
     const handleComment = (e) => {
         e.preventDefault();
@@ -103,7 +113,7 @@ const SingleMsgDetails = () => {
     }
 
     const handleShare = () => {
-        // Share logic here
+        shareModalRef.current.showModal();
     }
 
     const handleTextChange = (e) => {
@@ -181,6 +191,25 @@ const SingleMsgDetails = () => {
                     <button onClick={handleShare} className="flex items-center justify-center"><RiShareForwardLine /><span className="ml-2">Share</span></button>
                 </div>
             </div>
+            <dialog ref={shareModalRef} className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Share this post</h3>
+                    <div className="flex space-x-4 justify-center">
+                        <FacebookShareButton url={window.location.href} quote={title}>
+                            <FacebookIcon size={32} round />
+                        </FacebookShareButton>
+                        <TwitterShareButton url={window.location.href} title={title}>
+                            <TwitterIcon size={32} round />
+                        </TwitterShareButton>
+                        <LinkedinShareButton url={window.location.href} title={title} summary={text}>
+                            <LinkedinIcon size={32} round />
+                        </LinkedinShareButton>
+                    </div>
+                    <div className="modal-action">
+                        <button className="btn" onClick={() => shareModalRef.current.close()}>Close</button>
+                    </div>
+                </div>
+            </dialog>
         </div>
     );
 };
