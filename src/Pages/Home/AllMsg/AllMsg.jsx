@@ -6,6 +6,7 @@ import SingleMsg from '../AllMsg/SingleMsg';
 const AllMsg = () => {
     const [allMsg, refetch] = useAllMsg();
     const [currentPage, setCurrentPage] = useState(0);
+    const [sortBy, setSortBy] = useState('date'); // State to manage sorting criteria
     const itemsPerPage = 5;
 
     const totalPages = Math.ceil(allMsg.length / itemsPerPage);
@@ -14,7 +15,18 @@ const AllMsg = () => {
         setCurrentPage(pageNumber);
     };
 
-    const currentItems = allMsg.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+    // Sorting messages based on selected criteria
+    const sortedMessages = [...allMsg].sort((a, b) => {
+        if (sortBy === 'popularity') {
+            const aCount = a.upvote - a.downvote;
+            const bCount = b.upvote - b.downvote;
+            return bCount - aCount;
+        } else {
+            return new Date(b.postTime) - new Date(a.postTime);
+        }
+    });
+
+    const currentItems = sortedMessages.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
     return (
         <div className='p-20'>
@@ -22,6 +34,14 @@ const AllMsg = () => {
                 heading="Beautiful Thoughts"
                 subHeading="Explore beautiful thoughts"
             ></SectionTitle>
+            <div className='flex justify-end mb-5'>
+                <button
+                    onClick={() => setSortBy(sortBy === 'date' ? 'popularity' : 'date')}
+                    className='btn bg-[#050C9C] text-white'
+                >
+                    Sort by {sortBy === 'date' ? 'Popularity' : 'Date'}
+                </button>
+            </div>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                 {currentItems.map(singleMsg => (
                     <SingleMsg key={singleMsg._id} singleMsg={singleMsg}></SingleMsg>

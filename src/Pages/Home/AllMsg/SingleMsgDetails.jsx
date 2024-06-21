@@ -22,7 +22,7 @@ const SingleMsgDetails = () => {
     const { user } = useAuth();
 
     const { _id, photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
-
+   
     const [commentText, setCommentText] = useState("Comment here");
     const textareaRef = useRef(null);
     const modalRef = useRef(null);

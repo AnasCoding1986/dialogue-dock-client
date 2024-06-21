@@ -13,7 +13,7 @@ const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
-    const { user } = useAuth();
+    const { user, updateUserProfile } = useAuth();
     const pAmount = 100;
 
     useEffect(() => {
@@ -84,6 +84,7 @@ const CheckoutForm = () => {
                     .catch(err => {
                         console.log('Error in patch request:', err);
                     });
+
 
                 setTransactionId(paymentIntent.id);
                 navigate('/');

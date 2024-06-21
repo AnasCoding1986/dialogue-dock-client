@@ -19,6 +19,14 @@ import AdminRoute from "./AdminRoute";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Payment from "../Pages/Membership/Payment";
 import SingleMsgDetails from "../Pages/Home/AllMsg/SingleMsgDetails";
+import Coding from "../Pages/Home/AllTags/Coding/Coding";
+import Education from "../Pages/Home/AllTags/Education/Education";
+import Entertainment from "../Pages/Home/AllTags/Entertainment/Entertainment";
+import Environment from "../Pages/Home/AllTags/Environment/Environment";
+import Food from "../Pages/Home/AllTags/Food/Food";
+import Health from "../Pages/Home/AllTags/Health/Health";
+import Politics from "../Pages/Home/AllTags/Politics/Politics";
+import Travel from "../Pages/Home/AllTags/Travel/Travel";
 
 export const router = createBrowserRouter([
     {
@@ -45,6 +53,70 @@ export const router = createBrowserRouter([
             {
                 path: '/signup',
                 element: <SignUp></SignUp>
+            },
+            {
+                path: '/coding',
+                element: <Coding></Coding>
+            },
+            {
+                path: '/education',
+                element: <Education></Education>
+            },
+            {
+                path: '/coding',
+                element: <Coding></Coding>
+            },
+            {
+                path: '/coding',
+                element: <Coding></Coding>
+            },
+            {
+                path: '/coding',
+                element: <Coding></Coding>
+            },
+            {
+                path: '/coding',
+                element: <Coding></Coding>
+            },
+            {
+                path: '/coding',
+                element: <Coding></Coding>
+            },
+            {
+                path: '/coding',
+                element: <Coding></Coding>
+            },
+            {
+                path: '/coding',
+                element: <Coding></Coding>
+            },
+            {
+                path: '/entertainment',
+                element: <Entertainment></Entertainment>
+            },
+            {
+                path: '/environment',
+                element: <Environment></Environment>
+            },
+            {
+                path: '/fashion',
+                element: <Environment></Environment>
+            },
+            {
+                path: '/food',
+                element: <Food></Food>
+            },
+            {
+                path: '/health',
+                element: <Health></Health>
+            },
+            {
+                path: '/politics',
+                element: <Politics></Politics>
+            },
+            {
+                path: '/travel',
+                element: <Travel></Travel>
             },
             {
                 path: '/allMsg/:id',

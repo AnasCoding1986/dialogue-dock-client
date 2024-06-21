@@ -1,9 +1,11 @@
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 // Import required modules
 import { Pagination } from 'swiper/modules';
+import { Link } from 'react-router-dom';
 
 import './tag.css';
 
@@ -59,13 +61,15 @@ const Tag = () => {
                     { src: travel, label: 'travel' }
                 ].map((item, index) => (
                     <SwiperSlide key={index}>
-                        <div className="relative">
-                            <img className='w-full h-48' src={item.src} alt={item.label} />
-                            <div className="overlay"></div>
-                            <div className="slide-content">
-                                <h3 className='text-2xl -mt-5 text-white text-center uppercase font-bold'>{item.label}</h3>
+                        <Link to={`/${item.label}`}>
+                            <div className="relative">
+                                <img className='w-full h-48' src={item.src} alt={item.label} />
+                                <div className="overlay"></div>
+                                <div className="slide-content">
+                                    <h3 className='text-2xl -mt-5 text-white text-center uppercase font-bold'>{item.label}</h3>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>
