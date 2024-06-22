@@ -9,7 +9,7 @@ const AnnoucementCard = (singleNotification) => {
     console.log(photo);
     return (
         <div className="">
-            <div className="card w-full shadow-xl bg-[#e4f5fc]">
+            <div className="card w-full shadow-xl bg-white my-2">
                 <div className="card-body">
                     <h2 className="text-3xl font-bold text-center uppercase">{title}</h2>
                     <p className="text-center">{description}</p>
