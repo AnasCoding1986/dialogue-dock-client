@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { FaRegComment } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import useAuth from "../../../Hooks/useAuth";

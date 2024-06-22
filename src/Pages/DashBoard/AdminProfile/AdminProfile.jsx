@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import useAllMsg from "../../../Hooks/useAllMsg";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
+
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 const COLORS = ['#050C9C', '#3572EF', '#3ABEF9'];

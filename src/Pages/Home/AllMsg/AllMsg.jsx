@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 import useAllMsg from '../../../Hooks/useAllMsg';
 import SingleMsg from '../AllMsg/SingleMsg';

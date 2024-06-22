@@ -96,7 +96,7 @@ export const router = createBrowserRouter([
             {
                 path: '/allMsg/:id',
                 element: <SingleMsgDetails></SingleMsgDetails>,
-                loader: ({params}) => fetch(`http://localhost:5000/allMsg/${params.id}`)
+                loader: ({params}) => fetch(`https://y-blush-three.vercel.app/allMsg/${params.id}`)
             },
         ]
     },

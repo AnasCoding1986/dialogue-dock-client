@@ -13,5 +13,15 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_appId
 };
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAPTVDNR3-wzKziklWDLc-T8J9PIMSwtzg",
+//   authDomain: "dialoguedock-f470b.firebaseapp.com",
+//   projectId: "dialoguedock-f470b",
+//   storageBucket: "dialoguedock-f470b.appspot.com",
+//   messagingSenderId: "174993664993",
+//   appId: "1:174993664993:web:36cd496165ce728d9f80a0"
+// };
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+
