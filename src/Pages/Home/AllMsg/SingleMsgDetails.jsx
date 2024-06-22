@@ -1,10 +1,6 @@
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
-import { useLoaderData } from "react-router-dom";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import Swal from "sweetalert2";
-import useAuth from "../../../Hooks/useAuth";
 import { useState, useRef, useEffect } from "react";
 import {
     FacebookShareButton,
@@ -14,25 +10,46 @@ import {
     TwitterIcon,
     LinkedinIcon
 } from "react-share";
-
+import Swal from "sweetalert2";
+import { useLoaderData } from "react-router-dom";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import useAuth from "../../../Hooks/useAuth";
 
 const SingleMsgDetails = () => {
+    const { user, loading } = useAuth();
     const singleMsg = useLoaderData();
     const axiosSecure = useAxiosSecure();
-    const { user } = useAuth();
 
-    const { _id, photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
-   
-    const [commentText, setCommentText] = useState("Comment here");
+    const { _id, photo, name, title, text, tag, postTime } = singleMsg;
+
+    const [commentText, setCommentText] = useState("");
     const textareaRef = useRef(null);
     const modalRef = useRef(null);
     const shareModalRef = useRef(null);
 
+    useEffect(() => {
+        if (loading) {
+            return; // Loading spinner is handled separately
+        }
+
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                closeModal();
+            }
+        };
+
+        document.addEventListener("click", handleClickOutside, true);
+
+        return () => {
+            document.removeEventListener("click", handleClickOutside, true);
+        };
+    }, [loading]);
+
     const handleComment = (e) => {
         e.preventDefault();
-        const text = commentText.trim();
+        const trimmedText = commentText.trim();
 
-        if (!text) {
+        if (!trimmedText) {
             Swal.fire({
                 position: "top-end",
                 icon: "error",
@@ -40,20 +57,16 @@ const SingleMsgDetails = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
-            closeModal();
             return;
         }
 
-        const userEmail = user.email;
-        const postTitle = title;
-
-        const commentItems = {
-            text,
-            userEmail,
-            postTitle
+        const commentData = {
+            text: trimmedText,
+            userEmail: user.email,
+            postTitle: title
         };
 
-        axiosSecure.post('/comments', commentItems)
+        axiosSecure.post('/comments', commentData)
             .then(res => {
                 if (res.data.insertedId) {
                     Swal.fire({
@@ -63,24 +76,34 @@ const SingleMsgDetails = () => {
                         showConfirmButton: false,
                         timer: 1500
                     });
-                    setCommentText("Comment here");
+                    setCommentText("");
                     textareaRef.current.style.height = "auto";
                     axiosSecure.patch(`/allMsg/commentsCount/${_id}`)
-                    .then(res => {
-                        if (res.data.modifiedCount > 0) {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: `CommentsCount increased by one`,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
-                    })
+                        .then(res => {
+                            if (res.data.modifiedCount > 0) {
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: "CommentsCount increased by one",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        });
                     closeModal();
                 }
+            })
+            .catch(error => {
+                console.error("Error posting comment:", error);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Failed to post comment",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             });
-    }
+    };
 
     const handleUpVote = () => {
         axiosSecure.patch(`/allMsg/upvote/${_id}`)
@@ -89,13 +112,23 @@ const SingleMsgDetails = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: `UpVote increased by one`,
+                        title: "UpVote increased by one",
                         showConfirmButton: false,
                         timer: 1500
                     });
                 }
             })
-    }
+            .catch(error => {
+                console.error("Error upvoting:", error);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Failed to upvote",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+    };
 
     const handleDownVote = () => {
         axiosSecure.patch(`/allMsg/downvote/${_id}`)
@@ -104,55 +137,52 @@ const SingleMsgDetails = () => {
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
-                        title: `DownVote increased by one`,
+                        title: "DownVote increased by one",
                         showConfirmButton: false,
                         timer: 1500
                     });
                 }
             })
-    }
+            .catch(error => {
+                console.error("Error downvoting:", error);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Failed to downvote",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+    };
 
     const handleShare = () => {
         shareModalRef.current.showModal();
-    }
+    };
 
     const handleTextChange = (e) => {
         setCommentText(e.target.value);
         e.target.style.height = "auto";
         e.target.style.height = e.target.scrollHeight + "px";
-    }
+    };
 
-    const handleFocus = (e) => {
-        if (commentText === "Comment here") {
-            setCommentText("");
+    const handleFocus = () => {
+        if (commentText === "") {
+            setCommentText("Comment here");
         }
-    }
+    };
 
     const closeModal = () => {
         modalRef.current.close();
-    }
-
-    const handleClickOutside = (event) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
-            closeModal();
-        }
-    }
-
-    useEffect(() => {
-        document.addEventListener("click", handleClickOutside, true);
-        return () => {
-            document.removeEventListener("click", handleClickOutside, true);
-        };
-    }, []);
+    };
 
     return (
         <div className="flex items-center justify-center h-screen w-full">
-            <div className="card bg-base-100 shadow-xl">
+            <div className="card bg-base-100 shadow-xl max-w-2xl">
                 <div className="grid grid-cols-12 gap-2">
                     <div className="flex gap-2 col-span-5 p-2">
                         <div className="avatar">
                             <div className="w-10 rounded-full ring ring-[#050C9C] ring-offset-base-100 ring-offset-2">
-                                <img src={photo} />
+                                <img src={photo} alt={name} />
                             </div>
                         </div>
                         <div>
@@ -168,7 +198,7 @@ const SingleMsgDetails = () => {
                     <button className="btn bg-white" onClick={() => modalRef.current.showModal()}><FaRegComment /><span className="ml-2">Comment</span></button>
                     <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle" ref={modalRef}>
                         <div className="modal-box">
-                            <h3 className="font-bold text-lg">Comment as {user.displayName}</h3>
+                            <h3 className="font-bold text-lg">Comment as {user?.displayName}</h3>
                             <div className="modal-action flex justify-center">
                                 <form onSubmit={handleComment} method="dialog">
                                     <textarea

@@ -9,7 +9,7 @@ const Coding = () => {
     const codingPosts = allMsg.filter(codingPost => codingPost.tag === "coding");
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-16'>
             {codingPosts.map(singleMsg => (
                 <SingleMsg key={singleMsg._id} singleMsg={singleMsg}></SingleMsg>
             ))}

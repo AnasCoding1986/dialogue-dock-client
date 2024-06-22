@@ -74,16 +74,9 @@ const AddPost = () => {
     const upvote = parseInt(form.upvote.value, 10);
     const downvote = parseInt(form.downvote.value, 10);
 
-    // const now = new Date();
-    // const postTime = now.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) + ' ' + now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-
-
     const now = new Date();
-    const postDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-    const postTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-
+    const postDate = now.toLocaleDateString('en-CA'); // Format: YYYY-MM-DD
+    const postTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }); // Format: hh:mm am/pm
 
     const commentsCount = 0;
     const votesCount = 0;

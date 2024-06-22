@@ -28,16 +28,15 @@ const MyProfile = () => {
             return res.data;
         }
     });
-
+  
     // Find the current user's data from the list of users
     const currentUser = users.find(u => u.email === user.email);
 
     return (
         <div>
-            <SectionTitle
-                heading="Welcome"
-                subHeading={user.displayName}
-            ></SectionTitle>
+            <div className="text-center font-PermanentMarker py-5">
+                <p className="text-[#050C9C] text-xl mb-10">--------User profile--------</p>
+            </div>
             <div className="flex flex-col items-center justify-evenly h-screen w-full">
                 <div className="card bg-base-100 shadow-xl">
                     <div className="grid grid-cols-12 gap-2">

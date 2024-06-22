@@ -23,10 +23,12 @@ import Coding from "../Pages/Home/AllTags/Coding/Coding";
 import Education from "../Pages/Home/AllTags/Education/Education";
 import Entertainment from "../Pages/Home/AllTags/Entertainment/Entertainment";
 import Environment from "../Pages/Home/AllTags/Environment/Environment";
+import Fashion from "../Pages/Home/AllTags/Fashion/Fashion";
 import Food from "../Pages/Home/AllTags/Food/Food";
 import Health from "../Pages/Home/AllTags/Health/Health";
 import Politics from "../Pages/Home/AllTags/Politics/Politics";
 import Travel from "../Pages/Home/AllTags/Travel/Travel";
+
 
 export const router = createBrowserRouter([
     {
@@ -63,34 +65,6 @@ export const router = createBrowserRouter([
                 element: <Education></Education>
             },
             {
-                path: '/coding',
-                element: <Coding></Coding>
-            },
-            {
-                path: '/coding',
-                element: <Coding></Coding>
-            },
-            {
-                path: '/coding',
-                element: <Coding></Coding>
-            },
-            {
-                path: '/coding',
-                element: <Coding></Coding>
-            },
-            {
-                path: '/coding',
-                element: <Coding></Coding>
-            },
-            {
-                path: '/coding',
-                element: <Coding></Coding>
-            },
-            {
-                path: '/coding',
-                element: <Coding></Coding>
-            },
-            {
                 path: '/entertainment',
                 element: <Entertainment></Entertainment>
             },
@@ -100,7 +74,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/fashion',
-                element: <Environment></Environment>
+                element: <Fashion></Fashion>
             },
             {
                 path: '/food',
@@ -118,6 +92,7 @@ export const router = createBrowserRouter([
                 path: '/travel',
                 element: <Travel></Travel>
             },
+
             {
                 path: '/allMsg/:id',
                 element: <SingleMsgDetails></SingleMsgDetails>,

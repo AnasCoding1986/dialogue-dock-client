@@ -28,6 +28,38 @@ const AllMsg = () => {
 
     const currentItems = sortedMessages.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
+    const renderPagination = () => {
+        const visiblePages = [];
+        let startPage = Math.max(0, currentPage - 2);
+        let endPage = Math.min(totalPages - 1, currentPage + 2);
+
+        if (startPage > 0) {
+            visiblePages.push(0, '...');
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+            visiblePages.push(i);
+        }
+
+        if (endPage < totalPages - 1) {
+            visiblePages.push('...', totalPages - 1);
+        }
+
+        return visiblePages.map((page, index) => (
+            typeof page === 'string' ? (
+                <span key={index} className='btn btn-disabled'>{page}</span>
+            ) : (
+                <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`btn ${page === currentPage ? 'btn-primary' : 'btn-outline'}`}
+                >
+                    {page + 1}
+                </button>
+            )
+        ));
+    };
+
     return (
         <div className='p-20'>
             <SectionTitle
@@ -48,15 +80,21 @@ const AllMsg = () => {
                 ))}
             </div>
             <div className='flex justify-center mt-5 space-x-2'>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handlePageChange(index)}
-                        className={`btn ${index === currentPage ? 'btn-primary' : 'btn-outline'}`}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
+                <button
+                    onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
+                    className='btn btn-outline'
+                    disabled={currentPage === 0}
+                >
+                    &lt;
+                </button>
+                {renderPagination()}
+                <button
+                    onClick={() => handlePageChange(Math.min(totalPages - 1, currentPage + 1))}
+                    className='btn btn-outline'
+                    disabled={currentPage === totalPages - 1}
+                >
+                    &gt;
+                </button>
             </div>
         </div>
     );
