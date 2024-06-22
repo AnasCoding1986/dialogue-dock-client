@@ -35,7 +35,7 @@ const MyProfile = () => {
     return (
         <div>
             <div className="text-center font-PermanentMarker py-5">
-                <p className="text-[#050C9C] text-xl mb-10">--------User profile--------</p>
+                <p className="text-[#050C9C] text-xl">--------User profile--------</p>
             </div>
             <div className="flex flex-col items-center justify-evenly h-screen w-full">
                 <div className="card bg-base-100 shadow-xl">
