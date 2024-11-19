@@ -42,7 +42,7 @@ const Banner = () => {
                         onClick={handleSearch}
                         className="search-button bg-blue-500 text-white px-4 py-2"
                     >
-                        Please Search
+                        Please Search 
                     </button>
                 </div>
             </div>
