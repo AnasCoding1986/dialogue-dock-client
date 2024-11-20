@@ -19,7 +19,7 @@ const Banner = () => {
                     Explore Stunning things from people around your world
                 </h3>
                 <h4 className='md:text-2xl text-xl my-5'>
-                    Select your desired tag
+                    Choose your desired tag
                 </h4>
                 <div className="input-container w-8/12 flex">
                     <select
