@@ -16,7 +16,7 @@ const Banner = () => {
         <div className='banner h-screen rounded-b-3xl'>
             <div className='w-full h-full text-white bg-black bg-opacity-30 flex flex-col justify-center items-center'>
                 <h3 className='md:text-5xl text-3xl md:w-8/12 text-center'>
-                    Explore Stunning amazing things from people around your surroundings
+                    Explore Stunning beautiful things from people around your surroundings
                 </h3>
                 <h4 className='md:text-2xl text-xl my-5'>
                     Choose your desired tag
