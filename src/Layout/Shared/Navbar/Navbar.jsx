@@ -6,99 +6,138 @@ import useAnnoucement from "../../../Hooks/useAnnoucement";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [navDropdownOpen, setNavDropdownOpen] = useState(false);
+    const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
     const [notification] = useAnnoucement();
     const navigate = useNavigate();
-
-    console.log(user?.photoURL);
 
     const handleLogout = () => {
         logOut()
             .then(() => {
                 navigate("/");
-             })
-            .catch(err => console.log(err))
-    }
+            })
+            .catch(err => console.log(err));
+    };
 
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    }
+    const toggleNavDropdown = () => {
+        setNavDropdownOpen(!navDropdownOpen);
+    };
 
-    const navOptions = <>
-        <li className="md:mr-5">
-            <NavLink to="/" exact activeClassName="active-nav-link">
-                Home
-            </NavLink>
-        </li>
-        <li className="md:mr-5">
-            <NavLink to="/membership" activeClassName="active-nav-link">
-                Membership
-            </NavLink>
-        </li>
-        <li className="md:mr-5">
-            <NavLink to="/" activeClassName="active-nav-link">
-                <button className="btn border-[#050C9C] bg-[#A7E6FF] btn-sm">
-                    <span className="font-bold text-xl text-[#050C9C]">
-                        <IoNotificationsSharp />
-                    </span>
-                    <div className="badge bg-[#050C9C] border-[#050C9C] badge-secondary">{notification.length}</div>
-                </button>
-            </NavLink>
-        </li>
-    </>
+    const toggleProfileDropdown = () => {
+        setProfileDropdownOpen(!profileDropdownOpen);
+    };
+
+    const navOptions = (
+        <>
+            <li className="md:mr-5">
+                <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                        isActive ? "text-[#A7E6FF] font-bold" : ""
+                    }
+                >
+                    Home
+                </NavLink>
+            </li>
+            <li className="md:mr-5">
+                <NavLink
+                    to="/membership"
+                    className={({ isActive }) =>
+                        isActive ? "text-[#A7E6FF] font-bold" : ""
+                    }
+                >
+                    Membership
+                </NavLink>
+            </li>
+            <li className="md:mr-5">
+                <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                        isActive ? "text-[#A7E6FF]" : ""
+                    }
+                >
+                    <button className="btn border-[#050C9C] bg-[#A7E6FF] btn-sm">
+                        <span className="font-bold text-xl text-[#050C9C]">
+                            <IoNotificationsSharp />
+                        </span>
+                        <div className="badge bg-[#050C9C] border-[#050C9C] badge-secondary">
+                            {notification.length}
+                        </div>
+                    </button>
+                </NavLink>
+            </li>
+        </>
+    );
 
     return (
-        <div className="navbar fixed z-10 bg-opacity-30 max-w-screen-xl mx-auto bg-black text-white px-5">
+        <div className="fixed top-0 left-0 z-10 w-full bg-black bg-opacity-30 shadow-md">
+  <div className="navbar max-w-7xl mx-auto text-white px-5">
+
             <div className="navbar-start">
+                {/* Mobile Menu Toggle */}
                 <div className="dropdown">
-                    <div
+                    <button
                         tabIndex={0}
-                        role="button"
                         className="btn btn-ghost lg:hidden"
-                        onClick={toggleDropdown}
+                        onClick={toggleNavDropdown}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
                         </svg>
-                    </div>
-                    {isDropdownOpen && (
+                    </button>
+                    {navDropdownOpen && (
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-neutral text-neutral-content rounded-box w-52">
                             {navOptions}
                         </ul>
                     )}
                 </div>
+                {/* Logo */}
                 <div className="avatar">
                     <div className="w-10 rounded-full ring ring-[#050C9C] ring-offset-base-100 ring-offset-2">
                         <img src="/src/assets/images/logo.png.jpg" alt="Logo" />
                     </div>
                 </div>
-                <a className="btn btn-ghost text-xl font-Pacifico font-black">DialogueDock</a>
+                <Link className="btn btn-ghost text-xl font-Pacifico font-black" to="/">
+                    DialogueDock
+                </Link>
             </div>
+
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
                     {navOptions}
                 </ul>
             </div>
+
             <div className="navbar-end">
-                {user ?
+                {user ? (
                     <div className="relative">
-                        <div className="avatar" onClick={toggleDropdown}>
+                        <div className="avatar" onClick={toggleProfileDropdown}>
                             <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 cursor-pointer">
                                 <img src={user?.photoURL} alt="User Profile" />
                             </div>
                         </div>
-                        {isDropdownOpen && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
+                        {profileDropdownOpen && (
+                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
                                 <div className="px-4 py-2 text-black">{user?.displayName}</div>
-                                <Link to="/dashboard" className="block px-4 py-2 text-black hover:bg-gray-200">Dashboard</Link>
-                                <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200">Log Out</button>
+                                <Link to="/dashboard" className="block px-4 py-2 text-black hover:bg-gray-200">
+                                    Dashboard
+                                </Link>
+                                <button
+                                    onClick={handleLogout}
+                                    className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200"
+                                >
+                                    Log Out
+                                </button>
                             </div>
                         )}
                     </div>
-                    :
-                    <Link className="btn bg-[#A7E6FF] border-none" to="/login">Join US</Link>
-                }
+                ) : (
+                    <Link className="btn bg-[#A7E6FF] border-none" to="/login">
+                        Join Us
+                    </Link>
+                )}
             </div>
+        </div>
         </div>
     );
 };
