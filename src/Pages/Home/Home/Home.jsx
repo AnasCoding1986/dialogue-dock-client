@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import Tag from "../Tag/Tag";
 import Annoucement from "../Annoucement/Annoucement";
 import AllMsg from "../AllMsg/AllMsg";
+import RecentPosts from "../RecentPost/RecentPosts";
 
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
             <Tag></Tag>
             <Annoucement></Annoucement>
             <AllMsg></AllMsg>
+            <RecentPosts></RecentPosts>
         </div>
     );
 };

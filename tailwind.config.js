@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      roboto: ["Roboto", "sans-serif"],
+      roboto: ["Inter", "sans-serif"],           // <-- changed from Roboto to Inter
       PermanentMarker: ["Permanent Marker", "cursive"],
       Pacifico: ["Pacifico", "cursive"],
       LuckiestGuy: ["Luckiest Guy", "cursive"],
@@ -16,6 +16,4 @@ export default {
   plugins: [
     require('daisyui'),
   ],
-
 }
-
