@@ -2,6 +2,8 @@
 
 **DialogueDock** is a web platform that enables users to share their thoughts, ideas, and engage in meaningful discussions through posts and comments. It solves the problem of fragmented conversations by providing a centralized, interactive space for thoughtful dialogue.
 
+🔗 **Live Site:** [https://ephemeral-cactus-81fe5b.netlify.app/](https://ephemeral-cactus-81fe5b.netlify.app/)
+
 ---
 
 ## 🚀 Features
@@ -25,6 +27,15 @@
 | **Backend**  | Node.js, Express.js |
 | **Database** | MongoDB             |
 | **Auth**     | JSON Web Tokens (JWT) |
+
+---
+
+## 🧪 Demo Login Credentials
+
+You can explore the application using the following test credentials:
+
+- **Email:** j@j.com  
+- **Password:** j@j.com
 
 ---
 
