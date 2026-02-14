@@ -122,97 +122,85 @@ const AddPost = () => {
   }
 
   return (
-    <div className="hero min-h-screen bg-base-200">
-      <div className="card w-1/2 shadow-2xl bg-[#e5f4fa]">
+    <div className="hero min-h-screen bg-gray-50 py-10">
+      <div className="card w-full max-w-3xl shadow-2xl bg-white rounded-2xl overflow-hidden border border-gray-100">
         {showForm ? (
           <>
-            <h1 className="text-2xl uppercase border-y-4 py-4 text-center font-LuckiestGuy">Share your thought</h1>
-            <form ref={formRef} onSubmit={handleAddPost} className="card-body">
-              <div className="flex gap-2">
-                <div className="w-1/2 form-control">
+            <h1 className="text-3xl font-montserrat font-bold text-center mb-6 text-primary">Share Your Thoughts</h1>
+            <form ref={formRef} onSubmit={handleAddPost} className="card-body p-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Author Image</span>
+                    <span className="label-text font-medium text-gray-700">Author Image</span>
                   </label>
-                  <input name="image" type="text" defaultValue={aPhoto} placeholder="Image URL" className="input input-bordered w-full " />
+                  <input name="image" type="text" defaultValue={aPhoto} placeholder="Image URL" className="input input-bordered input-primary w-full bg-white" />
                 </div>
-                <div className="w-1/2 form-control">
+                <div className="form-control">
                   <label className="label">
-                    <span className="label-text font-medium">Author Name</span>
+                    <span className="label-text font-medium text-gray-700">Author Name</span>
                   </label>
-                  <input name="name" type="text" defaultValue={aName} placeholder="Author Name" className="input input-bordered w-full " />
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <div className="w-1/2 form-control">
-                  <label className="label">
-                    <span className="label-text font-medium">Author Email</span>
-                  </label>
-                  <input name="email" type="email" defaultValue={aEmail} placeholder="Email" className="input input-bordered w-full " />
-                </div>
-                <div className="w-1/2 form-control">
-                  <label className="label">
-                    <span className="label-text font-medium">Post Title</span>
-                  </label>
-                  <input name="title" type="text" required placeholder="Post Title" className="input input-bordered w-full " />
+                  <input name="name" type="text" defaultValue={aName} placeholder="Author Name" className="input input-bordered input-primary w-full bg-white" />
                 </div>
               </div>
-              <div className="form-control flex items-center">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text font-medium text-gray-700">Author Email</span>
+                  </label>
+                  <input name="email" type="email" defaultValue={aEmail} placeholder="Email" className="input input-bordered input-primary w-full bg-white" />
+                </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text font-medium text-gray-700">Post Title</span>
+                  </label>
+                  <input name="title" type="text" required placeholder="Enter an engaging title" className="input input-bordered input-primary w-full bg-white" />
+                </div>
+              </div>
+
+              <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-medium">Description</span>
+                  <span className="label-text font-medium text-gray-700">Description</span>
                 </label>
-                <textarea name="text" required className="textarea textarea-lg w-full" placeholder="Description"></textarea>
+                <textarea name="text" required className="textarea textarea-primary textarea-lg w-full bg-white h-32" placeholder="What's on your mind?"></textarea>
               </div>
-              <div className="form-control flex items-center">
+
+              <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-medium">Select Tag</span>
+                  <span className="label-text font-medium text-gray-700">Select Tag</span>
                 </label>
                 <Select
                   options={options}
                   required
                   name='tag'
                   value={value}
-                  placeholder="Select Tag"
+                  placeholder="Select a category..."
                   onChange={setValue}
                   styles={{
-                    container: (base) => ({
-                      ...base,
-                      width: '100%',
-                    }),
                     control: (base) => ({
                       ...base,
-                      width: '100%',
-                      borderColor: '#bde9fa',
-                    }),
-                    menu: (base) => ({
-                      ...base,
-                      width: '100%',
+                      borderColor: '#14b8a6', // secondary color
+                      borderRadius: '0.5rem',
+                      padding: '2px',
                     }),
                   }}
                 />
               </div>
-              <div className="flex gap-2">
-                <div className="w-1/2 form-control">
-                  <label className="label">
-                    <span className="label-text font-medium">UpVote</span>
-                  </label>
-                  <input name="upvote" type="number" defaultValue="0" min="0" readOnly className="input input-bordered w-full " />
-                </div>
-                <div className="w-1/2 form-control">
-                  <label className="label">
-                    <span className="label-text font-medium">DownVote</span>
-                  </label>
-                  <input name="downvote" type="number" defaultValue="0" min="0" readOnly className="input input-bordered w-full " />
-                </div>
-              </div>
+
+              {/* Hidden Inputs for Votes */}
+              <input name="upvote" type="hidden" defaultValue="0" />
+              <input name="downvote" type="hidden" defaultValue="0" />
+
               <div className="form-control mt-6">
-                <input className="btn bg-[#A7E6FF] text-black border-none font-bold btn-primary" type="submit" value="Post" />
+                <input className="btn btn-primary w-full text-white font-bold text-lg hover:btn-secondary transition-all" type="submit" value="Publish Post" />
               </div>
             </form>
           </>
         ) : (
-          <div className="card-body text-center">
-            <p className="text-lg font-bold mb-4">Become a member to post more than five messages.</p>
-            <button className="btn bg-[#A7E6FF] text-black border-none font-bold btn-primary" onClick={handleBecomeMember}>Become a Member</button>
+          <div className="card-body text-center p-10">
+            <h2 className="text-2xl font-bold text-gray-700 mb-4">Post Limit Reached</h2>
+            <p className="text-gray-500 mb-6">Become a member to enjoy unlimited posting privileges and premium features.</p>
+            <button className="btn btn-secondary w-full text-white font-bold" onClick={handleBecomeMember}>Upgrade Membership</button>
           </div>
         )}
       </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import login from '../../../assets/images/login/login.jpg';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -81,40 +80,67 @@ const Login = () => {
             <Helmet>
                 <title>DialogueDock | Login</title>
             </Helmet>
-            <div className="hero min-h-screen bg-base-200">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="text-center w-1/2 flex justify-center items-center lg:text-left">
-                        <img src={login} className="w-6/12 rounded-lg shadow-2xl" />
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+                <div className="max-w-4xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+
+                    {/* Image Section */}
+                    <div className="w-full md:w-1/2 relative">
+                        <div
+                            className="absolute inset-0 bg-cover bg-center"
+                            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?q=80&w=2670&auto=format&fit=crop')" }}
+                        >
+                            <div className="absolute inset-0 bg-primary/50 mix-blend-multiply"></div>
+                            <div className="absolute bottom-10 left-10 text-white z-10">
+                                <h2 className="text-4xl font-bold font-montserrat mb-2">Welcome Back!</h2>
+                                <p className="text-gray-200">Sign in to continue your journey with DialogueDock.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="card w-1/2 max-w-sm shadow-2xl bg-base-100">
-                        <form onSubmit={handleLogin} className="card-body">
+
+                    {/* Form Section */}
+                    <div className="w-full md:w-1/2 p-8 md:p-12 bg-white">
+                        <div className="text-center mb-8">
+                            <h3 className="text-2xl font-bold text-primary mb-2">Login to Account</h3>
+                            <p className="text-gray-500 text-sm">Please enter your credentials</p>
+                        </div>
+
+                        <form onSubmit={handleLogin} className="space-y-4">
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Email</span>
+                                    <span className="label-text font-medium text-gray-700">Email</span>
                                 </label>
-                                <input type="email" name='email' placeholder="email" className="input input-bordered" required />
+                                <input type="email" name='email' placeholder="Enter your email" className="input input-bordered input-primary w-full bg-gray-50" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Password</span>
+                                    <span className="label-text font-medium text-gray-700">Password</span>
                                 </label>
-                                <input type="password" name='password' placeholder="password" className="input input-bordered" required />
+                                <input type="password" name='password' placeholder="Enter your password" className="input input-bordered input-primary w-full bg-gray-50" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <LoadCanvasTemplate />
                                 </label>
-                                <input onBlur={handleValidateCaptcha} type="text" name='captcha' placeholder="Type the captcha" className="input input-bordered" required />
+                                <input onBlur={handleValidateCaptcha} type="text" name='captcha' placeholder="Type the captcha above" className="input input-bordered input-primary w-full bg-gray-50" required />
                             </div>
                             <div className="form-control mt-6">
-                                <input disabled={disabled} className="btn bg-[#A7E6FF] text-black border-none font-bold btn-primary" type="submit" value="login" />
+                                <input
+                                    disabled={disabled}
+                                    className="btn btn-primary w-full text-white font-bold text-lg hover:btn-secondary transition-all shadow-lg hover:shadow-primary/30"
+                                    type="submit"
+                                    value="Sign In"
+                                />
                             </div>
                         </form>
-                        {/* <div className='mb-5 mx-auto w-10/12'>
-                        <button onClick={handleGoogleSignIn} className="btn btn-outline border-[#3572EF] w-full"><span className='text-xl mr-2'><FcGoogle /></span><span className='text-[#3572EF] font-bold ml-2'>Google</span></button>
-                        </div> */}
-                        <SocialLogin></SocialLogin>
-                        <p className='text-center pb-3'><small>New Here? <Link className='text-[#3572EF] font-bold ml-1' to="/signup">Create an account</Link></small></p>
+
+                        <div className="divider my-6">OR</div>
+
+                        <SocialLogin />
+
+                        <p className='text-center mt-6 text-sm text-gray-600'>
+                            New Here?
+                            <Link className='text-secondary font-bold ml-1 hover:underline' to="/signup">Create an account</Link>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,9 @@ import Tag from "../Tag/Tag";
 import Annoucement from "../Annoucement/Annoucement";
 import AllMsg from "../AllMsg/AllMsg";
 import RecentPosts from "../RecentPost/RecentPosts";
+import PlatformHighlights from "../PlatformHighlights/PlatformHighlights";
+import Testimonials from "../Testimonials/Testimonials";
+import CallToAction from "../CallToAction/CallToAction";
 
 
 const Home = () => {
@@ -13,10 +16,13 @@ const Home = () => {
                 <title>DialogueDock | Home</title>
             </Helmet>
             <Banner></Banner>
+            <PlatformHighlights></PlatformHighlights>
             <Tag></Tag>
             <Annoucement></Annoucement>
             <AllMsg></AllMsg>
+            <Testimonials></Testimonials>
             <RecentPosts></RecentPosts>
+            <CallToAction></CallToAction>
         </div>
     );
 };

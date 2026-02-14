@@ -46,33 +46,75 @@ const Navbar = () => {
 
   const navOptions = (
     <>
-      <li className="md:mr-5">
+      <li className="md:mr-2">
         <NavLink
           to="/"
-          className={({ isActive }) => (isActive ? "text-[#A7E6FF] font-bold" : "")}
+          className={({ isActive }) =>
+            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
+          }
         >
           Home
         </NavLink>
       </li>
-      <li className="md:mr-5">
+      <li className="md:mr-2">
         <NavLink
           to="/membership"
-          className={({ isActive }) => (isActive ? "text-[#A7E6FF] font-bold" : "")}
+          className={({ isActive }) =>
+            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
+          }
         >
           Membership
         </NavLink>
       </li>
-      <li className="md:mr-5">
+      <li className="md:mr-2">
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
+          }
+        >
+          About
+        </NavLink>
+      </li>
+      <li className="md:mr-2">
+        <NavLink
+          to="/features"
+          className={({ isActive }) =>
+            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
+          }
+        >
+          Features
+        </NavLink>
+      </li>
+      <li className="md:mr-2">
+        <NavLink
+          to="/pricing"
+          className={({ isActive }) =>
+            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
+          }
+        >
+          Pricing
+        </NavLink>
+      </li>
+      <li className="md:mr-2">
+        <NavLink
+          to="/faq"
+          className={({ isActive }) =>
+            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
+          }
+        >
+          FAQ
+        </NavLink>
+      </li>
+      <li>
         <NavLink
           to="/"
-          className={({ isActive }) => (isActive ? "text-[#A7E6FF]" : "")}
+          className="p-0"
         >
-          <button className="btn border-[#050C9C] bg-[#A7E6FF] btn-sm">
-            <span className="font-bold text-xl text-[#050C9C]">
-              <IoNotificationsSharp />
-            </span>
-            <div className="badge bg-[#050C9C] border-[#050C9C] badge-secondary">
-              {notification.length}
+          <button className="btn btn-ghost btn-circle text-primary">
+            <div className="indicator">
+              <IoNotificationsSharp className="text-2xl" />
+              <span className="badge badge-sm badge-secondary indicator-item border-none text-white">{notification.length}</span>
             </div>
           </button>
         </NavLink>
@@ -81,15 +123,15 @@ const Navbar = () => {
   );
 
   return (
-    <div className="fixed top-0 left-0 z-10 w-full bg-black bg-opacity-30 shadow-md">
-      <div className="navbar max-w-7xl mx-auto text-white px-5">
+    <div className="fixed top-0 left-0 z-50 w-full bg-base-100/80 backdrop-blur-md shadow-sm border-b border-base-200 transition-all duration-300">
+      <div className="navbar max-w-7xl mx-auto text-primary px-5 py-3">
         <div className="navbar-start">
           {/* Mobile Menu Toggle */}
           <div className="dropdown">
-            <button tabIndex={0} className="btn btn-ghost lg:hidden" onClick={toggleNavDropdown}>
+            <button tabIndex={0} className="btn btn-ghost lg:hidden text-primary" onClick={toggleNavDropdown}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -100,89 +142,57 @@ const Navbar = () => {
             {navDropdownOpen && (
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-neutral text-neutral-content rounded-box w-52"
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white rounded-box w-52 border border-gray-100"
               >
                 {navOptions}
               </ul>
             )}
           </div>
           {/* Logo */}
-          <div className="avatar">
-            <div className="w-10 rounded-full ring ring-[#050C9C] ring-offset-base-100 ring-offset-2">
-              <img src="/src/assets/images/logo.png.jpg" alt="Logo" />
+          <Link className="flex items-center gap-2 group" to="/">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-secondary p-0.5">
+              <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+                <span className="font-Discipline font-bold text-xl text-primary">D</span>
+              </div>
             </div>
-          </div>
-          <Link className="btn btn-ghost text-xl font-Pacifico font-black" to="/">
-            DialogueDock
+            <span className="text-2xl font-montserrat font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary group-hover:to-primary transition-all">
+              DialogueDock
+            </span>
           </Link>
         </div>
 
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navOptions}</ul>
+          <ul className="menu menu-horizontal px-1 font-medium">{navOptions}</ul>
         </div>
 
-        <div className="navbar-end flex items-center space-x-3">
-          {/* Dark/Light toggle button */}
-          <button onClick={toggleTheme} className="btn btn-circle btn-sm">
+        <div className="navbar-end flex items-center space-x-4">
+          {/* Dark/Light toggle button - commenting out until fully implemented
+          <button onClick={toggleTheme} className="btn btn-circle btn-sm btn-ghost">
             {theme === "dark" ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-yellow-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {/* Sun Icon */}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 3v1m0 16v1m8.485-8.485l-.707.707M4.222 4.222l-.707.707M21 12h-1M4 12H3m16.485 4.485l-.707-.707M4.222 19.778l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                />
-              </svg>
+               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m8.485-8.485l-.707.707M4.222 4.222l-.707.707M21 12h-1M4 12H3m16.485 4.485l-.707-.707M4.222 19.778l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
             ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-gray-800"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {/* Moon Icon */}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"
-                />
-              </svg>
+               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" /></svg>
             )}
           </button>
+           */}
 
           {user ? (
-            <div className="relative">
-              <div className="avatar" onClick={toggleProfileDropdown}>
-                <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 cursor-pointer">
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar online ring ring-secondary ring-offset-2 hover:ring-primary transition-all">
+                <div className="w-10 rounded-full">
                   <img src={user?.photoURL} alt="User Profile" />
                 </div>
               </div>
-              {profileDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
-                  <div className="px-4 py-2 text-black">{user?.displayName}</div>
-                  <Link to="/dashboard" className="block px-4 py-2 text-black hover:bg-gray-200">
-                    Dashboard
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200"
-                  >
-                    Log Out
-                  </button>
-                </div>
-              )}
+              <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-base-100 rounded-box w-52 border border-gray-100">
+                <li className="menu-title px-4 py-2 text-gray-400 text-xs uppercase font-bold tracking-wider">
+                  {user?.displayName}
+                </li>
+                <li><Link to="/dashboard">Dashboard</Link></li>
+                <li><button onClick={handleLogout} className="text-red-500">Log Out</button></li>
+              </ul>
             </div>
           ) : (
-            <Link className="btn bg-[#A7E6FF] border-none" to="/login">
+            <Link className="btn btn-primary btn-sm px-6 rounded-full font-bold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all hover:scale-105" to="/login">
               Join Us
             </Link>
           )}

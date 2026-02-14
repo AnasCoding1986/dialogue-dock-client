@@ -11,47 +11,49 @@ const SingleMsg = ({ singleMsg }) => {
     const count = parseInt(upvote) - parseInt(downvote);
 
     return (
-        <div>
+        <div className="h-full">
             <Link to={`/allMsg/${_id}`}>
-                <div className="p-5 shadow-2xl border-dotted rounded-3xl bg-[#f9fcfc]">
-                    <div className="grid grid-cols-4 p-5">
-                        <div className="col-span-2">
-                            <div className="avatar">
-                                <div className="w-8 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                    <img src={photo} alt={`${name || 'User'}'s avatar`} />
+                <div className="card h-full bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-accent/20">
+                    <div className="card-body p-6">
+                        <div className="flex justify-between items-start mb-4">
+                            <div className="flex items-center gap-3">
+                                <div className="avatar">
+                                    <div className="w-10 rounded-full ring ring-secondary ring-offset-base-100 ring-offset-2">
+                                        <img src={photo} alt={`${name || 'User'}'s avatar`} />
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-primary text-sm">{name}</h4>
+                                    <p className="text-xs text-gray-500 flex items-center gap-1">
+                                        <IoTimeSharp className="text-secondary" />
+                                        {new Date(postTime).toLocaleDateString()}
+                                    </p>
                                 </div>
                             </div>
+                            <div className="badge badge-secondary badge-outline gap-1 capitalize">
+                                <PiTagSimpleFill /> {tag}
+                            </div>
                         </div>
-                        <div className="col-span-2">
-                            <h3 className="flex items-center gap-2 capitalize">
-                                <span className="font-bold text-[#3572EF]">
-                                    <PiTagSimpleFill />
+
+                        <h2 className="card-title text-xl font-bold text-gray-800 mb-2 line-clamp-2 hover:text-secondary transition-colors">
+                            {title}
+                        </h2>
+
+                        <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+                            {text}
+                        </p>
+
+                        <div className="card-actions justify-between items-center mt-auto border-t border-gray-100 pt-4">
+                            <div className="flex items-center gap-4 text-gray-500 text-sm">
+                                <span className="flex items-center gap-1 hover:text-primary transition-colors">
+                                    <MdHowToVote className="text-lg text-secondary" />
+                                    {count} Votes
                                 </span>
-                                {tag}
-                            </h3>
-                        </div>
-                    </div>
-                    <div className="border-y-[1px] border-[#3572EF] border-dotted p-10 flex justify-center items-center text-2xl font-bold">
-                        <h2>{title}</h2>
-                    </div>
-                    <div className="grid grid-cols-3 p-5 gap-2">
-                        <div className="col-span-1 flex items-center justify-center">
-                            <span className="font-bold text-[#3572EF]">
-                                <IoTimeSharp />
-                            </span>
-                            : <span className="font-light ml-2 text-sm">{postTime}</span>
-                        </div>
-                        <div className="col-span-1 flex items-center justify-center">
-                            <span className="font-bold text-[#3572EF]">
-                                <FaCommentAlt />
-                            </span>
-                            : <span className="font-light ml-2 text-sm">{commentsCount}</span>
-                        </div>
-                        <div className="col-span-1 flex items-center justify-center">
-                            <span className="font-bold text-[#3572EF]">
-                                <MdHowToVote />
-                            </span>
-                            : <span className="font-light ml-2 text-sm">{count}</span>
+                                <span className="flex items-center gap-1 hover:text-primary transition-colors">
+                                    <FaCommentAlt className="text-lg text-secondary" />
+                                    {commentsCount} Comments
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

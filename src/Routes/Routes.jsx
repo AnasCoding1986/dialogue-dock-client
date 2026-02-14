@@ -28,6 +28,11 @@ import Food from "../Pages/Home/AllTags/Food/Food";
 import Health from "../Pages/Home/AllTags/Health/Health";
 import Politics from "../Pages/Home/AllTags/Politics/Politics";
 import Travel from "../Pages/Home/AllTags/Travel/Travel";
+import About from "../Pages/About/About";
+import Features from "../Pages/Features/Features";
+import Pricing from "../Pages/Pricing/Pricing";
+import FAQ from "../Pages/FAQ/FAQ";
+import NotFound from "../Pages/NotFound/NotFound";
 
 
 export const router = createBrowserRouter([
@@ -92,11 +97,31 @@ export const router = createBrowserRouter([
                 path: '/travel',
                 element: <Travel></Travel>
             },
+            {
+                path: '/about',
+                element: <About></About>
+            },
+            {
+                path: '/features',
+                element: <Features></Features>
+            },
+            {
+                path: '/pricing',
+                element: <Pricing></Pricing>
+            },
+            {
+                path: '/faq',
+                element: <FAQ></FAQ>
+            },
 
             {
                 path: '/allMsg/:id',
                 element: <SingleMsgDetails></SingleMsgDetails>,
-                loader: ({params}) => fetch(`https://y-blush-three.vercel.app/allMsg/${params.id}`)
+                loader: ({ params }) => fetch(`https://y-blush-three.vercel.app/allMsg/${params.id}`)
+            },
+            {
+                path: '*',
+                element: <NotFound></NotFound>
             },
         ]
     },
