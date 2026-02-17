@@ -18,6 +18,11 @@ const useInfiniteMsg = (search = '', sort = 'newest') => {
             }
             return undefined;
         },
+        // Polling configuration for real-time updates
+        refetchInterval: 5000,           // Auto-refresh every 5 seconds
+        refetchOnWindowFocus: true,      // Refetch when user returns to tab
+        refetchIntervalInBackground: false, // Pause polling when tab is inactive (battery friendly)
+        staleTime: 3000,                 // Consider data stale after 3 seconds
     });
 };
 

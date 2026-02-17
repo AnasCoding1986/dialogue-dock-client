@@ -13,7 +13,7 @@ const SingleMsg = ({ singleMsg }) => {
     return (
         <div className="h-full">
             <Link to={`/allMsg/${_id}`}>
-                <div className="card h-full bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-accent/20">
+                <div className="card h-full bg-base-100 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 hover:border-secondary/30 rounded-xl overflow-hidden">
                     <div className="card-body p-6">
                         <div className="flex justify-between items-start mb-4">
                             <div className="flex items-center gap-3">

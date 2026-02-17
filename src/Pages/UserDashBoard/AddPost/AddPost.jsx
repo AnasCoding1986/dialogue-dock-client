@@ -26,8 +26,9 @@ const AddPost = () => {
         { value: 'travel', label: 'Travel' },
     ];
 
-    const handleAddPost = e => {
+    const handleAddPost = async (e) => {
         e.preventDefault();
+
         const form = e.target;
         const photo = form.image.value;
         const name = form.name.value;
@@ -38,42 +39,74 @@ const AddPost = () => {
         const upvote = parseInt(form.upvote.value, 10); // Parse as integer
         const downvote = parseInt(form.downvote.value, 10); // Parse as integer
 
+        // Validate required fields
+        if (!tag) {
+            Swal.fire({
+                icon: "error",
+                title: "Missing Tag",
+                text: "Please select a category for your post",
+            });
+            return;
+        }
+
         const now = new Date();
-        const postDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }); // Format date as dd,mm,yyyy
+        const postDate = now.toLocaleDateString('en-CA'); // Format: YYYY-MM-DD
         const postTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }); // Format time as hh:mm AM/PM
 
         const commentsCount = 0; // Initial value as integer
         const votesCount = 0; // Initial value as integer
 
-        const msgItems = { 
-            photo, 
-            name, 
-            email, 
-            title, 
-            text, 
-            tag, 
-            upvote, 
-            downvote, 
+        const msgItems = {
+            photo,
+            name,
+            email,
+            title,
+            text,
+            tag,
+            upvote,
+            downvote,
             postTime: `${postDate} ${postTime}`, // Combine date and time
-            commentsCount, 
-            votesCount 
+            commentsCount,
+            votesCount
         };
 
-        axiosSecure.post('/allMsg', msgItems)
-            .then(res => {
-                if (res.data.insertedId) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Message posted successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+        console.log('Submitting post...', msgItems);
 
-                    formRef.current.reset(); // Reset the form
-                    setValue(null); // Reset the select value
-                }
+        try {
+            const res = await axiosSecure.post('/allMsg', msgItems);
+
+            if (res.data.insertedId) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Message posted successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                formRef.current.reset(); // Reset the form
+                setValue(null); // Reset the select value
+            }
+        } catch (error) {
+            console.error('Error posting message:', error);
+            console.error('Error response:', error.response);
+
+            let errorMessage = "Could not post your message. Please try again.";
+
+            if (error.response?.status === 401) {
+                errorMessage = "Your session has expired. Please log in again.";
+            } else if (error.response?.status === 403) {
+                errorMessage = error.response?.data?.message || "You have reached the maximum number of posts allowed.";
+            } else if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            }
+
+            Swal.fire({
+                icon: "error",
+                title: "Post Failed",
+                text: errorMessage,
             });
+        }
     }
 
     return (
@@ -126,6 +159,9 @@ const AddPost = () => {
                             value={value}
                             placeholder="Select Tag"
                             onChange={setValue}
+                            menuPortalTarget={document.body}
+                            menuPosition="fixed"
+                            menuPlacement="auto"
                             styles={{
                                 container: (base) => ({
                                     ...base,
@@ -135,10 +171,33 @@ const AddPost = () => {
                                     ...base,
                                     width: '100%',
                                     borderColor: '#bde9fa',
+                                    minHeight: '45px',
                                 }),
                                 menu: (base) => ({
                                     ...base,
-                                    width: '100%',
+                                    zIndex: 9999,
+                                }),
+                                menuPortal: (base) => ({
+                                    ...base,
+                                    zIndex: 9999,
+                                }),
+                                menuList: (base) => ({
+                                    ...base,
+                                    maxHeight: '200px', // Slightly reduced to ensure it fits in most viewports without scrolling body
+                                    padding: 0,
+                                }),
+                                option: (base, state) => ({
+                                    ...base,
+                                    padding: '12px 16px',
+                                    minHeight: '45px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    backgroundColor: state.isFocused ? '#e5f4fa' : state.isSelected ? '#A7E6FF' : 'white',
+                                    color: 'black',
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                        backgroundColor: '#e5f4fa',
+                                    },
                                 }),
                             }}
                         />

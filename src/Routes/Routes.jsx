@@ -33,6 +33,7 @@ import Features from "../Pages/Features/Features";
 import Pricing from "../Pages/Pricing/Pricing";
 import FAQ from "../Pages/FAQ/FAQ";
 import NotFound from "../Pages/NotFound/NotFound";
+import DashboardHome from "../Pages/DashBoard/DashboardHome/DashboardHome";
 
 
 export const router = createBrowserRouter([
@@ -129,6 +130,10 @@ export const router = createBrowserRouter([
         path: "dashboard",
         element: <PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
         children: [
+            {
+                index: true,
+                element: <DashboardHome></DashboardHome>
+            },
             {
                 path: '/dashboard/myprofile',
                 element: <MyProfile></MyProfile>

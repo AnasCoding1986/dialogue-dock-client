@@ -8,8 +8,12 @@ const useAllMsg = () => {
         queryKey: ['allMsg'],
         queryFn: async () => {
             const res = await axiosPublic.get('/allMsg');
-            return res.data;
-        }
+            return res.data.messages || res.data;
+        },
+        // Polling configuration
+        refetchInterval: 5000,
+        refetchOnWindowFocus: true,
+        staleTime: 3000,
     });
 
     return [allMsg, refetch];

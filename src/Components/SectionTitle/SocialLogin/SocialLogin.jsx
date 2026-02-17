@@ -11,23 +11,32 @@ const SocialLogin = () => {
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
-        .then(res => {
-            console.log(res);
-            const userInfo = {
-                email: res.user?.email,
-                name: res.user?.displayName,
-                photo: res.user?.photoURL,
-            }
-            console.log(userInfo.photo);
-            axiosPublic.post('/users', userInfo)
             .then(res => {
-                navigate('/');
-                console.log(res.data);
+                console.log(res);
+                const userInfo = {
+                    email: res.user?.email,
+                    name: res.user?.displayName,
+                    photo: res.user?.photoURL,
+                }
+                console.log('Google user info:', userInfo);
+
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        console.log('User saved:', res.data);
+                    })
+                    .catch(err => {
+                        console.error('Error saving user:', err);
+                    })
+                    .finally(() => {
+                        // Navigate regardless of database save success
+                        setTimeout(() => {
+                            navigate('/');
+                        }, 500);
+                    });
             })
-        })
-        .catch(err => {
-            console.error(err);
-        })
+            .catch(err => {
+                console.error('Google sign-in error:', err);
+            });
     }
 
     return (

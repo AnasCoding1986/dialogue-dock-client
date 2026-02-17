@@ -5,7 +5,7 @@ const useSocket = () => {
     const [socket, setSocket] = useState(null);
 
     useEffect(() => {
-        const newSocket = io('http://localhost:5000'); // Adjust URL if deployed
+        const newSocket = io('https://y-blush-three.vercel.app/'); // Adjust URL if deployed
         setSocket(newSocket);
 
         return () => newSocket.close();

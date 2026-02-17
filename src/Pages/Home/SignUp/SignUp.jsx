@@ -21,14 +21,13 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        console.log(data);
         createUser(data.email, data.password)
             .then(res => {
                 const loggedUser = res.user;
                 console.log(loggedUser);
                 updateUserProfile(data.name, data.photoUrl)
                     .then(() => {
-                        console.log('uer profile updated');
+                        console.log('User profile updated');
                         // create user entry in the database
                         const userInfo = {
                             name: data.name,
@@ -42,18 +41,41 @@ const SignUp = () => {
                                     Swal.fire({
                                         position: "top-end",
                                         icon: "success",
-                                        title: "Account created and updated successfully",
+                                        title: "Account created successfully!",
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
-                                    navigate('/');
+                                    setTimeout(() => {
+                                        navigate('/');
+                                    }, 500);
                                 }
                             })
+                            .catch(err => {
+                                console.error('Error saving user:', err);
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "Account created but failed to save details",
+                                });
+                            });
                     })
                     .catch(err => {
-                        console.log(err);
-                    })
+                        console.error('Profile update error:', err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Profile Update Failed",
+                            text: err.message
+                        });
+                    });
             })
+            .catch(err => {
+                console.error('Sign up error:', err);
+                Swal.fire({
+                    icon: "error",
+                    title: "Sign Up Failed",
+                    text: err.message || "Could not create account",
+                });
+            });
     };
 
     return (

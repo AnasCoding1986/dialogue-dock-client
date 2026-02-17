@@ -7,11 +7,11 @@ const Annoucement = () => {
     const hasNotifications = notification.length > 0;
 
     return (
-        <div className={`p-20 bg-[#ebf6fa] ${hasNotifications ? 'block' : 'hidden'}`}>
+        <div className={`px-5 md:px-20 py-16 bg-gradient-to-br from-accent/20 to-white ${hasNotifications ? 'block' : 'hidden'}`}>
             <SectionTitle
-                heading="Annoucement"
-                subHeading="Please go through our annoucement"
-            ></SectionTitle>
+                heading="Announcements"
+                subHeading="Stay Updated"
+            />
             <div className="grid gap-5">
                 {
                     notification.map(singleNotification => (

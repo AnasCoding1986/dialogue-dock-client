@@ -39,7 +39,11 @@ const AuthProvider = ({ children }) => {
     const updateUserProfile = (name, photo) => {
         return updateProfile(auth.currentUser, {
             displayName: name, photoURL: photo
-        })
+        }).then(() => {
+            // Manually update the user state to reflect changes immediately
+            setUser({ ...auth.currentUser });
+            return auth.currentUser.reload();
+        });
     }
 
     useEffect(() => {

@@ -28,31 +28,48 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
+
         signIn(email, password)
             .then(res => {
                 const user = res.user;
                 const userInfo = {
-                    name: user.name,
+                    name: user.displayName,
                     email: user.email,
-                    photo: user.photoUrl
+                    photo: user.photoURL
                 }
+
+                // Save/update user in database
                 axiosPublic.post('/users', userInfo)
                     .then(res => {
-                        if (res.data.insertedId) {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: "Account created and updated successfully",
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            navigate('/');
-                        }
+                        console.log('User saved to database:', res.data);
                     })
-                console.log(user);
-                navigate(from, { replace: true })
+                    .catch(err => {
+                        console.error('Error saving user:', err);
+                    })
+                    .finally(() => {
+                        // Navigate regardless of database save success
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Login successful!",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        // Navigate after showing message
+                        setTimeout(() => {
+                            navigate(from, { replace: true });
+                        }, 500);
+                    });
             })
+            .catch(err => {
+                console.error('Login error:', err);
+                Swal.fire({
+                    icon: "error",
+                    title: "Login Failed",
+                    text: err.message || "Invalid email or password",
+                });
+            });
     }
 
     // const handleGoogleSignIn = () => {

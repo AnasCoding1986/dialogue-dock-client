@@ -2,17 +2,13 @@ import { useState, useEffect } from 'react';
 import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 import SingleMsg from '../AllMsg/SingleMsg';
 import useInfiniteMsg from '../../../Hooks/useInfiniteMsg';
-import useSocket from '../../../Hooks/useSocket';
 import { useInView } from 'react-intersection-observer';
-import { useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 
 const AllMsg = () => {
     const [search, setSearch] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [sortBy, setSortBy] = useState('newest');
-    const socket = useSocket();
-    const queryClient = useQueryClient();
 
     const {
         data,
@@ -30,21 +26,7 @@ const AllMsg = () => {
         }
     }, [inView, hasNextPage, fetchNextPage]);
 
-    useEffect(() => {
-        if (socket) {
-            socket.on('new-post', () => {
-                // Invalidate query to refetch the first page and show new post
-                queryClient.invalidateQueries(['messages']);
-            });
-
-            socket.on('vote-update', () => {
-                // Optionally refetch or update locally. For simplicity, we invalidate.
-                // A better approach for votes is optimistic updates or partial updates, 
-                // but invalidation ensures consistency.
-                queryClient.invalidateQueries(['messages']);
-            });
-        }
-    }, [socket, queryClient]);
+    // Polling is now handled in useInfiniteMsg hook with refetchInterval
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -59,7 +41,7 @@ const AllMsg = () => {
         <div className="p-5 md:p-20">
             <SectionTitle
                 heading="Beautiful Thoughts"
-                subHeading="Explore beautiful thoughts"
+                subHeading="Join the Conversation"
             />
 
             <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">

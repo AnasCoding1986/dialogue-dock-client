@@ -20,7 +20,10 @@ const DashBoard = () => {
                         <>
                             <li>
                                 <NavLink
-                                    className="text-white p-2 rounded-xl flex items-center"
+                                    className={({ isActive }) =>
+                                        `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                        }`
+                                    }
                                     to="/dashboard/adminprofile"
                                 >
                                     <span className="mr-5"><CgProfile /></span>Admin Profile
@@ -28,7 +31,10 @@ const DashBoard = () => {
                             </li>
                             <li>
                                 <NavLink
-                                    className="text-white p-2 rounded-xl flex items-center"
+                                    className={({ isActive }) =>
+                                        `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                        }`
+                                    }
                                     to="/dashboard/manageusers"
                                 >
                                     <span className="mr-5"><MdManageAccounts /></span>Manage Users
@@ -36,7 +42,10 @@ const DashBoard = () => {
                             </li>
                             <li>
                                 <NavLink
-                                    className="text-white p-2 rounded-xl flex items-center"
+                                    className={({ isActive }) =>
+                                        `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                        }`
+                                    }
                                     to="/dashboard/reportedactivities"
                                 >
                                     <span className="mr-5"><MdBugReport /></span>Reported Activities
@@ -44,7 +53,10 @@ const DashBoard = () => {
                             </li>
                             <li>
                                 <NavLink
-                                    className="text-white p-2 rounded-xl flex items-center"
+                                    className={({ isActive }) =>
+                                        `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                        }`
+                                    }
                                     to="/dashboard/notification"
                                 >
                                     <span className="mr-5"><GrAnnounce /></span>Make Announcement
@@ -55,15 +67,21 @@ const DashBoard = () => {
                         <>
                             <li>
                                 <NavLink
-                                    className="text-white p-2 rounded-xl flex items-center"
-                                    to="/dashboard/myProfile"
+                                    className={({ isActive }) =>
+                                        `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                        }`
+                                    }
+                                    to="/dashboard/myprofile"
                                 >
                                     <span className="mr-5"><RiProfileFill /></span>My Profile
                                 </NavLink>
                             </li>
                             <li>
                                 <NavLink
-                                    className="text-white p-2 rounded-xl flex items-center"
+                                    className={({ isActive }) =>
+                                        `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                        }`
+                                    }
                                     to="/dashboard/addpost"
                                 >
                                     <span className="mr-5"><GiTargetPoster /></span>Add Post
@@ -71,7 +89,10 @@ const DashBoard = () => {
                             </li>
                             <li>
                                 <NavLink
-                                    className="text-white p-2 rounded-xl flex items-center"
+                                    className={({ isActive }) =>
+                                        `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                        }`
+                                    }
                                     to="/dashboard/mypost"
                                 >
                                     <span className="mr-5"><SiDeutschepost /></span>My Post
@@ -84,7 +105,10 @@ const DashBoard = () => {
 
                     <li>
                         <NavLink
-                            className="text-white p-2 rounded-xl flex items-center"
+                            className={({ isActive }) =>
+                                `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                }`
+                            }
                             to="/"
                         >
                             <span className="mr-5"><IoHomeSharp /></span>Home
@@ -92,7 +116,10 @@ const DashBoard = () => {
                     </li>
                     <li>
                         <NavLink
-                            className="text-white p-2 rounded-xl flex items-center"
+                            className={({ isActive }) =>
+                                `text-white p-3 rounded-xl flex items-center transition-all duration-200 mb-2 ${isActive ? 'bg-white/20 font-bold shadow-lg' : 'hover:bg-white/10'
+                                }`
+                            }
                             to="/membership"
                         >
                             <span className="mr-5"><PiMemberOfBold /></span>Membership

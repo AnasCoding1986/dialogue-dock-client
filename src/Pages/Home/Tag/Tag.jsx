@@ -13,12 +13,11 @@ import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 
 const Tag = () => {
     return (
-        <div className='p-20 mt-16'>
+        <div className='px-5 md:px-20 py-16'>
             <SectionTitle
-                heading="tags"
-                subHeading="choose your desired one"
-            >
-            </SectionTitle>
+                heading="Explore by Topic"
+                subHeading="Browse Categories"
+            />
             <Swiper
                 slidesPerView={3}
                 spaceBetween={30}
