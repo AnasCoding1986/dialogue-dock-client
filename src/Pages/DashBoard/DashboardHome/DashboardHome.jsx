@@ -1,65 +1,35 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiEdit, FiMessageSquare, FiUser, FiTrendingUp } from 'react-icons/fi';
+import { FiEdit, FiMessageSquare, FiBarChart2, FiShield } from 'react-icons/fi';
 import { BiMessageSquareAdd } from 'react-icons/bi';
 import { MdManageAccounts } from 'react-icons/md';
 import useAuth from '../../../Hooks/useAuth';
-import useAdmin from '../../../Hooks/useAdmin';
+import useRole from '../../../Hooks/useRole';
 import { Helmet } from 'react-helmet-async';
+import DashboardStats from '../../../Components/DashboardStats/DashboardStats';
 
 const DashboardHome = () => {
     const { user } = useAuth();
-    const [isAdmin] = useAdmin();
+    const { isAdmin, isSuperAdmin } = useRole();
 
-    const stats = [
+    const superAdminActions = [
         {
-            title: 'Total Posts',
-            value: '0',
-            icon: FiMessageSquare,
-            color: 'from-blue-500 to-blue-600',
-            link: '/dashboard/mypost'
+            title: 'Platform Stats',
+            description: 'View platform-wide analytics',
+            icon: FiBarChart2,
+            link: '/dashboard/stats',
+            color: 'bg-gradient-to-br from-purple-500 to-purple-600'
         },
         {
-            title: 'Profile Views',
-            value: '0',
-            icon: FiTrendingUp,
-            color: 'from-purple-500 to-purple-600',
-            link: '/dashboard/myprofile'
-        },
-        {
-            title: 'Active Discussions',
-            value: '0',
-            icon: FiMessageSquare,
-            color: 'from-teal-500 to-teal-600',
-            link: '/dashboard/mypost'
+            title: 'Manage Admins',
+            description: 'Promote or demote admin roles',
+            icon: FiShield,
+            link: '/dashboard/manage-admins',
+            color: 'bg-gradient-to-br from-indigo-500 to-indigo-600'
         },
     ];
 
-    const adminStats = [
-        {
-            title: 'Total Users',
-            value: '0',
-            icon: FiUser,
-            color: 'from-green-500 to-green-600',
-            link: '/dashboard/manageusers'
-        },
-        {
-            title: 'Reported Items',
-            value: '0',
-            icon: FiMessageSquare,
-            color: 'from-red-500 to-red-600',
-            link: '/dashboard/reportedactivities'
-        },
-        {
-            title: 'Active Posts',
-            value: '0',
-            icon: FiTrendingUp,
-            color: 'from-blue-500 to-blue-600',
-            link: '/dashboard/adminprofile'
-        },
-    ];
-
-    const quickActions = isAdmin ? [
+    const adminActions = [
         {
             title: 'Manage Users',
             description: 'View and manage user accounts',
@@ -72,9 +42,11 @@ const DashboardHome = () => {
             description: 'Post important announcements',
             icon: BiMessageSquareAdd,
             link: '/dashboard/notification',
-            color: 'bg-gradient-to-br from-purple-500 to-purple-600'
+            color: 'bg-gradient-to-br from-amber-500 to-amber-600'
         },
-    ] : [
+    ];
+
+    const userActions = [
         {
             title: 'Create Post',
             description: 'Share your thoughts with the community',
@@ -98,7 +70,13 @@ const DashboardHome = () => {
         },
     ];
 
-    const displayStats = isAdmin ? adminStats : stats;
+    // Build quick actions based on role
+    let quickActions = [];
+    if (isSuperAdmin) quickActions = [...superAdminActions, ...adminActions, ...userActions];
+    else if (isAdmin) quickActions = [...adminActions, ...userActions];
+    else quickActions = userActions;
+
+
 
     return (
         <>
@@ -118,7 +96,11 @@ const DashboardHome = () => {
                                 Welcome back, {user?.displayName || 'User'}! 👋
                             </h1>
                             <p className="text-blue-100 text-lg">
-                                {isAdmin ? 'Manage your platform from your admin dashboard' : 'Here\'s what\'s happening with your account'}
+                                {isSuperAdmin
+                                    ? 'Full platform control — Super Admin dashboard'
+                                    : isAdmin
+                                        ? 'Manage your platform from your admin dashboard'
+                                        : 'Here\'s what\'s happening with your account'}
                             </p>
                         </div>
                         {user?.photoURL && (
@@ -130,31 +112,7 @@ const DashboardHome = () => {
                 </motion.div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    {displayStats.map((stat, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
-                        >
-                            <Link to={stat.link}>
-                                <div className={`bg-gradient-to-br ${stat.color} rounded-xl p-6 text-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1`}>
-                                    <div className="flex items-center justify-between mb-4">
-                                        <stat.icon className="text-4xl opacity-80" />
-                                        <div className="text-right">
-                                            <p className="text-sm opacity-90 font-medium">{stat.title}</p>
-                                            <p className="text-3xl font-bold font-montserrat">{stat.value}</p>
-                                        </div>
-                                    </div>
-                                    <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                                        <div className="h-full bg-white/40 rounded-full" style={{ width: '0%' }}></div>
-                                    </div>
-                                </div>
-                            </Link>
-                        </motion.div>
-                    ))}
-                </div>
+                <DashboardStats />
 
                 {/* Quick Actions */}
                 <motion.div

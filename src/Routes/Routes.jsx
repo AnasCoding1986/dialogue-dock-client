@@ -16,6 +16,7 @@ import AdminProfile from "../Pages/DashBoard/AdminProfile/AdminProfile";
 import ManageUsers from "../Pages/DashBoard/ManageUsers/ManageUsers";
 import ReportedActivities from "../Pages/DashBoard/ReportedActivities/ReportedActivities";
 import AdminRoute from "./AdminRoute";
+import SuperAdminRoute from "./SuperAdminRoute";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Payment from "../Pages/Membership/Payment";
 import SingleMsgDetails from "../Pages/Home/AllMsg/SingleMsgDetails";
@@ -34,6 +35,8 @@ import Pricing from "../Pages/Pricing/Pricing";
 import FAQ from "../Pages/FAQ/FAQ";
 import NotFound from "../Pages/NotFound/NotFound";
 import DashboardHome from "../Pages/DashBoard/DashboardHome/DashboardHome";
+import PlatformStats from "../Pages/DashBoard/PlatformStats/PlatformStats";
+import ManageAdmins from "../Pages/DashBoard/ManageAdmins/ManageAdmins";
 
 
 export const router = createBrowserRouter([
@@ -118,7 +121,7 @@ export const router = createBrowserRouter([
             {
                 path: '/allMsg/:id',
                 element: <SingleMsgDetails></SingleMsgDetails>,
-                loader: ({ params }) => fetch(`https://y-blush-three.vercel.app/allMsg/${params.id}`)
+                loader: ({ params }) => fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/allMsg/${params.id}`)
             },
             {
                 path: '*',
@@ -145,6 +148,16 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/mypost',
                 element: <MyPost></MyPost>
+            },
+
+            // super admin dashboard
+            {
+                path: '/dashboard/stats',
+                element: <SuperAdminRoute><PlatformStats></PlatformStats></SuperAdminRoute>
+            },
+            {
+                path: '/dashboard/manage-admins',
+                element: <SuperAdminRoute><ManageAdmins></ManageAdmins></SuperAdminRoute>
             },
 
             // admin dashboard

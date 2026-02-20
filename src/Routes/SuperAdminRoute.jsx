@@ -2,11 +2,9 @@ import { Navigate, useLocation } from "react-router-dom";
 import useRole from "../Hooks/useRole";
 import useAuth from "../Hooks/useAuth";
 
-
-const AdminRoute = ({ children }) => {
-
+const SuperAdminRoute = ({ children }) => {
     const { user, loading } = useAuth();
-    const { isAdmin, isRoleLoading } = useRole();
+    const { isSuperAdmin, isRoleLoading } = useRole();
 
     const location = useLocation();
 
@@ -14,10 +12,10 @@ const AdminRoute = ({ children }) => {
         return <span className="loading loading-ball loading-lg"></span>;
     }
 
-    if (user && isAdmin) {
+    if (user && isSuperAdmin) {
         return children;
     }
-    return <Navigate to="/login" state={{ from: location }} replace></Navigate>
+    return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
 };
 
-export default AdminRoute;
+export default SuperAdminRoute;

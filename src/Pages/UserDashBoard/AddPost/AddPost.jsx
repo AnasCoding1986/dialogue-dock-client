@@ -183,7 +183,7 @@ const AddPost = () => {
                                 }),
                                 menuList: (base) => ({
                                     ...base,
-                                    maxHeight: '200px', // Slightly reduced to ensure it fits in most viewports without scrolling body
+                                    maxHeight: '400px',
                                     padding: 0,
                                 }),
                                 option: (base, state) => ({

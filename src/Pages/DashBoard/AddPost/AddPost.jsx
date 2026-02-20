@@ -155,6 +155,9 @@ const AddPost = () => {
         if (currentUser && currentUser.membership !== 'member' && msgCount + 1 >= 5) {
           setShowForm(false);
         }
+
+        // Redirect to home page posts section
+        navigate('/#posts');
       }
     } catch (error) {
       console.error('Error posting message:', error);
@@ -258,12 +261,36 @@ const AddPost = () => {
                     value={value}
                     placeholder="Select a category..."
                     onChange={setValue}
+                    maxMenuHeight={400}
+                    menuPortalTarget={document.body}
+                    menuPosition="fixed"
+                    menuPlacement="auto"
                     styles={{
                       control: (base) => ({
                         ...base,
-                        borderColor: '#14b8a6', // secondary color
+                        borderColor: '#14b8a6',
                         borderRadius: '0.5rem',
                         padding: '2px',
+                      }),
+                      menu: (base) => ({
+                        ...base,
+                        zIndex: 9999,
+                      }),
+                      menuPortal: (base) => ({
+                        ...base,
+                        zIndex: 9999,
+                      }),
+                      menuList: (base) => ({
+                        ...base,
+                        maxHeight: '400px',
+                        padding: 0,
+                      }),
+                      option: (base, state) => ({
+                        ...base,
+                        padding: '12px 16px',
+                        backgroundColor: state.isFocused ? '#ccfbf1' : state.isSelected ? '#14b8a6' : 'white',
+                        color: state.isSelected ? 'white' : 'black',
+                        cursor: 'pointer',
                       }),
                     }}
                   />
