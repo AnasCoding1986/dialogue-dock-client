@@ -208,10 +208,28 @@ const AddPost = () => {
         <div className="card w-full max-w-3xl shadow-2xl bg-white rounded-2xl overflow-hidden border border-gray-100 p-8">
           {showForm ? (
             <>
-              <div className="text-center mb-8">
+              <div className="text-center mb-4">
                 <h1 className="text-3xl md:text-4xl font-montserrat font-bold text-primary mb-2">Share Your Thoughts</h1>
                 <p className="text-gray-600">Connect with the community by sharing your ideas</p>
               </div>
+
+              {/* Community Ethics Notice */}
+              <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl mb-6">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl mt-0.5">⚠️</span>
+                  <div>
+                    <h4 className="font-bold text-amber-800 text-sm mb-1">Community Guidelines</h4>
+                    <ul className="text-xs text-amber-700 space-y-0.5 list-disc list-inside">
+                      <li>Be respectful — no hate speech, harassment, or personal attacks</li>
+                      <li>No spam, misleading content, or self-promotion</li>
+                      <li>Respect others' privacy — don't share personal information</li>
+                      <li>Stay on topic and contribute constructively</li>
+                    </ul>
+                    <p className="text-xs text-amber-600 mt-2 italic">Violating these rules may result in post removal or account action.</p>
+                  </div>
+                </div>
+              </div>
+
               <form ref={formRef} onSubmit={handleAddPost} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="form-control">

@@ -3,11 +3,32 @@ import { loadStripe } from "@stripe/stripe-js";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { HiOutlineLockClosed, HiOutlineShieldCheck } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 import CheckoutForm from "./CheckoutForm";
+import useRole from "../../Hooks/useRole";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 
 const Payment = () => {
+    const { isMember, isRoleLoading } = useRole();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isRoleLoading && isMember) {
+            Swal.fire({
+                position: "center",
+                icon: "info",
+                title: "Already a Member",
+                text: "You already have a Gold membership!",
+                showConfirmButton: false,
+                timer: 2000,
+                customClass: { popup: 'rounded-2xl' }
+            });
+            setTimeout(() => navigate('/'), 2100);
+        }
+    }, [isMember, isRoleLoading, navigate]);
     return (
         <>
             <Helmet>

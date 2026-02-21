@@ -60,6 +60,16 @@ const CheckoutForm = () => {
         if (confirmError) {
             setPErr(confirmError.message);
             setProcessing(false);
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Payment Failed",
+                text: confirmError.message,
+                showConfirmButton: false,
+                timer: 2000,
+                customClass: { popup: 'rounded-2xl' }
+            });
+            setTimeout(() => navigate('/'), 2200);
         } else {
             if (paymentIntent.status === 'succeeded') {
                 axiosSecure.patch(`/users/${user.email}`)
@@ -143,8 +153,8 @@ const CheckoutForm = () => {
                 type="submit"
                 disabled={!stripe || !clientSecret || processing || transactionId}
                 className={`w-full py-3.5 rounded-xl font-bold text-base transition-all duration-300 ${processing || transactionId
-                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                        : 'btn-shimmer bg-gradient-to-r from-secondary to-teal-400 text-white shadow-glow-teal hover:shadow-glow-teal-lg'
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'btn-shimmer bg-gradient-to-r from-secondary to-teal-400 text-white shadow-glow-teal hover:shadow-glow-teal-lg'
                     }`}
             >
                 {processing ? (

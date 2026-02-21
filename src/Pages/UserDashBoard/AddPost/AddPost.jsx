@@ -113,6 +113,24 @@ const AddPost = () => {
         <div className="hero min-h-screen bg-base-200">
             <div className="card w-1/2 shadow-2xl bg-[#e5f4fa]">
                 <h1 className="text-2xl uppercase border-y-4 py-4 text-center font-LuckiestGuy">Share your thought</h1>
+
+                {/* Community Ethics Notice */}
+                <div className="mx-6 mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                    <div className="flex items-start gap-3">
+                        <span className="text-2xl mt-0.5">⚠️</span>
+                        <div>
+                            <h4 className="font-bold text-amber-800 text-sm mb-1">Community Guidelines</h4>
+                            <ul className="text-xs text-amber-700 space-y-0.5 list-disc list-inside">
+                                <li>Be respectful — no hate speech, harassment, or personal attacks</li>
+                                <li>No spam, misleading content, or self-promotion</li>
+                                <li>Respect others' privacy — don't share personal information</li>
+                                <li>Stay on topic and contribute constructively</li>
+                            </ul>
+                            <p className="text-xs text-amber-600 mt-2 italic">Violating these rules may result in post removal or account action.</p>
+                        </div>
+                    </div>
+                </div>
+
                 <form ref={formRef} onSubmit={handleAddPost} className="card-body">
                     <div className="flex gap-2">
                         <div className="w-1/2 form-control">

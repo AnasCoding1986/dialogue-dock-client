@@ -1,6 +1,7 @@
 import { BiDownvote, BiUpvote } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa";
 import { RiShareForwardLine } from "react-icons/ri";
+import { HiOutlineTrash } from "react-icons/hi2";
 import { useState, useRef, useEffect } from "react";
 import {
     FacebookShareButton,
@@ -11,13 +12,16 @@ import {
     LinkedinIcon
 } from "react-share";
 import Swal from "sweetalert2";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
+import useRole from "../../../Hooks/useRole";
 import { useQuery } from "@tanstack/react-query";
 
 const SingleMsgDetails = () => {
     const { user, loading } = useAuth();
+    const { isAdmin } = useRole();
+    const navigate = useNavigate();
     const singleMsg = useLoaderData();
     const axiosSecure = useAxiosSecure();
 
@@ -238,6 +242,47 @@ const SingleMsgDetails = () => {
         modalRef.current.close();
     };
 
+    /* ── Admin: delete post ── */
+    const handleDeletePost = () => {
+        Swal.fire({
+            title: 'Delete this post?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            confirmButtonText: 'Yes, delete it',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/allMsg/${_id}`).then(res => {
+                    if (res.data.deletedCount > 0) {
+                        Swal.fire({ icon: 'success', title: 'Post deleted', showConfirmButton: false, timer: 1500 });
+                        navigate('/');
+                    }
+                });
+            }
+        });
+    };
+
+    /* ── User: delete own comment ── */
+    const handleDeleteComment = (commentId) => {
+        Swal.fire({
+            title: 'Delete this comment?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            confirmButtonText: 'Delete',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/comments/${commentId}`).then(res => {
+                    if (res.data.deletedCount > 0) {
+                        Swal.fire({ icon: 'success', title: 'Comment deleted', showConfirmButton: false, timer: 1200 });
+                        refetch();
+                    }
+                });
+            }
+        });
+    };
+
     const rootComments = comments.filter(comment => !comment.parentId);
 
     const getReplies = (commentId) => {
@@ -259,8 +304,20 @@ const SingleMsgDetails = () => {
                             <p>{new Date(postTime).toLocaleString()}</p>
                         </div>
                     </div>
-                    <div className="col-span-5 flex justify-center items-center text-xl font-bold">{title}</div>
+                    <div className={`${isAdmin ? 'col-span-4' : 'col-span-5'} flex justify-center items-center text-xl font-bold`}>{title}</div>
                     <div className="col-span-2 flex justify-center items-center capitalize bg-[#e9f8f8] rounded-xl font-semibold">{tag}</div>
+                    {/* Admin Delete */}
+                    {isAdmin && (
+                        <div className="col-span-1 flex justify-center items-center">
+                            <button
+                                onClick={handleDeletePost}
+                                className="p-2 rounded-lg text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors"
+                                title="Delete post (Admin)"
+                            >
+                                <HiOutlineTrash className="text-lg" />
+                            </button>
+                        </div>
+                    )}
                 </div>
                 <div className="p-2 text-lg">{text}</div>
                 <div className="grid grid-cols-4 p-2 border-y-2 pb-2">
@@ -309,7 +366,7 @@ const SingleMsgDetails = () => {
                         </div>
                         <p className="text-gray-700 mb-2">{comment.text}</p>
 
-                        {/* Reply Button */}
+                        {/* Reply & Delete Buttons */}
                         <div className="flex items-center gap-4">
                             <button
                                 className="text-sm text-blue-600 hover:text-blue-800"
@@ -317,6 +374,14 @@ const SingleMsgDetails = () => {
                             >
                                 {replyingTo === comment._id ? "Cancel Reply" : "Reply"}
                             </button>
+                            {(user?.email === comment.userEmail || isAdmin) && (
+                                <button
+                                    className="text-sm text-red-500 hover:text-red-700 flex items-center gap-1"
+                                    onClick={() => handleDeleteComment(comment._id)}
+                                >
+                                    <HiOutlineTrash className="text-xs" /> Delete
+                                </button>
+                            )}
                         </div>
 
                         {/* Reply Input */}
@@ -354,6 +419,14 @@ const SingleMsgDetails = () => {
                                             </div>
                                         </div>
                                         <p className="text-sm text-gray-700">{reply.text}</p>
+                                        {(user?.email === reply.userEmail || isAdmin) && (
+                                            <button
+                                                className="text-xs text-red-500 hover:text-red-700 flex items-center gap-1 mt-1"
+                                                onClick={() => handleDeleteComment(reply._id)}
+                                            >
+                                                <HiOutlineTrash className="text-xs" /> Delete
+                                            </button>
+                                        )}
                                     </div>
                                 ))}
                             </div>

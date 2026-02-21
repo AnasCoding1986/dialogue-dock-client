@@ -18,8 +18,9 @@ const useRole = () => {
     const role = data?.role || 'user';
     const isAdmin = data?.isAdmin || false;
     const isSuperAdmin = data?.isSuperAdmin || false;
+    const isMember = data?.membership === 'member';
 
-    return { role, isAdmin, isSuperAdmin, isRoleLoading };
+    return { role, isAdmin, isSuperAdmin, isMember, isRoleLoading };
 };
 
 export default useRole;

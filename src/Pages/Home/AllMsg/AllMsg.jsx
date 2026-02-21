@@ -111,8 +111,8 @@ const AllMsg = () => {
                                 key={cat}
                                 onClick={() => handleCategoryChange(cat)}
                                 className={`px-4 py-1.5 rounded-full text-xs font-semibold capitalize transition-all duration-200 ${selectedCategory === cat
-                                        ? "bg-secondary text-white shadow-glow-teal"
-                                        : "bg-gray-100 text-gray-500 hover:bg-secondary/10 hover:text-secondary"
+                                    ? "bg-secondary text-white shadow-glow-teal"
+                                    : "bg-gray-100 text-gray-500 hover:bg-secondary/10 hover:text-secondary"
                                     }`}
                             >
                                 {cat}
@@ -146,7 +146,7 @@ const AllMsg = () => {
                             key={singleMsg._id}
                             variants={itemVariants}
                         >
-                            <SingleMsg singleMsg={singleMsg} />
+                            <SingleMsg singleMsg={singleMsg} onDelete={() => refetch()} />
                         </motion.div>
                     ))
                 ))}

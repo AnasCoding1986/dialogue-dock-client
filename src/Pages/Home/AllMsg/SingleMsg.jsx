@@ -2,9 +2,12 @@ import { FaCommentAlt } from "react-icons/fa";
 import { IoTimeSharp } from "react-icons/io5";
 import { MdHowToVote } from "react-icons/md";
 import useAuth from "../../../Hooks/useAuth";
+import useRole from "../../../Hooks/useRole";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { PiTagSimpleFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import { HiArrowUpRight } from "react-icons/hi2";
+import { HiArrowUpRight, HiOutlineTrash } from "react-icons/hi2";
+import Swal from "sweetalert2";
 
 // Simple time-ago formatter
 const timeAgo = (date) => {
@@ -27,10 +30,34 @@ const timeAgo = (date) => {
     return past.toLocaleDateString();
 };
 
-const SingleMsg = ({ singleMsg }) => {
+const SingleMsg = ({ singleMsg, onDelete }) => {
     const { user } = useAuth();
+    const { isAdmin } = useRole();
+    const axiosSecure = useAxiosSecure();
     const { _id, photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
     const count = parseInt(upvote) - parseInt(downvote);
+
+    const handleAdminDelete = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        Swal.fire({
+            title: 'Delete this post?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            confirmButtonText: 'Yes, delete it',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.delete(`/allMsg/${_id}`).then(res => {
+                    if (res.data.deletedCount > 0) {
+                        Swal.fire({ icon: 'success', title: 'Post deleted', showConfirmButton: false, timer: 1500 });
+                        if (onDelete) onDelete(_id);
+                    }
+                });
+            }
+        });
+    };
 
     return (
         <div className="h-full group/card">
@@ -75,6 +102,15 @@ const SingleMsg = ({ singleMsg }) => {
                             >
                                 <PiTagSimpleFill className="text-[10px]" /> {tag}
                             </Link>
+                            {isAdmin && (
+                                <button
+                                    onClick={handleAdminDelete}
+                                    className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors opacity-0 group-hover/card:opacity-100"
+                                    title="Delete post (Admin)"
+                                >
+                                    <HiOutlineTrash className="text-sm" />
+                                </button>
+                            )}
                         </div>
 
                         {/* Title */}

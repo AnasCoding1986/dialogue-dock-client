@@ -12,9 +12,11 @@ import {
     HiOutlineArrowPath,
 } from 'react-icons/hi2';
 import useAuth from '../../Hooks/useAuth';
+import useRole from '../../Hooks/useRole';
 
 const Membership = () => {
     const { user } = useAuth();
+    const { isMember } = useRole();
 
     const features = [
         { icon: HiOutlineArrowPath, text: 'Unlimited Posts', desc: 'Share as many ideas as you want, no limits.' },
@@ -99,13 +101,22 @@ const Membership = () => {
                                 </div>
 
                                 {/* CTA */}
-                                <Link
-                                    to="/payment"
-                                    className="btn-shimmer magnetic-hover w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-secondary to-teal-400 text-white py-4 rounded-xl font-bold text-base shadow-glow-teal hover:shadow-glow-teal-lg transition-all duration-300"
-                                >
-                                    {user ? 'Get Membership' : 'Sign Up to Join'}
-                                    <HiOutlineArrowRight className="text-lg" />
-                                </Link>
+                                {isMember ? (
+                                    <div className="w-full text-center py-4 rounded-xl bg-green-50 border border-green-200">
+                                        <span className="flex items-center justify-center gap-2 text-green-600 font-bold">
+                                            <HiOutlineCheckCircle className="text-xl" />
+                                            You're a Gold Member!
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <Link
+                                        to={user ? '/payment' : '/signup'}
+                                        className="btn-shimmer magnetic-hover w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-secondary to-teal-400 text-white py-4 rounded-xl font-bold text-base shadow-glow-teal hover:shadow-glow-teal-lg transition-all duration-300"
+                                    >
+                                        {user ? 'Get Membership' : 'Sign Up to Join'}
+                                        <HiOutlineArrowRight className="text-lg" />
+                                    </Link>
+                                )}
 
                                 {/* Trust */}
                                 <div className="flex items-center justify-center gap-4 mt-5 text-xs text-gray-400">
