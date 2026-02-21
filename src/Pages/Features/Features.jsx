@@ -12,7 +12,7 @@ const Features = () => {
         {
             icon: FaBolt,
             title: 'Real-Time Updates',
-            description: 'See new posts, comments, and votes instantly without refreshing. Powered by Socket.io for seamless collaboration.',
+            description: 'See new posts, comments, and votes instantly without refreshing. Powered by smart polling for seamless collaboration.',
             color: 'from-yellow-400 to-orange-500'
         },
         {

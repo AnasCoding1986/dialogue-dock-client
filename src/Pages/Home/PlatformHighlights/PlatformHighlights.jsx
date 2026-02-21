@@ -1,92 +1,113 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FaBolt, FaUsers, FaComments, FaHashtag } from 'react-icons/fa';
+import { HiOutlineBolt, HiOutlineUserGroup, HiOutlineChatBubbleLeftRight, HiOutlineHashtag } from 'react-icons/hi2';
+import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 
 const PlatformHighlights = () => {
     const highlights = [
         {
-            icon: FaBolt,
+            icon: HiOutlineBolt,
             title: 'Real-Time Engagement',
-            description: 'See conversations unfold instantly with Socket.io powered live updates',
-            gradient: 'from-yellow-400 to-orange-500'
+            description: 'See conversations unfold instantly with live polling for real-time updates.',
+            color: 'text-amber-500',
+            bg: 'bg-amber-50',
+            borderHover: 'hover:border-amber-200',
         },
         {
-            icon: FaUsers,
+            icon: HiOutlineUserGroup,
             title: 'Thriving Community',
-            description: 'Join thousands of active members sharing knowledge daily',
-            gradient: 'from-blue-400 to-cyan-500'
+            description: 'Join thousands of active members sharing knowledge daily.',
+            color: 'text-blue-500',
+            bg: 'bg-blue-50',
+            borderHover: 'hover:border-blue-200',
         },
         {
-            icon: FaComments,
+            icon: HiOutlineChatBubbleLeftRight,
             title: 'Meaningful Discussions',
-            description: 'Engage in rich, threaded conversations that matter',
-            gradient: 'from-purple-400 to-pink-500'
+            description: 'Engage in rich, threaded conversations that matter.',
+            color: 'text-purple-500',
+            bg: 'bg-purple-50',
+            borderHover: 'hover:border-purple-200',
         },
         {
-            icon: FaHashtag,
+            icon: HiOutlineHashtag,
             title: 'Smart Organization',
-            description: 'Find exactly what you need with intuitive tag-based navigation',
-            gradient: 'from-green-400 to-teal-500'
+            description: 'Find exactly what you need with intuitive tag-based navigation.',
+            color: 'text-teal-500',
+            bg: 'bg-teal-50',
+            borderHover: 'hover:border-teal-200',
         }
     ];
 
-    return (
-        <div className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4">
-                <motion.div
-                    className="text-center mb-16"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                >
-                    <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 font-montserrat">
-                        Why Choose DialogueDock?
-                    </h2>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Built for modern communities who value quality, speed, and meaningful connections
-                    </p>
-                    <div className="w-24 h-1 bg-gradient-to-r from-secondary to-accent mx-auto mt-4"></div>
-                </motion.div>
+    const containerVariants = {
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.12 } }
+    };
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                    {highlights.map((highlight, index) => (
+    const itemVariants = {
+        hidden: { opacity: 0, y: 25 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+    };
+
+    return (
+        <section className="py-24 bg-white">
+            <div className="max-w-7xl mx-auto px-5">
+                <SectionTitle
+                    heading="Why Choose DialogueDock?"
+                    subHeading="Platform Features"
+                />
+
+                <motion.div
+                    className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-14"
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-80px" }}
+                >
+                    {highlights.map((h, i) => (
                         <motion.div
-                            key={index}
-                            className="text-center group"
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
+                            key={i}
+                            variants={itemVariants}
+                            className={`group relative bg-white rounded-2xl p-7 border border-gray-100 ${h.borderHover} transition-all duration-300 hover:shadow-glass-lg hover:-translate-y-1`}
                         >
-                            <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br ${highlight.gradient} mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
-                                <highlight.icon className="text-4xl text-white" />
+                            {/* Icon */}
+                            <div className={`w-14 h-14 rounded-xl ${h.bg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                                <h.icon className={`text-2xl ${h.color}`} />
                             </div>
-                            <h3 className="text-xl font-bold text-primary mb-3 font-montserrat">
-                                {highlight.title}
+
+                            <h3 className="text-lg font-bold text-primary mb-2 font-montserrat">
+                                {h.title}
                             </h3>
-                            <p className="text-gray-600 leading-relaxed">
-                                {highlight.description}
+                            <p className="text-gray-500 text-sm leading-relaxed">
+                                {h.description}
                             </p>
+
+                            {/* Subtle corner accent on hover */}
+                            <div className={`absolute top-0 right-0 w-16 h-16 rounded-bl-3xl ${h.bg} opacity-0 group-hover:opacity-40 transition-opacity duration-300`} />
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
 
+                {/* CTA */}
                 <motion.div
                     className="text-center"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
+                    transition={{ delay: 0.4 }}
                 >
                     <Link
                         to="/features"
-                        className="btn btn-primary btn-lg text-white font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                        className="btn-shimmer inline-flex items-center gap-2 bg-primary text-white px-8 py-3.5 rounded-full font-bold text-sm hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                     >
                         Explore All Features
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
                     </Link>
                 </motion.div>
             </div>
-        </div>
+        </section>
     );
 };
 

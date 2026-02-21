@@ -45,27 +45,7 @@ const Pricing = () => {
             gradient: 'from-secondary to-primary',
             icon: FaCrown
         },
-        {
-            name: 'Premium',
-            price: '$19',
-            period: '/month',
-            description: 'For power users and influencers',
-            features: [
-                'Everything in Member',
-                'Advanced analytics',
-                'Custom profile URL',
-                'Highlighted posts',
-                'Moderation tools',
-                'API access',
-                'Premium badge',
-                'Dedicated support'
-            ],
-            cta: 'Go Premium',
-            link: '/membership',
-            popular: false,
-            gradient: 'from-purple-500 to-pink-600',
-            icon: FaRocket
-        }
+
     ];
 
     return (
@@ -99,7 +79,7 @@ const Pricing = () => {
             {/* Pricing Cards */}
             <div className="py-20 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                         {tiers.map((tier, index) => (
                             <motion.div
                                 key={index}
@@ -145,8 +125,8 @@ const Pricing = () => {
                                     <Link
                                         to={tier.link}
                                         className={`btn w-full text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105 ${tier.popular
-                                                ? 'bg-gradient-to-r from-secondary to-primary border-none'
-                                                : 'btn-primary'
+                                            ? 'bg-gradient-to-r from-secondary to-primary border-none'
+                                            : 'btn-primary'
                                             }`}
                                     >
                                         {tier.cta}
@@ -159,7 +139,7 @@ const Pricing = () => {
             </div>
 
             {/* FAQ Section */}
-            <div className="py-20 bg-white">
+            <div id="faq" className="py-20 bg-white">
                 <div className="max-w-4xl mx-auto px-4">
                     <motion.div
                         className="text-center mb-12"
@@ -218,8 +198,8 @@ const Pricing = () => {
                     <p className="text-xl mb-8 text-gray-100">
                         Our support team is here to help you choose the perfect plan.
                     </p>
-                    <Link to="/faq" className="btn btn-accent btn-lg text-primary font-bold hover:scale-105 transition-all shadow-xl">
-                        Visit FAQ
+                    <Link to="/signup" className="btn btn-accent btn-lg text-primary font-bold hover:scale-105 transition-all shadow-xl">
+                        Get Started Free
                     </Link>
                 </motion.div>
             </div>

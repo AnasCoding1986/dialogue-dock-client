@@ -1,217 +1,379 @@
 import { useState, useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { IoNotificationsSharp } from "react-icons/io5";
+import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
 import useAuth from "../../../Hooks/useAuth";
 import useAnnoucement from "../../../Hooks/useAnnoucement";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
-  const [navDropdownOpen, setNavDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [notification] = useAnnoucement();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
-  // State to track current theme, for UI toggle feedback (optional)
-  const [theme, setTheme] = useState("light");
+  // On non-home pages, always use "scrolled" (dark text) style
+  const useDarkText = scrolled || !isHome;
 
+  // Scroll-driven navbar transition (smooth with rAF)
   useEffect(() => {
-    // On mount, load saved theme or fallback to light
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.documentElement.setAttribute("data-theme", savedTheme);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
+  // Close profile dropdown on outside click
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (profileDropdownOpen && !e.target.closest('.profile-dropdown')) {
+        setProfileDropdownOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, [profileDropdownOpen]);
 
   const handleLogout = () => {
     logOut()
-      .then(() => {
-        navigate("/");
-      })
+      .then(() => navigate("/"))
       .catch((err) => console.log(err));
   };
 
-  const toggleNavDropdown = () => {
-    setNavDropdownOpen(!navDropdownOpen);
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/membership", label: "Membership" },
+    { to: "/about", label: "About" },
+    { to: "/features", label: "Features" },
+  ];
+
+  const mobileMenuVariants = {
+    closed: { x: "100%", transition: { type: "spring", stiffness: 300, damping: 30 } },
+    open: { x: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
   };
 
-  const toggleProfileDropdown = () => {
-    setProfileDropdownOpen(!profileDropdownOpen);
+  const menuItemVariants = {
+    closed: { opacity: 0, x: 20 },
+    open: (i) => ({
+      opacity: 1,
+      x: 0,
+      transition: { delay: i * 0.08, duration: 0.3 },
+    }),
   };
-
-  const navOptions = (
-    <>
-      <li className="md:mr-2">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
-          }
-        >
-          Home
-        </NavLink>
-      </li>
-      <li className="md:mr-2">
-        <NavLink
-          to="/membership"
-          className={({ isActive }) =>
-            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
-          }
-        >
-          Membership
-        </NavLink>
-      </li>
-      <li className="md:mr-2">
-        <NavLink
-          to="/about"
-          className={({ isActive }) =>
-            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
-          }
-        >
-          About
-        </NavLink>
-      </li>
-      <li className="md:mr-2">
-        <NavLink
-          to="/features"
-          className={({ isActive }) =>
-            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
-          }
-        >
-          Features
-        </NavLink>
-      </li>
-      <li className="md:mr-2">
-        <NavLink
-          to="/pricing"
-          className={({ isActive }) =>
-            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
-          }
-        >
-          Pricing
-        </NavLink>
-      </li>
-      <li className="md:mr-2">
-        <NavLink
-          to="/faq"
-          className={({ isActive }) =>
-            `hover:text-secondary rounded-lg px-4 py-2 transition-colors ${isActive ? "text-secondary font-bold" : "text-gray-600"}`
-          }
-        >
-          FAQ
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/"
-          className="p-0"
-        >
-          <button className="btn btn-ghost btn-circle text-primary">
-            <div className="indicator">
-              <IoNotificationsSharp className="text-2xl" />
-              <span className="badge badge-sm badge-secondary indicator-item border-none text-white">{notification.length}</span>
-            </div>
-          </button>
-        </NavLink>
-      </li>
-    </>
-  );
 
   return (
-    <div className="fixed top-0 left-0 z-50 w-full bg-base-100/80 backdrop-blur-md shadow-sm border-b border-base-200 transition-all duration-300">
-      <div className="navbar max-w-7xl mx-auto text-primary px-5 py-3">
-        <div className="navbar-start">
-          {/* Mobile Menu Toggle */}
-          <div className="dropdown">
-            <button tabIndex={0} className="btn btn-ghost lg:hidden text-primary" onClick={toggleNavDropdown}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
-              </svg>
-            </button>
-            {navDropdownOpen && (
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-white rounded-box w-52 border border-gray-100"
-              >
-                {navOptions}
-              </ul>
-            )}
-          </div>
+    <>
+      <nav
+        className={`fixed top-0 left-0 z-50 w-full py-4 will-change-[background-color,box-shadow,backdrop-filter] ${useDarkText
+          ? "navbar-scrolled"
+          : ""
+          }`}
+        style={{
+          transition: 'background-color 0.6s ease, box-shadow 0.6s ease, backdrop-filter 0.6s ease, border-color 0.6s ease',
+        }}
+      >
+        {/* Subtle gradient line at bottom - appears on scroll */}
+        <div
+          className={`absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-secondary/50 to-transparent transition-opacity duration-500 ${useDarkText ? "opacity-100" : "opacity-0"
+            }`}
+        />
+
+        <div className="max-w-7xl mx-auto px-5 flex items-center justify-between">
           {/* Logo */}
-          <Link className="flex items-center gap-2 group" to="/">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-secondary p-0.5">
+          <Link className="flex items-center gap-2.5 group" to="/">
+            <motion.div
+              className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-secondary p-0.5 will-change-transform"
+              style={{
+                transform: useDarkText ? 'scale(0.85)' : 'scale(1)',
+                transition: 'transform 0.6s ease',
+              }}
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.6 }}
+            >
               <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                <span className="font-Discipline font-bold text-xl text-primary">D</span>
+                <span className="font-montserrat font-bold text-primary text-xl">D</span>
               </div>
-            </div>
-            <span className="text-2xl font-montserrat font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary group-hover:to-primary transition-all">
+            </motion.div>
+            <span
+              className={`font-montserrat font-bold text-2xl will-change-[color,opacity] ${useDarkText
+                ? "bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
+                : "text-white drop-shadow-lg"
+                }`}
+              style={{ transition: 'color 0.6s ease, opacity 0.6s ease' }}
+            >
               DialogueDock
             </span>
           </Link>
-        </div>
 
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 font-medium">{navOptions}</ul>
-        </div>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === "/"}
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""} ${useDarkText ? "text-gray-700" : "text-white/90 hover:text-white"
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
 
-        <div className="navbar-end flex items-center space-x-4">
-          {/* Dark/Light toggle button - commenting out until fully implemented
-          <button onClick={toggleTheme} className="btn btn-circle btn-sm btn-ghost">
-            {theme === "dark" ? (
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m8.485-8.485l-.707.707M4.222 4.222l-.707.707M21 12h-1M4 12H3m16.485 4.485l-.707-.707M4.222 19.778l-.707-.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-            ) : (
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" /></svg>
+            {/* Notification Bell */}
+            <a href="/#announcements" className="relative ml-2 p-2 group">
+              <IoNotificationsSharp className={`text-xl transition-colors ${useDarkText ? "text-gray-600 group-hover:text-secondary" : "text-white/80 group-hover:text-white"
+                } ${notification.length > 0 ? "bell-bounce" : ""}`} />
+              {notification.length > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 flex items-center justify-center bg-secondary text-white text-[10px] font-bold rounded-full animate-pulse-glow">
+                  {notification.length}
+                </span>
+              )}
+            </a>
+
+            {/* Create Post Button */}
+            {user && (
+              <Link
+                to="/dashboard/addpost"
+                className="btn-shimmer ml-3 bg-gradient-to-r from-secondary to-teal-400 text-white px-6 py-2 rounded-full text-sm font-bold shadow-glow-teal hover:shadow-glow-teal-lg transition-all duration-300 hover:scale-105"
+              >
+                + Create Post
+              </Link>
             )}
-          </button>
-           */}
+          </div>
 
-          {user ? (
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar online ring ring-secondary ring-offset-2 hover:ring-primary transition-all">
-                <div className="w-10 rounded-full">
-                  {user?.photoURL ? (
-                    <img
-                      src={user.photoURL}
-                      alt="User Profile"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || user?.email || 'User')}&background=14b8a6&color=fff&bold=true`;
-                      }}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white font-bold text-lg">
-                      {user?.displayName?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase() || 'U'}
-                    </div>
+          {/* Right Section */}
+          <div className="flex items-center gap-3">
+            {user ? (
+              <div className="profile-dropdown relative">
+                <button
+                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                  className="relative group"
+                >
+                  <div className={`w-10 h-10 rounded-full overflow-hidden border-2 transition-all duration-300 ${useDarkText ? "border-secondary/50" : "border-white/50"
+                    } group-hover:border-secondary group-hover:shadow-glow-teal`}>
+                    {user?.photoURL ? (
+                      <img
+                        src={user.photoURL}
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || user?.email || 'User')}&background=14b8a6&color=fff&bold=true`;
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white font-bold text-lg">
+                        {user?.displayName?.charAt(0)?.toUpperCase() || 'U'}
+                      </div>
+                    )}
+                  </div>
+                  {/* Online indicator */}
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full" />
+                </button>
+
+                <AnimatePresence>
+                  {profileDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-glass-lg border border-gray-100 overflow-hidden z-50"
+                    >
+                      <div className="p-4 bg-gradient-to-r from-primary/5 to-secondary/5 border-b border-gray-100">
+                        <p className="font-bold text-primary text-sm truncate">{user?.displayName}</p>
+                        <p className="text-gray-400 text-xs truncate">{user?.email}</p>
+                      </div>
+                      <div className="py-1">
+                        <Link
+                          to="/dashboard"
+                          className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-secondary/5 hover:text-secondary transition-colors"
+                          onClick={() => setProfileDropdownOpen(false)}
+                        >
+                          Dashboard
+                        </Link>
+                        <Link
+                          to="/dashboard/myprofile"
+                          className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-secondary/5 hover:text-secondary transition-colors"
+                          onClick={() => setProfileDropdownOpen(false)}
+                        >
+                          My Profile
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
+                    </motion.div>
                   )}
-                </div>
+                </AnimatePresence>
               </div>
-              <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow-lg bg-base-100 rounded-box w-52 border border-gray-100">
-                <li className="menu-title px-4 py-2 text-gray-400 text-xs uppercase font-bold tracking-wider">
-                  {user?.displayName}
-                </li>
-                <li><Link to="/dashboard">Dashboard</Link></li>
-                <li><button onClick={handleLogout} className="text-red-500">Log Out</button></li>
-              </ul>
-            </div>
-          ) : (
-            <Link className="btn btn-primary btn-sm px-6 rounded-full font-bold shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all hover:scale-105" to="/login">
-              Join Us
-            </Link>
-          )}
+            ) : (
+              <Link
+                to="/login"
+                className={`btn-shimmer px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 hover:scale-105 ${scrolled
+                  ? "bg-primary text-white shadow-lg hover:shadow-xl"
+                  : "bg-white text-primary shadow-glass hover:shadow-glass-lg"
+                  }`}
+              >
+                Join Us
+              </Link>
+            )}
+
+            {/* Mobile Menu Toggle */}
+            <button
+              className={`lg:hidden p-2 rounded-xl transition-colors ${scrolled ? "text-primary hover:bg-gray-100" : "text-white hover:bg-white/10"
+                }`}
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <HiOutlineMenuAlt3 className="text-2xl" />
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
+      </nav>
+
+      {/* Mobile Menu Overlay + Slide-in Panel */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <motion.div
+              variants={mobileMenuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 lg:hidden flex flex-col"
+            >
+              {/* Mobile Header */}
+              <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                <span className="font-montserrat font-bold text-xl text-primary">Menu</span>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  <HiX className="text-2xl text-gray-600" />
+                </button>
+              </div>
+
+              {/* Mobile Nav Links */}
+              <div className="flex-1 overflow-y-auto py-4">
+                {navLinks.map((link, i) => (
+                  <motion.div key={link.to} custom={i} variants={menuItemVariants} initial="closed" animate="open">
+                    <NavLink
+                      to={link.to}
+                      end={link.to === "/"}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={({ isActive }) =>
+                        `block px-6 py-3.5 text-base font-medium transition-colors ${isActive ? "text-secondary bg-secondary/5 border-r-4 border-secondary" : "text-gray-700 hover:text-secondary hover:bg-gray-50"
+                        }`
+                      }
+                    >
+                      {link.label}
+                    </NavLink>
+                  </motion.div>
+                ))}
+
+                {user && (
+                  <motion.div custom={navLinks.length} variants={menuItemVariants} initial="closed" animate="open">
+                    <NavLink
+                      to="/dashboard/addpost"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={({ isActive }) =>
+                        `block px-6 py-3.5 text-base font-medium transition-colors ${isActive ? "text-secondary bg-secondary/5 border-r-4 border-secondary" : "text-gray-700 hover:text-secondary hover:bg-gray-50"
+                        }`
+                      }
+                    >
+                      + Create Post
+                    </NavLink>
+                  </motion.div>
+                )}
+
+                <motion.div custom={navLinks.length + 1} variants={menuItemVariants} initial="closed" animate="open">
+                  <a
+                    href="/#announcements"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 px-6 py-3.5 text-base font-medium text-gray-700 hover:text-secondary hover:bg-gray-50 transition-colors"
+                  >
+                    <IoNotificationsSharp />
+                    Announcements
+                    {notification.length > 0 && (
+                      <span className="bg-secondary text-white text-xs font-bold rounded-full px-2 py-0.5">
+                        {notification.length}
+                      </span>
+                    )}
+                  </a>
+                </motion.div>
+              </div>
+
+              {/* Mobile Footer */}
+              <div className="p-6 border-t border-gray-100">
+                {user ? (
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-secondary/30 flex-shrink-0">
+                      {user?.photoURL ? (
+                        <img
+                          src={user.photoURL}
+                          alt="Profile"
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.displayName || 'U')}&background=14b8a6&color=fff&bold=true`;
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center text-white font-bold">
+                          {user?.displayName?.charAt(0)?.toUpperCase() || 'U'}
+                        </div>
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-semibold text-sm truncate">{user?.displayName}</p>
+                      <Link
+                        to="/dashboard"
+                        className="text-secondary text-xs font-medium hover:underline"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Go to Dashboard →
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full text-center bg-primary text-white py-3 rounded-xl font-bold hover:bg-primary/90 transition-colors"
+                  >
+                    Join Us
+                  </Link>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

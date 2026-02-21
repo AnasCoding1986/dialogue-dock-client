@@ -1,16 +1,27 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiEdit, FiMessageSquare, FiBarChart2, FiShield } from 'react-icons/fi';
+import { FiEdit, FiMessageSquare, FiBarChart2, FiShield, FiClock } from 'react-icons/fi';
 import { BiMessageSquareAdd } from 'react-icons/bi';
 import { MdManageAccounts } from 'react-icons/md';
 import useAuth from '../../../Hooks/useAuth';
 import useRole from '../../../Hooks/useRole';
+import useAllMsg from '../../../Hooks/useAllMsg';
 import { Helmet } from 'react-helmet-async';
 import DashboardStats from '../../../Components/DashboardStats/DashboardStats';
+import SingleMsg from '../../Home/AllMsg/SingleMsg';
 
 const DashboardHome = () => {
     const { user } = useAuth();
     const { isAdmin, isSuperAdmin } = useRole();
+    const [allMsg] = useAllMsg();
+
+    // Get this user's recent posts
+    const myRecentPosts = Array.isArray(allMsg)
+        ? [...allMsg]
+            .filter(post => post.email === user?.email)
+            .sort((a, b) => new Date(b.postTime) - new Date(a.postTime))
+            .slice(0, 3)
+        : [];
 
     const superAdminActions = [
         {
@@ -144,7 +155,7 @@ const DashboardHome = () => {
                     </div>
                 </motion.div>
 
-                {/* Recent Activity Placeholder */}
+                {/* Recent Activity — shows real posts */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -152,20 +163,29 @@ const DashboardHome = () => {
                     className="bg-white rounded-2xl p-6 md:p-8 shadow-lg"
                 >
                     <h2 className="text-2xl font-bold font-montserrat text-primary mb-6 flex items-center gap-2">
-                        <span className="text-secondary">📊</span> Recent Activity
+                        <FiClock className="text-secondary text-2xl" /> Recent Activity
                     </h2>
-                    <div className="text-center py-12">
-                        <div className="text-6xl mb-4">📝</div>
-                        <p className="text-gray-500 text-lg mb-2">No recent activity</p>
-                        <p className="text-gray-400 text-sm mb-6">Start creating posts to see your activity here</p>
-                        {!isAdmin && (
-                            <Link to="/dashboard/addpost">
-                                <button className="btn btn-primary px-8 rounded-full shadow-lg hover:shadow-primary/30 transition-all">
-                                    Create Your First Post
-                                </button>
-                            </Link>
-                        )}
-                    </div>
+
+                    {myRecentPosts.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {myRecentPosts.map(post => (
+                                <SingleMsg key={post._id} singleMsg={post} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-12">
+                            <div className="text-6xl mb-4">📝</div>
+                            <p className="text-gray-500 text-lg mb-2">No posts yet</p>
+                            <p className="text-gray-400 text-sm mb-6">Start creating posts to see your activity here</p>
+                            {!isAdmin && (
+                                <Link to="/dashboard/addpost">
+                                    <button className="btn btn-primary px-8 rounded-full shadow-lg hover:shadow-primary/30 transition-all">
+                                        Create Your First Post
+                                    </button>
+                                </Link>
+                            )}
+                        </div>
+                    )}
                 </motion.div>
             </div>
         </>

@@ -1,0 +1,38 @@
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[1m[33m[plugin:vite:resolve][39m[22m [33m[plugin vite:resolve] Module "events" has been externalized for browser compatibility, imported by "C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/htmlparser2/lib/Parser.js". See https://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.[39m
+[1m[33m[plugin:vite:resolve][39m[22m [33m[plugin vite:resolve] Module "buffer" has been externalized for browser compatibility, imported by "C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/htmlparser2/lib/WritableStream.js". See https://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.[39m
+[1m[33m[plugin:vite:resolve][39m[22m [33m[plugin vite:resolve] Module "buffer" has been externalized for browser compatibility, imported by "C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/safe-buffer/index.js". See https://vitejs.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.[39m
+[31mx[39m Build failed in 6.04s
+[31merror during build:
+[31msrc/Pages/Membership/Membership.jsx (12:4): "HiOutlineInfinity" is not exported by "node_modules/react-icons/hi2/index.mjs", imported by "src/Pages/Membership/Membership.jsx".[31m
+file: [36mC:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/src/Pages/Membership/Membership.jsx:12:4[31m
+[33m
+10:     HiOutlineChatBubbleLeftRight,
+11:     HiOutlineShieldCheck,
+12:     HiOutlineInfinity,
+        ^
+13: } from 'react-icons/hi2';
+14: import useAuth from '../../Hooks/useAuth';
+[31m
+    at getRollupError (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/parseAst.js:396:41)
+    at error (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/parseAst.js:392:42)
+    at Module.error (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/node-entry.js:13858:16)
+    at Module.traceVariable (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/node-entry.js:14306:29)
+    at ModuleScope.findVariable (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/node-entry.js:11984:39)
+    at ReturnValueScope.findVariable (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/node-entry.js:7432:38)
+    at FunctionBodyScope.findVariable (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/node-entry.js:7432:38)
+    at Identifier.bind (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/node-entry.js:6908:40)
+    at Property.bind (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/node-entry.js:4775:23)
+    at ObjectExpression.bind (file:///C:/Users/HP/Desktop/Dialoghe-Dock/dialogue-dock-client/node_modules/rollup/dist/es/shared/node-entry.js:4771:28)[39m
+
+---
+[36mvite v5.2.12 [32mbuilding for production...[36m[39m
+transforming...
+
+🌼   [35mdaisyUI[39m [2m4.11.1[22m
+├─ [32m✔︎[39m 1 theme added[2m		https://daisyui.com/docs/themes[22m
+╰─ [32m❤︎[39m [0mSupport daisyUI project:[0m	[2mhttps://opencollective.com/daisyui[22m
+
+[32m✓[39m 1582 modules transformed.
