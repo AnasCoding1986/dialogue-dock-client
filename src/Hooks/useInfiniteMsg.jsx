@@ -18,11 +18,10 @@ const useInfiniteMsg = (search = '', sort = 'newest') => {
             }
             return undefined;
         },
-        // Polling configuration for real-time updates
-        refetchInterval: 5000,           // Auto-refresh every 5 seconds
-        refetchOnWindowFocus: true,      // Refetch when user returns to tab
-        refetchIntervalInBackground: false, // Pause polling when tab is inactive (battery friendly)
-        staleTime: 3000,                 // Consider data stale after 3 seconds
+        // Removed automatic polling here to prevent unexpected UI jumps.
+        // We will implement a smart manual "Load New Posts" trigger instead.
+        staleTime: 5 * 60 * 1000, // Keep data fresh for 5 mins
+        cacheTime: 10 * 60 * 1000,
     });
 };
 

@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import useAnnoucement from "../../../Hooks/useAnnoucement";
 import AnnoucementCard from "./AnnoucementCard";
 
@@ -10,34 +8,16 @@ const Annoucement = () => {
     if (!hasNotifications) return null;
 
     return (
-        <section id="announcements" className="py-24 bg-gradient-to-b from-gray-50 to-white">
-            <div className="max-w-5xl mx-auto px-5">
-                <SectionTitle
-                    heading="Announcements"
-                    subHeading="Stay Updated"
-                />
-
-                <motion.div
-                    className="grid gap-5"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-50px" }}
-                    variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
-                >
-                    {notification.map(singleNotification => (
-                        <motion.div
-                            key={singleNotification._id}
-                            variants={{
-                                hidden: { opacity: 0, y: 20 },
-                                visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
-                            }}
-                        >
-                            <AnnoucementCard singleNotification={singleNotification} />
-                        </motion.div>
-                    ))}
-                </motion.div>
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 className="text-lg font-bold text-primary mb-4 font-montserrat flex items-center gap-2">
+                <span>📣</span> Announcements
+            </h3>
+            <div className="space-y-3">
+                {notification.map(singleNotification => (
+                    <AnnoucementCard key={singleNotification._id} singleNotification={singleNotification} compact={true} />
+                ))}
             </div>
-        </section>
+        </div>
     );
 };
 

@@ -11,7 +11,7 @@ const Pricing = () => {
             period: 'forever',
             description: 'Perfect for getting started',
             features: [
-                'Up to 5 posts',
+                'Up to 5 posts a month',
                 'Basic text formatting',
                 'Tag-based browsing',
                 'Voting & commenting',
