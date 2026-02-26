@@ -1,0 +1,17 @@
+
+> dialoguedock-client@0.0.0 dev
+> vite --host 127.0.0.1
+
+
+  [32m[1mVITE[22m v5.2.12[39m  [2mready in [0m[1m1237[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+🌼   [35mdaisyUI[39m [2m4.11.1[22m
+├─ [32m✔︎[39m 1 theme added[2m		https://daisyui.com/docs/themes[22m
+╰─ [32m❤︎[39m [0mSupport daisyUI project:[0m	[2mhttps://opencollective.com/daisyui[22m
+
