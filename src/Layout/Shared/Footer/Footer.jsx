@@ -128,9 +128,23 @@ const Footer = () => {
                 {/* Bottom bar */}
                 <div className="border-t border-white/5">
                     <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center gap-3">
-                        <p className="text-gray-600 text-xs">
-                            &copy; {new Date().getFullYear()} DialogueDock. All rights reserved.
-                        </p>
+                        <div className="flex flex-col sm:flex-row items-center gap-4">
+                            <p className="text-gray-600 text-xs text-center sm:text-left">
+                                &copy; {new Date().getFullYear()} DialogueDock. All rights reserved.
+                            </p>
+                            <span className="hidden sm:block w-px h-3 bg-white/10" />
+                            <p className="text-gray-600 text-xs">
+                                Developed by{" "}
+                                <a 
+                                    href="https://my-portfolio-alpha-dun-71.vercel.app/" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-secondary hover:text-teal-400 font-medium transition-colors duration-300"
+                                >
+                                    Anas Code Works .
+                                </a>
+                            </p>
+                        </div>
                         <div className="flex gap-6 text-xs text-gray-600">
                             <a href="#" className="hover:text-gray-400 transition-colors">Privacy</a>
                             <a href="#" className="hover:text-gray-400 transition-colors">Terms</a>
