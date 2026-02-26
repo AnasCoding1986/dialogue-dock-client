@@ -10,6 +10,7 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [notificationOpen, setNotificationOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [notification] = useAnnoucement();
   const navigate = useNavigate();
@@ -35,16 +36,19 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close profile dropdown on outside click
+  // Close dropdowns on outside click
   useEffect(() => {
     const handleClick = (e) => {
       if (profileDropdownOpen && !e.target.closest('.profile-dropdown')) {
         setProfileDropdownOpen(false);
       }
+      if (notificationOpen && !e.target.closest('.notification-dropdown')) {
+        setNotificationOpen(false);
+      }
     };
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
-  }, [profileDropdownOpen]);
+  }, [profileDropdownOpen, notificationOpen]);
 
   const handleLogout = () => {
     logOut()
@@ -134,15 +138,84 @@ const Navbar = () => {
             ))}
 
             {/* Notification Bell */}
-            <a href="/#announcements" className="relative ml-2 p-2 group">
-              <IoNotificationsSharp className={`text-xl transition-colors ${useDarkText ? "text-gray-600 group-hover:text-secondary" : "text-white/80 group-hover:text-white"
-                } ${notification.length > 0 ? "bell-bounce" : ""}`} />
-              {notification.length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 w-5 h-5 flex items-center justify-center bg-secondary text-white text-[10px] font-bold rounded-full animate-pulse-glow">
-                  {notification.length}
-                </span>
-              )}
-            </a>
+            <div className="relative ml-2 notification-dropdown">
+              <button
+                onClick={() => setNotificationOpen(!notificationOpen)}
+                className="p-2 group outline-none"
+              >
+                <IoNotificationsSharp className={`text-xl transition-colors ${useDarkText ? "text-gray-600 group-hover:text-secondary" : "text-white/80 group-hover:text-white"
+                  } ${notification.length > 0 ? "bell-bounce" : ""}`} />
+                {notification.length > 0 && (
+                  <span className="absolute top-1.5 right-1.5 w-4 h-4 flex items-center justify-center bg-secondary text-white text-[9px] font-bold rounded-full animate-pulse-glow">
+                    {notification.length}
+                  </span>
+                )}
+              </button>
+
+              <AnimatePresence>
+                {notificationOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                    className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-glass-lg border border-gray-100 overflow-hidden z-50"
+                  >
+                    <div className="p-4 bg-gradient-to-r from-secondary/10 to-primary/10 border-b border-gray-100 flex justify-between items-center">
+                      <h3 className="font-bold text-primary text-sm font-montserrat">Announcements</h3>
+                      <span className="text-[10px] bg-secondary/20 text-secondary px-2 py-0.5 rounded-full font-bold">
+                        {notification.length} New
+                      </span>
+                    </div>
+                    <div className="max-h-[400px] overflow-y-auto py-1">
+                      {notification.length > 0 ? (
+                        notification.map((n) => (
+                          <div key={n._id} className="p-4 hover:bg-gray-50 border-b border-gray-50 last:border-0 transition-colors">
+                            <div className="flex gap-3">
+                              <div className="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
+                                <span className="text-sm">📣</span>
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <p className="text-xs font-bold text-gray-800 truncate mb-0.5">{n.title}</p>
+                                <p className="text-[11px] text-gray-500 line-clamp-2 leading-relaxed">{n.description}</p>
+                                <div className="mt-2 flex items-center gap-1.5">
+                                  <div className="w-4 h-4 rounded-full overflow-hidden">
+                                    <img
+                                      src={n.photo}
+                                      className="w-full h-full object-cover"
+                                      onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(n.name || 'A')}&background=14b8a6&color=fff&bold=true&size=16`;
+                                      }}
+                                    />
+                                  </div>
+                                  <span className="text-[9px] text-gray-400">by {n.name}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="p-8 text-center">
+                          <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <IoNotificationsSharp className="text-gray-300 text-xl" />
+                          </div>
+                          <p className="text-gray-400 text-xs">No new announcements</p>
+                        </div>
+                      )}
+                    </div>
+                    {notification.length > 0 && (
+                      <Link
+                        to="/#announcements"
+                        onClick={() => setNotificationOpen(false)}
+                        className="block w-full text-center py-3 text-[11px] font-bold text-secondary hover:bg-gray-50 border-t border-gray-100 transition-colors"
+                      >
+                        View All Announcements
+                      </Link>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             {/* Create Post Button */}
             {user && (

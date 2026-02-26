@@ -15,3 +15,4 @@ Browserslist: caniuse-lite is outdated. Please run:
 ├─ [32m✔︎[39m 1 theme added[2m		https://daisyui.com/docs/themes[22m
 ╰─ [32m❤︎[39m [0mSupport daisyUI project:[0m	[2mhttps://opencollective.com/daisyui[22m
 
+[2m5:08:30 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/Layout/Shared/Navbar/Navbar.jsx, /src/index.css[22m
