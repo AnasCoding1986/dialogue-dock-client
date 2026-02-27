@@ -5,7 +5,7 @@ const useInfiniteMsg = (search = '', sort = 'newest') => {
     const axiosPublic = useAxiosPublic();
 
     const getMessages = async ({ pageParam = 1 }) => {
-        const res = await axiosPublic.get(`/allMsg?page=${pageParam}&limit=10&search=${search}&sort=${sort}`);
+        const res = await axiosPublic.get(`/allMsg?page=${pageParam}&limit=5&search=${search}&sort=${sort}`);
         return res.data;
     };
 
