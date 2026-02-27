@@ -16,3 +16,9 @@ Browserslist: caniuse-lite is outdated. Please run:
 ╰─ [32m❤︎[39m [0mSupport daisyUI project:[0m	[2mhttps://opencollective.com/daisyui[22m
 
 [2m5:08:30 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/Layout/Shared/Navbar/Navbar.jsx, /src/index.css[22m
+[2m6:00:49 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/Pages/Home/AllMsg/SingleMsg.jsx, /src/index.css[22m
+[2m6:01:03 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/Pages/Home/AllMsg/SingleMsgDetails.jsx, /src/index.css[22m
+[2m6:04:50 AM[22m [36m[1m[vite][22m[39m [32mpage reload [39m[2msrc/Routes/Routes.jsx[22m
+[2m6:05:02 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/Layout/DashBoard.jsx, /src/index.css[22m
+[2m6:08:05 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/Pages/Home/AllMsg/SingleMsg.jsx, /src/index.css[22m
+[2m6:08:18 AM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/Layout/Shared/Footer/Footer.jsx, /src/index.css[22m

@@ -91,6 +91,11 @@ const DashBoard = () => {
                                 </NavLink>
                             </li>
                             <li>
+                                <NavLink className={navLinkClass} to="/dashboard/manage-posts">
+                                    <SiDeutschepost className="text-lg" /> Manage Posts
+                                </NavLink>
+                            </li>
+                            <li>
                                 <NavLink className={navLinkClass} to="/dashboard/notification">
                                     <GrAnnounce className="text-lg" /> Make Announcement
                                 </NavLink>

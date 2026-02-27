@@ -6,7 +6,7 @@ import useRole from "../../../Hooks/useRole";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { PiTagSimpleFill } from "react-icons/pi";
 import { Link, useNavigate } from "react-router-dom";
-import { HiArrowUpRight, HiOutlineTrash, HiChevronDown, HiChevronUp } from "react-icons/hi2";
+import { HiArrowUpRight, HiOutlineTrash } from "react-icons/hi2";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,11 +33,11 @@ const timeAgo = (date) => {
 };
 
 const SingleMsg = ({ singleMsg, onDelete }) => {
-    const { user } = useAuth();
+    useAuth();
     const { isAdmin } = useRole();
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
-    const { _id, photo, name, email, title, text, tag, upvote, downvote, postTime, commentsCount, votesCount } = singleMsg;
+    const { _id, photo, name, title, text, tag, upvote, downvote, postTime, commentsCount } = singleMsg;
 
     // UI states
     const [isExpanded, setIsExpanded] = useState(false);
@@ -132,7 +132,7 @@ const SingleMsg = ({ singleMsg, onDelete }) => {
                         {isAdmin && (
                             <button
                                 onClick={handleAdminDelete}
-                                className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors opacity-0 group-hover/card:opacity-100"
+                                className="p-2 rounded-xl bg-red-50 text-red-500 border border-red-100 hover:bg-red-500 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md active:scale-90"
                                 title="Delete post (Admin)"
                             >
                                 <HiOutlineTrash className="text-sm" />

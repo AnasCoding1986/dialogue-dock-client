@@ -325,10 +325,11 @@ const SingleMsgDetails = () => {
                         {isAdmin && (
                             <button
                                 onClick={handleDeletePost}
-                                className="p-2 rounded-full text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"
+                                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 text-red-600 border border-red-100 hover:bg-red-600 hover:text-white transition-all duration-300 font-bold text-xs shadow-sm hover:shadow-md active:scale-95"
                                 title="Delete post (Admin)"
                             >
-                                <HiOutlineTrash className="text-xl" />
+                                <HiOutlineTrash className="text-lg" />
+                                <span>Delete Post</span>
                             </button>
                         )}
                     </div>

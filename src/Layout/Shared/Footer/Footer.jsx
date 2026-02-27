@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { FaFacebook, FaTwitter, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiOutlineArrowUpRight } from 'react-icons/hi2';
 
@@ -135,9 +134,9 @@ const Footer = () => {
                             <span className="hidden sm:block w-px h-3 bg-white/10" />
                             <p className="text-gray-600 text-xs">
                                 Developed by{" "}
-                                <a 
-                                    href="https://my-portfolio-alpha-dun-71.vercel.app/" 
-                                    target="_blank" 
+                                <a
+                                    href="https://my-portfolio-alpha-dun-71.vercel.app/"
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-secondary hover:text-teal-400 font-medium transition-colors duration-300"
                                 >

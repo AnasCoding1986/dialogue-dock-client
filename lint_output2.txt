@@ -1,0 +1,70 @@
+
+> dialoguedock-client@0.0.0 lint
+> eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0
+
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Layout\Shared\Footer\Footer.jsx
+  2:10  error  'motion' is defined but never used  no-unused-vars
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\About\About.jsx
+   12:5   error  'HiOutlineBolt' is defined but never used                        no-unused-vars
+   96:75  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  158:42  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\DashBoard\AddPost\AddPost.jsx
+  225:41  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  225:56  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  335:52  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\FAQ\FAQ.jsx
+  222:28  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                 react/no-unescaped-entities
+  222:44  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                 react/no-unescaped-entities
+  236:16  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Home\AllMsg\AllMsg.jsx
+    2:8   error  'SectionTitle' is defined but never used                         no-unused-vars
+   26:12  error  'filterOpen' is assigned a value but never used                  no-unused-vars
+   26:24  error  'setFilterOpen' is assigned a value but never used               no-unused-vars
+   81:11  error  'containerVariants' is assigned a value but never used           no-unused-vars
+  253:84  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Home\AllMsg\SingleMsg.jsx
+   9:42  error  'HiChevronDown' is defined but never used        no-unused-vars
+   9:57  error  'HiChevronUp' is defined but never used          no-unused-vars
+  36:13  error  'user' is assigned a value but never used        no-unused-vars
+  40:31  error  'email' is assigned a value but never used       no-unused-vars
+  40:99  error  'votesCount' is assigned a value but never used  no-unused-vars
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Home\Banner\Banner.jsx
+  8:11  error  'navigate' is assigned a value but never used  no-unused-vars
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Home\PostTeaser\PostTeaser.jsx
+  42:29  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Home\RecentPost\RecentPosts.jsx
+  1:10  error  'useEffect' is defined but never used  no-unused-vars
+  1:21  error  'useState' is defined but never used   no-unused-vars
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Home\Testimonials\Testimonials.jsx
+  83:33  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  83:42  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Membership\CheckoutForm.jsx
+  39:24  error  'paymentMethod' is assigned a value but never used  no-unused-vars
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Membership\Membership.jsx
+  108:48  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\NotFound\NotFound.jsx
+  47:41  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  47:87  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\Pricing\Pricing.jsx
+  74:53  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Users\HP\Desktop\DialogueDock\client\src\Pages\UserDashBoard\AddPost\AddPost.jsx
+  126:51  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  126:66  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+✖ 33 problems (32 errors, 1 warning)
+

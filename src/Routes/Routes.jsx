@@ -14,6 +14,7 @@ import MyProfile from "../Pages/DashBoard/MyProfile/MyProfile";
 import MyPost from "../Pages/DashBoard/MyPost/MyPost";
 import AdminProfile from "../Pages/DashBoard/AdminProfile/AdminProfile";
 import ManageUsers from "../Pages/DashBoard/ManageUsers/ManageUsers";
+import ManagePosts from "../Pages/DashBoard/ManagePosts/ManagePosts";
 import ReportedActivities from "../Pages/DashBoard/ReportedActivities/ReportedActivities";
 import AdminRoute from "./AdminRoute";
 import SuperAdminRoute from "./SuperAdminRoute";
@@ -78,6 +79,10 @@ export const router = createBrowserRouter([
             {
                 path: 'reportedactivities',
                 element: <AdminRoute><ReportedActivities></ReportedActivities></AdminRoute>
+            },
+            {
+                path: 'manage-posts',
+                element: <AdminRoute><ManagePosts></ManagePosts></AdminRoute>
             },
         ]
     },
