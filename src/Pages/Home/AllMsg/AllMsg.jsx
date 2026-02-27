@@ -1,29 +1,26 @@
-import { useState, forwardRef } from 'react';
+import { useState } from 'react';
 import SectionTitle from '../../../Components/SectionTitle/SectionTitle';
 import SingleMsg from './SingleMsg';
-import useInfiniteMsg from '../../../Hooks/useInfiniteMsg';
+import usePaginatedPosts from '../../../Hooks/usePaginatedPosts';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineMagnifyingGlass, HiOutlineAdjustmentsHorizontal, HiOutlineArrowUp } from "react-icons/hi2";
+import {
+    HiOutlineMagnifyingGlass,
+    HiOutlineAdjustmentsHorizontal,
+    HiOutlineArrowUp,
+    HiOutlineChevronLeft,
+    HiOutlineChevronRight
+} from "react-icons/hi2";
 import { IoChevronDown } from "react-icons/io5";
-import { VirtuosoGrid } from 'react-virtuoso';
 
-const GridList = forwardRef(({ className, style, ...props }, ref) => (
-    <div
-        {...props}
-        ref={ref}
-        style={style}
-        className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${className || ''}`}
-    />
-));
-GridList.displayName = "GridList";
 const AllMsg = () => {
     const [search, setSearch] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [sortBy, setSortBy] = useState('newest');
-    const [filterOpen, setFilterOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const postsPerPage = 6;
 
     const categories = [
         'coding', 'education', 'entertainment', 'environment',
@@ -33,16 +30,15 @@ const AllMsg = () => {
     const {
         data,
         isLoading,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
+        isFetching,
         refetch
-    } = useInfiniteMsg(searchTerm, sortBy);
+    } = usePaginatedPosts(searchTerm, sortBy, currentPage, postsPerPage);
 
     const axiosPublic = useAxiosPublic();
-    const flatMessages = data?.pages?.flatMap(page => page.messages) || [];
+    const messages = data?.messages || [];
+    const totalPages = data?.totalPages || 1;
 
-    // Silent polling for new posts
+    // Silent polling for new posts (only relevant on page 1)
     const { data: latestData } = useQuery({
         queryKey: ['latestCount', searchTerm, sortBy],
         queryFn: async () => {
@@ -51,20 +47,36 @@ const AllMsg = () => {
         },
         refetchInterval: 5000,
         refetchOnWindowFocus: true,
+        enabled: currentPage === 1
     });
 
-    const initialTotal = data?.pages[0]?.totalMessages || 0;
+    const initialTotal = data?.totalMessages || 0;
     const newCount = Math.max(0, (latestData?.total || 0) - initialTotal);
-    const hasNewPosts = newCount > 0 && latestData?.firstId !== flatMessages[0]?._id && sortBy === 'newest';
+    const hasNewPosts = newCount > 0 && latestData?.firstId !== messages[0]?._id && sortBy === 'newest' && currentPage === 1;
 
     const handleLoadNewPosts = () => {
+        setCurrentPage(1);
         refetch();
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+        scrollToPosts();
+    };
+
+    const scrollToPosts = () => {
+        const element = document.getElementById('posts-grid');
+        if (element) {
+            const offset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
     };
 
     const handleSearch = (e) => {
         if (e) e.preventDefault();
         setSearchTerm(selectedCategory || search);
+        setCurrentPage(1);
     };
 
     const handleCategoryChange = (cat) => {
@@ -76,13 +88,12 @@ const AllMsg = () => {
             setSearch(cat);
             setSearchTerm(cat);
         }
+        setCurrentPage(1);
     };
 
-    const containerVariants = {
-        hidden: {},
-        visible: {
-            transition: { staggerChildren: 0.08 }
-        }
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        scrollToPosts();
     };
 
     const itemVariants = {
@@ -95,7 +106,7 @@ const AllMsg = () => {
     };
 
     return (
-        <div className="w-full">
+        <div className="w-full" id="posts-grid">
             {/* Search & Filter Bar */}
             <motion.div
                 className="mb-8"
@@ -144,7 +155,10 @@ const AllMsg = () => {
 
                     {/* Sort Toggle */}
                     <button
-                        onClick={() => setSortBy(sortBy === 'newest' ? 'popular' : 'newest')}
+                        onClick={() => {
+                            setSortBy(sortBy === 'newest' ? 'popular' : 'newest');
+                            setCurrentPage(1);
+                        }}
                         className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-gray-200 text-xs font-semibold text-gray-600 hover:border-secondary/30 hover:text-secondary transition-all duration-200 flex-shrink-0 shadow-sm"
                     >
                         <HiOutlineAdjustmentsHorizontal className="text-base" />
@@ -154,8 +168,8 @@ const AllMsg = () => {
                 </div>
             </motion.div>
 
-            {/* Post Grid (Virtual or Empty State) */}
-            <div className="relative">
+            {/* Post Grid */}
+            <div className="relative min-h-[400px]">
                 {/* Floating New Posts Pill */}
                 <AnimatePresence>
                     {hasNewPosts && (
@@ -174,7 +188,7 @@ const AllMsg = () => {
 
                 {isLoading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-                        {[1, 2, 3, 4].map((i) => (
+                        {[1, 2, 3, 4, 5, 6].map((i) => (
                             <div key={i} className="bg-white/80 rounded-[1.25rem] border border-gray-100/50 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.02)] overflow-hidden animate-pulse">
                                 <div className="flex items-start gap-3 mb-4">
                                     <div className="w-10 h-10 rounded-full bg-gray-200/60" />
@@ -198,19 +212,9 @@ const AllMsg = () => {
                             </div>
                         ))}
                     </div>
-                ) : flatMessages.length > 0 ? (
-                    <VirtuosoGrid
-                        useWindowScroll
-                        data={flatMessages}
-                        endReached={() => {
-                            if (hasNextPage && !isFetchingNextPage) {
-                                fetchNextPage();
-                            }
-                        }}
-                        components={{
-                            List: GridList,
-                        }}
-                        itemContent={(index, singleMsg) => (
+                ) : messages.length > 0 ? (
+                    <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-opacity duration-300 ${isFetching ? 'opacity-50' : 'opacity-100'}`}>
+                        {messages.map((singleMsg) => (
                             <motion.div
                                 key={singleMsg._id}
                                 variants={itemVariants}
@@ -220,40 +224,79 @@ const AllMsg = () => {
                             >
                                 <SingleMsg singleMsg={singleMsg} onDelete={() => refetch()} />
                             </motion.div>
-                        )}
-                    />
+                        ))}
+                    </div>
                 ) : (
-                    data && flatMessages.length === 0 && (
-                        <motion.div
-                            className="col-span-full text-center py-20 bg-white rounded-2xl border border-gray-100"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                        >
-                            <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-4 border border-gray-100">
-                                <HiOutlineMagnifyingGlass className="text-2xl text-gray-400" />
-                            </div>
-                            <p className="text-gray-500 font-medium">No posts found</p>
-                            <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filters</p>
-                        </motion.div>
-                    )
+                    <motion.div
+                        className="text-center py-20 bg-white rounded-2xl border border-gray-100"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                    >
+                        <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center mx-auto mb-4 border border-gray-100">
+                            <HiOutlineMagnifyingGlass className="text-2xl text-gray-400" />
+                        </div>
+                        <p className="text-gray-500 font-medium">No posts found</p>
+                        <p className="text-gray-400 text-sm mt-1">Try adjusting your search or filters</p>
+                    </motion.div>
                 )}
 
-                {/* Loading Indicator */}
-                <div className="mt-12 text-center pb-8">
-                    {isFetchingNextPage ? (
-                        <div className="flex items-center justify-center gap-2">
-                            <span className="w-2 h-2 bg-secondary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                            <span className="w-2 h-2 bg-secondary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                            <span className="w-2 h-2 bg-secondary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                {/* Modern Pagination UI */}
+                {totalPages > 1 && (
+                    <div className="mt-12 flex justify-center items-center gap-2">
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-all duration-200 ${currentPage === 1
+                                ? "bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed"
+                                : "bg-white border-gray-200 text-gray-600 hover:border-secondary hover:text-secondary shadow-sm"
+                                }`}
+                        >
+                            <HiOutlineChevronLeft className="text-lg" />
+                        </button>
+
+                        <div className="flex items-center gap-2 bg-white px-2 py-1.5 rounded-2xl border border-gray-100 shadow-sm">
+                            {[...Array(totalPages)].map((_, i) => {
+                                const pageNum = i + 1;
+                                // Show first, last, current, and pages around current
+                                if (
+                                    pageNum === 1 ||
+                                    pageNum === totalPages ||
+                                    (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+                                ) {
+                                    return (
+                                        <button
+                                            key={pageNum}
+                                            onClick={() => handlePageChange(pageNum)}
+                                            className={`w-9 h-9 rounded-lg text-xs font-bold transition-all duration-300 ${currentPage === pageNum
+                                                ? "bg-secondary text-white shadow-glow-teal"
+                                                : "text-gray-500 hover:bg-gray-50 hover:text-secondary"
+                                                }`}
+                                        >
+                                            {pageNum}
+                                        </button>
+                                    );
+                                } else if (
+                                    pageNum === currentPage - 2 ||
+                                    pageNum === currentPage + 2
+                                ) {
+                                    return <span key={pageNum} className="text-gray-300 px-1">...</span>;
+                                }
+                                return null;
+                            })}
                         </div>
-                    ) : hasNextPage ? (
-                        <span className="text-gray-400 text-sm">Scroll for more</span>
-                    ) : (
-                        data?.pages[0]?.messages.length > 0 && (
-                            <span className="text-gray-300 text-sm font-medium">You've reached the end ✨</span>
-                        )
-                    )}
-                </div>
+
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center border transition-all duration-200 ${currentPage === totalPages
+                                ? "bg-gray-50 border-gray-100 text-gray-300 cursor-not-allowed"
+                                : "bg-white border-gray-200 text-gray-600 hover:border-secondary hover:text-secondary shadow-sm"
+                                }`}
+                        >
+                            <HiOutlineChevronRight className="text-lg" />
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
