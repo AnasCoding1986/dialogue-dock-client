@@ -308,7 +308,7 @@ const SingleMsgDetails = () => {
 
             {/* Back Button & Top Action Bar */}
             <div className="sticky top-[72px] z-40 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm transition-all duration-300">
-                <div className="max-w-4xl mx-auto px-5 py-3 flex items-center justify-between">
+                <div className="max-w-4xl mx-auto px-5 py-3 flex flex-wrap items-center justify-between gap-2">
                     <button
                         onClick={() => navigate(-1)}
                         className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-secondary group transition-colors"
@@ -379,7 +379,7 @@ const SingleMsgDetails = () => {
                             <BiDownvote className="text-xl" />
                             Downvote
                         </button>
-                        <button className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-50 hover:bg-blue-500 hover:text-white text-gray-600 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95 ml-auto" onClick={() => modalRef.current.showModal()}>
+                        <button className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-50 hover:bg-blue-500 hover:text-white text-gray-600 font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95 sm:ml-auto w-full sm:w-auto justify-center sm:justify-start" onClick={() => modalRef.current.showModal()}>
                             <FaRegComment className="text-xl" />
                             Comment
                         </button>
@@ -506,7 +506,7 @@ const SingleMsgDetails = () => {
             <dialog ref={shareModalRef} className="modal">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Share this post</h3>
-                    <div className="flex space-x-4 justify-center mt-4">
+                    <div className="flex flex-wrap gap-4 justify-center mt-4">
                         <FacebookShareButton url={window.location.href} quote={title}>
                             <FacebookIcon size={32} round />
                         </FacebookShareButton>

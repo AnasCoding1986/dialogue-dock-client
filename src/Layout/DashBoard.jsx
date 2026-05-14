@@ -211,7 +211,7 @@ const DashBoard = () => {
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 mt-14 md:mt-0">
+            <div className="flex-1 mt-14 md:mt-0 min-w-0">
                 <Outlet />
             </div>
         </div>

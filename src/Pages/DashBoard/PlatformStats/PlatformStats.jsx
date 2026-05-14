@@ -76,7 +76,7 @@ const PlatformStats = () => {
                                 <stat.icon className="text-white text-xl" />
                             </div>
                             <p className="text-gray-500 text-sm mb-1">{stat.title}</p>
-                            <p className="text-3xl font-bold text-gray-800">{stat.value.toLocaleString()}</p>
+                            <p className="text-2xl lg:text-3xl font-bold text-gray-800">{stat.value.toLocaleString()}</p>
                         </motion.div>
                     ))}
                 </div>
@@ -98,8 +98,8 @@ const PlatformStats = () => {
                                     cx="50%"
                                     cy="50%"
                                     labelLine={false}
-                                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                                    outerRadius={100}
+                                    label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+                                    outerRadius={80}
                                     dataKey="value"
                                 >
                                     {userBreakdown.map((entry, index) => (
@@ -107,6 +107,7 @@ const PlatformStats = () => {
                                     ))}
                                 </Pie>
                                 <Tooltip />
+                                <Legend />
                             </PieChart>
                         </ResponsiveContainer>
                     </motion.div>

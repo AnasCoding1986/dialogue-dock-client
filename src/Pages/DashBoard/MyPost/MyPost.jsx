@@ -92,7 +92,56 @@ const MyPost = () => {
                         animate={{ opacity: 1, y: 0 }}
                         className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100"
                     >
-                        <div className="overflow-x-auto">
+                        {/* Mobile Card View */}
+                        <div className="md:hidden divide-y divide-gray-100">
+                            {myPosts.map((myPost, index) => {
+                                const voteCount = parseInt(myPost.upvote) - parseInt(myPost.downvote);
+                                return (
+                                    <div key={myPost._id} className="p-4 bg-white hover:bg-gray-50/50 transition-colors">
+                                        <div className="flex items-start justify-between gap-3 mb-3">
+                                            <div className="flex-1 min-w-0">
+                                                <p className="font-semibold text-gray-800 text-sm line-clamp-2 leading-snug">{myPost.title}</p>
+                                                <div className="mt-2 flex items-center gap-2">
+                                                    <span className="badge badge-sm badge-outline badge-secondary capitalize">
+                                                        {myPost.tag}
+                                                    </span>
+                                                    <span className="text-xs text-gray-400 font-medium">#{index + 1}</span>
+                                                </div>
+                                            </div>
+                                            <button
+                                                onClick={() => handleDelete(myPost._id, myPost.title)}
+                                                className="btn btn-ghost btn-sm text-red-500 hover:bg-red-50 hover:text-red-700 transition-colors rounded-lg flex-shrink-0"
+                                                title="Delete post"
+                                            >
+                                                <MdDelete className="text-xl" />
+                                            </button>
+                                        </div>
+                                        <div className="flex items-center justify-between text-xs text-gray-500 pt-2 border-t border-gray-50">
+                                            <div className="flex items-center gap-1.5">
+                                                <FaCalendarAlt className="text-gray-400" />
+                                                <span>{new Date(myPost.postTime).toLocaleDateString()}</span>
+                                            </div>
+                                            <div className="flex items-center gap-4">
+                                                <div className="flex items-center gap-1">
+                                                    <BiUpvote className="text-green-500 text-sm" />
+                                                    <span className={`font-bold ${voteCount > 0 ? 'text-green-600' : voteCount < 0 ? 'text-red-500' : 'text-gray-500'}`}>
+                                                        {voteCount}
+                                                    </span>
+                                                    <BiDownvote className="text-red-400 text-sm" />
+                                                </div>
+                                                <div className="flex items-center gap-1 text-primary">
+                                                    <FaRegComment className="text-sm" />
+                                                    <span className="font-medium">{myPost.commentsCount || 0}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {/* Desktop Table View */}
+                        <div className="hidden md:block overflow-x-auto">
                             <table className="table w-full">
                                 <thead>
                                     <tr className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b border-gray-200">

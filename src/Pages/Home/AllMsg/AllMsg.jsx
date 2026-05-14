@@ -129,7 +129,7 @@ const AllMsg = () => {
                     </div>
                     <button
                         type="submit"
-                        className="btn-shimmer bg-primary text-white px-6 py-3 rounded-xl text-sm font-bold hover:bg-primary/90 transition-colors shadow-sm"
+                        className="btn-shimmer bg-primary text-white px-4 sm:px-6 py-3 rounded-xl text-sm font-bold hover:bg-primary/90 transition-colors shadow-sm flex-shrink-0"
                     >
                         Search
                     </button>
@@ -138,7 +138,7 @@ const AllMsg = () => {
                 {/* Filter Row */}
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full">
                     {/* Category Pills */}
-                    <div className="flex flex-wrap justify-start gap-2">
+                    <div className="flex flex-wrap justify-start gap-1.5 sm:gap-2">
                         {categories.map((cat) => (
                             <button
                                 key={cat}

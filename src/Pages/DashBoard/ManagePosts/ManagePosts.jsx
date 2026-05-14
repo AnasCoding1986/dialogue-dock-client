@@ -81,7 +81,73 @@ const ManagePosts = () => {
                 transition={{ delay: 0.2 }}
                 className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
             >
-                <div className="overflow-x-auto">
+                {/* Mobile Card View */}
+                <div className="md:hidden divide-y divide-gray-100">
+                    {isLoading ? (
+                        <div className="text-center py-10">
+                            <span className="loading loading-spinner loading-lg text-secondary"></span>
+                        </div>
+                    ) : postsData.messages.map((post) => (
+                        <div key={post._id} className="p-4 bg-white hover:bg-gray-50/50 transition-colors">
+                            <div className="flex items-start justify-between gap-3 mb-3">
+                                <div className="flex items-center gap-3">
+                                    <div className="avatar">
+                                        <div className="w-10 h-10 rounded-full">
+                                            <img
+                                                src={post.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(post.name)}&background=14b8a6&color=fff&bold=true`}
+                                                alt={post.name}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-sm text-gray-800 line-clamp-1">{post.name}</p>
+                                        <p className="text-[10px] text-gray-400 font-medium uppercase tracking-tight">{new Date(post.postTime).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-2 flex-shrink-0">
+                                    <Link
+                                        to={`/allMsg/${post._id}`}
+                                        className="p-1.5 bg-blue-50 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all shadow-sm"
+                                        title="View Post"
+                                    >
+                                        <HiOutlineEye className="text-lg" />
+                                    </Link>
+                                    <button
+                                        onClick={() => handleDelete(post._id)}
+                                        className="p-1.5 bg-red-50 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                                        title="Delete Post"
+                                    >
+                                        <HiOutlineTrash className="text-lg" />
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="mb-3">
+                                <p className="text-sm font-semibold text-gray-700 line-clamp-2">{post.title}</p>
+                            </div>
+                            <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-50">
+                                <span className="px-3 py-1 bg-secondary/10 text-secondary text-[10px] font-bold rounded-full uppercase">
+                                    {post.tag}
+                                </span>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xs font-bold text-gray-600 flex items-center gap-1">
+                                        <span className="text-secondary">↑</span> {post.upvote || 0}
+                                    </span>
+                                    <span className="text-xs font-bold text-gray-600 flex items-center gap-1">
+                                        <span className="text-red-400">↓</span> {post.downvote || 0}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                    {!isLoading && postsData.messages.length === 0 && (
+                        <div className="text-center py-10">
+                            <p className="text-gray-400 font-medium">No posts found</p>
+                        </div>
+                    )}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="table w-full">
                         <thead>
                             <tr className="bg-gray-50/50 text-gray-600">

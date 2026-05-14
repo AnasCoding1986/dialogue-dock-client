@@ -158,7 +158,7 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: 8, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                    className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-glass-lg border border-gray-100 overflow-hidden z-50"
+                    className="absolute right-0 mt-3 w-72 sm:w-80 max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-glass-lg border border-gray-100 overflow-hidden z-50"
                   >
                     <div className="p-4 bg-gradient-to-r from-secondary/10 to-primary/10 border-b border-gray-100 flex justify-between items-center">
                       <h3 className="font-bold text-primary text-sm font-montserrat">Announcements</h3>

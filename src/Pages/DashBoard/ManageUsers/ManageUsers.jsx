@@ -86,11 +86,64 @@ const ManageUsers = () => {
 
     return (
         <div>
-            <div className="flex justify-evenly my-5">
-                <h2 className="text-3xl">All Users</h2>
-                <h2 className="text-3xl">Total Users: {users.length}</h2>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-4 py-5 gap-2">
+                <h2 className="text-xl sm:text-3xl font-bold text-primary">All Users</h2>
+                <span className="text-sm sm:text-base text-gray-500">Total Users: <strong>{users.length}</strong></span>
             </div>
-            <div className="overflow-x-auto p-2">
+            
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-3 p-2">
+                {users.map((user, index) => (
+                    <div key={user._id} className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm">
+                        <div className="flex items-start justify-between mb-3 gap-2">
+                            <div className="min-w-0">
+                                <p className="font-semibold text-sm text-gray-800 line-clamp-1">{user.name}</p>
+                                <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                            </div>
+                            <div className="flex-shrink-0">
+                                {getRoleBadge(user.role)}
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-50">
+                            <div className="flex items-center gap-2">
+                                {user.membership === "member" ? (
+                                    <div className="avatar">
+                                        <div className="w-7 rounded-full ring bg-[#3572EF] ring-offset-base-100 ring-offset-2">
+                                            <img src={gold} alt="gold badge" />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="avatar">
+                                        <div className="w-7 rounded-full ring bg-[#3572EF] ring-offset-base-100 ring-offset-2">
+                                            <img src={silver} alt="silver badge" />
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            <div>
+                                {user.role === 'superadmin' ? (
+                                    <span className="text-gray-400 text-sm">Protected</span>
+                                ) : user.role === 'admin' ? (
+                                    isSuperAdmin ? (
+                                        <button onClick={() => handleRemoveAdmin(user)} className="btn btn-sm bg-red-500 hover:bg-red-600 text-white border-none">
+                                            Demote
+                                        </button>
+                                    ) : (
+                                        <span className="text-gray-400 text-sm">Admin</span>
+                                    )
+                                ) : (
+                                    <button onClick={() => handleMakeAdmin(user)} className="btn btn-sm bg-[#3572EF] text-white border-none">
+                                        <FaUsers className="text-white" /> Make Admin
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto p-2">
                 <table className="table">
                     <thead className="bg-[#3572EF] text-white font-bold">
                         <tr>

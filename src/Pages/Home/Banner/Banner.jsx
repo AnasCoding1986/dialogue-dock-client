@@ -160,7 +160,7 @@ const Banner = () => {
                 </motion.div>
 
                 {/* Staggered Headline */}
-                <div className="mb-6 flex flex-wrap justify-center gap-x-5 gap-y-1">
+                <div className="mb-6 flex flex-wrap justify-center gap-x-3 gap-y-1 sm:gap-x-5">
                     {headlineWords.map((word, i) => (
                         <motion.span
                             key={word}
@@ -168,7 +168,7 @@ const Banner = () => {
                             variants={wordVariants}
                             initial="hidden"
                             animate="visible"
-                            className={`text-5xl md:text-7xl lg:text-8xl font-bold font-montserrat leading-tight tracking-tight ${word === "Conversations"
+                            className={`text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold font-montserrat leading-tight tracking-tight ${word === "Conversations"
                                 ? "gradient-text"
                                 : "text-white"
                                 }`}
@@ -213,7 +213,7 @@ const Banner = () => {
                 {/* Stats */}
                 <motion.div
                     ref={statsRef}
-                    className="grid grid-cols-3 gap-4 md:gap-8 w-full max-w-2xl"
+                    className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8 w-full max-w-2xl px-2 sm:px-0"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.2, duration: 0.6 }}
@@ -227,10 +227,10 @@ const Banner = () => {
                             transition={{ delay: 1.4 + i * 0.15, duration: 0.5 }}
                         >
                             <stat.icon className="text-secondary text-2xl mx-auto mb-2" />
-                            <p className="text-2xl md:text-3xl font-bold text-white font-montserrat">
+                            <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white font-montserrat">
                                 <AnimatedCounter end={stat.value} suffix={stat.suffix} />
                             </p>
-                            <p className="text-gray-400 text-xs md:text-sm mt-1">{stat.label}</p>
+                            <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm mt-1">{stat.label}</p>
                         </motion.div>
                     ))}
                 </motion.div>
