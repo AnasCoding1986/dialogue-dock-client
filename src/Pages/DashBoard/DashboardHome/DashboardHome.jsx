@@ -101,7 +101,7 @@ const DashboardHome = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 mb-8 text-white shadow-xl"
                 >
-                    <div className="flex items-center justify-between flex-wrap gap-4">
+                    <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:justify-between sm:text-left gap-4">
                         <div>
                             <h1 className="text-3xl md:text-4xl font-bold font-montserrat mb-2">
                                 Welcome back, {user?.displayName || 'User'}! 👋
@@ -115,7 +115,7 @@ const DashboardHome = () => {
                             </p>
                         </div>
                         {user?.photoURL && (
-                            <div className="w-20 h-20 rounded-full border-4 border-white shadow-lg overflow-hidden">
+                            <div className="w-20 h-20 rounded-full border-4 border-white shadow-lg overflow-hidden flex-shrink-0">
                                 <img src={user.photoURL} alt="Profile" className="w-full h-full object-cover" />
                             </div>
                         )}

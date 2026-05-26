@@ -45,7 +45,7 @@ const DashBoard = () => {
                 <ul>
                     {/* Dashboard Home */}
                     <li>
-                        <NavLink className={navLinkClass} to="/dashboard" end>
+                        <NavLink className={navLinkClass} to="/dashboard" end onClick={() => setIsSidebarOpen(false)}>
                             <IoHomeSharp className="text-lg" /> Dashboard
                         </NavLink>
                     </li>
@@ -57,12 +57,12 @@ const DashBoard = () => {
                                 Super Admin
                             </li>
                             <li>
-                                <NavLink className={navLinkClass} to="/dashboard/stats">
+                                <NavLink className={navLinkClass} to="/dashboard/stats" onClick={() => setIsSidebarOpen(false)}>
                                     <FiBarChart2 className="text-lg" /> Platform Stats
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink className={navLinkClass} to="/dashboard/manage-admins">
+                                <NavLink className={navLinkClass} to="/dashboard/manage-admins" onClick={() => setIsSidebarOpen(false)}>
                                     <FiShield className="text-lg" /> Manage Admins
                                 </NavLink>
                             </li>
@@ -76,27 +76,27 @@ const DashBoard = () => {
                                 Admin
                             </li>
                             <li>
-                                <NavLink className={navLinkClass} to="/dashboard/adminprofile">
+                                <NavLink className={navLinkClass} to="/dashboard/adminprofile" onClick={() => setIsSidebarOpen(false)}>
                                     <CgProfile className="text-lg" /> Admin Profile
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink className={navLinkClass} to="/dashboard/manageusers">
+                                <NavLink className={navLinkClass} to="/dashboard/manageusers" onClick={() => setIsSidebarOpen(false)}>
                                     <MdManageAccounts className="text-lg" /> Manage Users
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink className={navLinkClass} to="/dashboard/reportedactivities">
+                                <NavLink className={navLinkClass} to="/dashboard/reportedactivities" onClick={() => setIsSidebarOpen(false)}>
                                     <MdBugReport className="text-lg" /> Reported Activities
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink className={navLinkClass} to="/dashboard/manage-posts">
+                                <NavLink className={navLinkClass} to="/dashboard/manage-posts" onClick={() => setIsSidebarOpen(false)}>
                                     <SiDeutschepost className="text-lg" /> Manage Posts
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink className={navLinkClass} to="/dashboard/notification">
+                                <NavLink className={navLinkClass} to="/dashboard/notification" onClick={() => setIsSidebarOpen(false)}>
                                     <GrAnnounce className="text-lg" /> Make Announcement
                                 </NavLink>
                             </li>
@@ -108,17 +108,17 @@ const DashBoard = () => {
                         Account
                     </li>
                     <li>
-                        <NavLink className={navLinkClass} to="/dashboard/myprofile">
+                        <NavLink className={navLinkClass} to="/dashboard/myprofile" onClick={() => setIsSidebarOpen(false)}>
                             <RiProfileFill className="text-lg" /> My Profile
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink className={navLinkClass} to="/dashboard/addpost">
+                        <NavLink className={navLinkClass} to="/dashboard/addpost" onClick={() => setIsSidebarOpen(false)}>
                             <GiTargetPoster className="text-lg" /> Add Post
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink className={navLinkClass} to="/dashboard/mypost">
+                        <NavLink className={navLinkClass} to="/dashboard/mypost" onClick={() => setIsSidebarOpen(false)}>
                             <SiDeutschepost className="text-lg" /> My Posts
                         </NavLink>
                     </li>
@@ -126,12 +126,12 @@ const DashBoard = () => {
                     <div className="h-px bg-white/15 my-3"></div>
 
                     <li>
-                        <NavLink className={navLinkClass} to="/" end>
+                        <NavLink className={navLinkClass} to="/" end onClick={() => setIsSidebarOpen(false)}>
                             <IoHomeSharp className="text-lg" /> Back to Home
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink className={navLinkClass} to="/membership">
+                        <NavLink className={navLinkClass} to="/membership" onClick={() => setIsSidebarOpen(false)}>
                             <PiMemberOfBold className="text-lg" /> Membership
                         </NavLink>
                     </li>

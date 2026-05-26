@@ -204,8 +204,8 @@ const AddPost = () => {
       <Helmet>
         <title>DialogueDock | Add Post</title>
       </Helmet>
-      <div className="hero min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-10 px-4">
-        <div className="card w-full max-w-3xl shadow-2xl bg-white rounded-2xl overflow-hidden border border-gray-100 p-8">
+      <div className="hero min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-10 pb-20 px-4">
+        <div className="card w-full max-w-3xl shadow-2xl bg-white rounded-2xl overflow-hidden border border-gray-100 p-4 sm:p-8">
           {showForm ? (
             <>
               <div className="text-center mb-4">

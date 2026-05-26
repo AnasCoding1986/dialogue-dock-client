@@ -39,7 +39,7 @@ const MyProfile = () => {
             <Helmet>
                 <title>DialogueDock | My Profile</title>
             </Helmet>
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 md:p-8">
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 pb-20 md:p-8">
                 {/* Profile Header */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}

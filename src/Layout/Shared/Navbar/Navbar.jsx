@@ -300,7 +300,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className={`btn-shimmer px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 hover:scale-105 ${scrolled
+                className={`btn-shimmer px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-300 hover:scale-105 ${scrolled
                   ? "bg-primary text-white shadow-lg hover:shadow-xl"
                   : "bg-white text-primary shadow-glass hover:shadow-glass-lg"
                   }`}

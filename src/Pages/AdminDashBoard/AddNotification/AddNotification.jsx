@@ -41,25 +41,24 @@ const AddNotification = () => {
     }
 
     return (
-        <div className="hero min-h-screen bg-base-200">
-
-            <div className="card w-1/2 shadow-2xl bg-[#e5f4fa]">
-                <h1 className="text-2xl uppercase border-y-4 py-4 text-center font-LuckiestGuy">Annoucement</h1>
-                <form onSubmit={handleNotificattion} className="card-body">
-                    <div className="form-control flex items-center">
+        <div className="hero min-h-screen bg-base-200 py-10 pb-20 px-4">
+            <div className="card w-full max-w-xl shadow-2xl bg-[#e5f4fa] border border-blue-100 p-4 sm:p-6">
+                <h1 className="text-2xl uppercase border-y-4 py-4 text-center font-LuckiestGuy text-primary">Announcement</h1>
+                <form onSubmit={handleNotificattion} className="card-body px-2 sm:px-6">
+                    <div className="form-control">
                         <label className="label">
-                            <span className="label-text font-medium">Title</span>
+                            <span className="label-text font-semibold text-gray-700">Title</span>
                         </label>
-                        <input name="title" type="text" placeholder="Title" className="input input-bordered w-1/2 " />
+                        <input name="title" type="text" placeholder="Title" required className="input input-bordered input-primary w-full bg-white" />
                     </div>
-                    <div className="form-control flex items-center">
+                    <div className="form-control">
                         <label className="label">
-                            <span className="label-text font-medium">Annoucement</span>
+                            <span className="label-text font-semibold text-gray-700">Announcement Description</span>
                         </label>
-                        <input name="description" type="text" placeholder="Description" className="input input-bordered w-full " />
+                        <textarea name="description" placeholder="Description" required className="textarea textarea-bordered textarea-primary w-full bg-white h-28" />
                     </div>
                     <div className="form-control mt-6">
-                        <input className="btn bg-[#A7E6FF] text-black border-none font-bold btn-primary" type="submit" value="Give Annoucement" />
+                        <input className="btn bg-[#A7E6FF] hover:bg-[#8fd5f5] text-black border-none font-bold btn-primary w-full shadow-lg" type="submit" value="Give Announcement" />
                     </div>
                 </form>
             </div>
