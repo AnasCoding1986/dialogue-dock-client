@@ -111,7 +111,7 @@ const Navbar = () => {
               </div>
             </motion.div>
             <span
-              className={`font-montserrat font-bold text-2xl will-change-[color,opacity] ${useDarkText
+              className={`font-montserrat font-bold text-xl sm:text-2xl will-change-[color,opacity] ${useDarkText
                 ? "bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary"
                 : "text-white drop-shadow-lg"
                 }`}

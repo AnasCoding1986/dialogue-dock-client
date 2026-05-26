@@ -7,12 +7,16 @@
 @layer base {
   html {
     @apply scroll-smooth;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   body {
     @apply font-roboto text-slate-800 bg-gray-50;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 
   h1,
